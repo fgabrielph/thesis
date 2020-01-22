@@ -47,7 +47,6 @@ class CustomerController extends Controller
 
         //Handle File Upload
 
-        /* ============= SAVE FOR LATER ==============================
         if($request->hasFile('image')){
             // Get filename with extension
             $fileNameWithExt = $request->file('image')->getClientOriginalName();
@@ -70,20 +69,20 @@ class CustomerController extends Controller
 
             // Upload Image
             $path = $request->file('image')->storeAs('public/assets/images', $fileNameToStore);
-            $smallpath = $request->file('image')->storeAs('public/assets/images/thumbnail', $smallthumbnail);
-            $mediumpath = $request->file('image')->storeAs('public/assets/images/thumbnail', $mediumthumbnail);
-            $largepath = $request->file('image')->storeAs('public/assets/images/thumbnail', $largethumbnail);
+            $smallpath = $request->file('image')->storeAs('public/assets/images/small_thumbnail', $smallthumbnail);
+            $mediumpath = $request->file('image')->storeAs('public/assets/images/medium_thumbnail', $mediumthumbnail);
+            $largepath = $request->file('image')->storeAs('public/assets/images/large_thumbnail', $largethumbnail);
 
             //create small thumbnail
-            $smallthumbnailpath = public_path('storage/assets/images/thumbnail/'.$smallthumbnail);
+            $smallthumbnailpath = public_path('storage/assets/images/small_thumbnail/'.$smallthumbnail);
             $this->createThumbnail($smallthumbnailpath, 150, 93);
 
             //create medium thumbnail
-            $mediumthumbnailpath = public_path('storage/assets/images/thumbnail/'.$mediumthumbnail);
+            $mediumthumbnailpath = public_path('storage/assets/images/medium_thumbnail/'.$mediumthumbnail);
             $this->createThumbnail($mediumthumbnailpath, 300, 185);
 
             //create large thumbnail
-            $largethumbnailpath = public_path('storage/assets/images/thumbnail/'.$largethumbnail);
+            $largethumbnailpath = public_path('storage/assets/images/large_thumbnail/'.$largethumbnail);
             $this->createThumbnail($largethumbnailpath, 550, 340);
 
         } else {
@@ -92,10 +91,10 @@ class CustomerController extends Controller
             $mediumthumbnail = 'noimage.jpg';
             $largethumbnail = 'noimage.jpg';
         }
-        */
 
         $customer = new User;
         $customer->name = $request->name;
+        $customer->avatar = $largethumbnail;
         $customer->email = $request->email;
         $customer->password = bcrypt($request->password);
         $customer->save();
@@ -168,5 +167,13 @@ class CustomerController extends Controller
 
         $customer->delete();
         return back()->withInput()->with('success', 'Account Deleted');
+    }
+
+    public function createThumbnail($path, $width, $height)
+    {
+        $img = Image::make($path)->resize($width, $height, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+        $img->save($path);
     }
 }

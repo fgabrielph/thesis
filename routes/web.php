@@ -12,12 +12,14 @@
 */
 
 Route::view('/', 'site.pages.homepage')->name('home');
+Route::get('/shop', 'PagesController@index')->name('site.shop');
 
-Route::group(['middleware' => ['auth']], function () {
-    Route::get('/accounts/profile', 'PagesController@index')->name('account.index');
+Route::group(['middleware' => ['auth', 'verified']], function () {
+
+    Route::get('/accounts/profile', 'AccountController@index')->name('account.index');
 });
 
-Auth::routes(/*['verify' => true]*/);
+Auth::routes(['verify' => true]);
 
 //Route::get('/home', 'HomeController@index')->name('home');
 

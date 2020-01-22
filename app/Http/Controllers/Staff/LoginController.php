@@ -49,10 +49,11 @@ class LoginController extends Controller
         ]);
         if (Auth::guard('staff')->attempt([
             'email' => $request->email,
-            'password' => $request->password
+            'password' => $request->password,
         ], $request->get('remember'))) {
             return redirect()->intended(route('staff.dashboard'));
         }
+
         return back()->withInput($request->only('email', 'remember'))->with('error', 'Wrong Credentials');
     }
 

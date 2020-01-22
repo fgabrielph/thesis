@@ -71,7 +71,7 @@
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="col d-flex justify-content-center">
-                                                            <img src="../assets/images/agent-2.jpg" width="100%" alt="this is image">
+                                                            <img src="/storage/assets/images/large_thumbnail/{{$customer->avatar}}" width="100%" alt="this is image">
                                                         </div>
                                                         <div class="col">
                                                             <strong><h2>{{$customer->name}}</h2></strong>
@@ -105,12 +105,12 @@
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="col d-flex justify-content-center">
-                                                            <img src="../assets/images/agent-2.jpg" width="100%" alt="this is image">
+                                                            <img src="/storage/assets/images/large_thumbnail/{{$customer->avatar}}" width="100%" alt="this is image">
                                                         </div>
                                                         <div class="col">
                                                             <strong><h2>{{$customer->name}}</h2></strong>
                                                             <h3 class="text-success">{{$customer->email}}</h3>
-                                                            <p>THIS IS JOSEPH</p>
+                                                            <h1>{!! !empty($customer->email_verified_at) ? '<span class="badge bg-success">VERIFIED</span>' : '<span class="badge bg-danger">NOT VERIFIED</span>'!!}</h1>
                                                             <h5></h5>
 
                                                         </div>
@@ -136,11 +136,7 @@
                         <!-- /.card-body -->
                         <div class="card-footer clearfix">
                             <ul class="pagination pagination-sm m-0 float-right">
-                                <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                                {{$customers->links()}}
                             </ul>
                         </div>
                     </div>

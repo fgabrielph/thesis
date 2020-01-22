@@ -1,10 +1,11 @@
 <!-- Navbar -->
-<nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark black scrolling-navbar">
     <div class="container">
 
         <!-- Brand -->
-        <a class="navbar-brand waves-effect" href="#" target="_blank">
-            <strong class="red-text">NEW MJC</strong>
+        <a class="navbar-brand" href="{{route('home')}}">
+            <img src="../assets/images/LogoMJC.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+                 style="opacity: .8; width: 80px; height: 40px">
         </a>
 
         <!-- Collapse -->
@@ -17,13 +18,17 @@
 
             <!-- Left -->
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link waves-effect" href="#">Home
-                        <span class="sr-only">(current)</span>
+                <li class="nav-item">
+                    <a class="nav-link waves-effect" href="{{route('home')}}">Home
+{{--                        <span class="sr-only">(current)</span>--}}
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link waves-effect" href="#">About NEW MJC</a>
+                    <a class="nav-link waves-effect" href="{{route('site.shop')}}">Shop
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link waves-effect" href="#">About</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link waves-effect" href="#">Contact Us</a>
@@ -33,15 +38,10 @@
             <!-- Right -->
             <ul class="navbar-nav nav-flex-icons">
                 <li class="nav-item">
-                    <a class="nav-link waves-effect">
-                        <span class="badge red z-depth-1 mr-1"> 1 </span>
+                    <a class="nav-link waves-effect" style="color: orange">
+                        {{-- <span class="badge red z-depth-1 mr-1"> 1 </span> --}}
                         <i class="fas fa-shopping-cart"></i>
                         <span class="clearfix d-none d-sm-inline-block"> Cart </span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://www.facebook.com/mdbootstrap" class="nav-link waves-effect" target="_blank">
-                        <i class="fab fa-facebook-f"></i>
                     </a>
                 </li>
                 @guest
@@ -55,7 +55,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle waves-effect" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i></a>
                         <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">{{ Auth::user()->name }}</a>
+                            <a class="dropdown-item" href="{{route('account.index')}}">{{ Auth::user()->name }}</a>
                             <a class="dropdown-item" href="#">Orders</a>
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}

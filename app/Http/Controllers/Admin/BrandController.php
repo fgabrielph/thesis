@@ -4,12 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\User;
-use DB;
+use App\Brand;
 use Illuminate\Support\Facades\Storage;
 use Image;
 
-class CustomerController extends Controller
+class BrandController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +17,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = User::orderBy('id', 'asc')->paginate(10);
-        return view('admin.customers.index')->with('customers', $customers);
+        $brands = Brand::orderBy('created_at', 'desc')->paginate(10);
+        return view('admin.brands.index')->with('brands', $brands);
     }
 
     /**
@@ -42,10 +41,102 @@ class CustomerController extends Controller
     {
         //Validation
         $this->validate($request, [
-            'name' => 'required|max:160',
-            'email' => 'required|unique:staff|email',
-            'password' => 'required|min:8|max:16',
-            'confirm_pass' => 'same:password'
+            'name' => 'required|unique:categories|max:160',
+        ]);
+
+
+
+        //Handle File Upload
+
+        if($request->hasFile('image')){
+            // Get filename with extension
+            $fileNameWithExt = $request->file('image')->getClientOriginalName();
+            // Get just filename
+            $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+            // Get just ext
+            $extension = $request->file('image')->getClientOriginalExtension();
+
+            // Filename to store
+            $fileNameToStore = $fileName.'_'.time().'.'.$extension;
+
+            //small thumbnail name
+            $smallthumbnail = $fileName.'_small_'.time().'.'.$extension;
+
+            //medium thumbnail name
+            $mediumthumbnail = $fileName.'_medium_'.time().'.'.$extension;
+
+            //large thumbnail name
+            $largethumbnail = $fileName.'_large_'.time().'.'.$extension;
+
+            // Upload Image
+            $path = $request->file('image')->storeAs('public/assets/images', $fileNameToStore);
+            $smallpath = $request->file('image')->storeAs('public/assets/images/small_thumbnail', $smallthumbnail);
+            $mediumpath = $request->file('image')->storeAs('public/assets/images/medium_thumbnail', $mediumthumbnail);
+            $largepath = $request->file('image')->storeAs('public/assets/images/large_thumbnail', $largethumbnail);
+
+            //create small thumbnail
+            $smallthumbnailpath = public_path('storage/assets/images/small_thumbnail/'.$smallthumbnail);
+            $this->createThumbnail($smallthumbnailpath, 150, 93);
+
+            //create medium thumbnail
+            $mediumthumbnailpath = public_path('storage/assets/images/medium_thumbnail/'.$mediumthumbnail);
+            $this->createThumbnail($mediumthumbnailpath, 300, 185);
+
+            //create large thumbnail
+            $largethumbnailpath = public_path('storage/assets/images/large_thumbnail/'.$largethumbnail);
+            $this->createThumbnail($largethumbnailpath, 550, 340);
+
+        } else {
+            $fileNameToStore = 'noimage.jpg';
+            $smallthumbnail = 'noimage.jpg';
+            $mediumthumbnail = 'noimage.jpg';
+            $largethumbnail = 'noimage.jpg';
+        }
+
+        //Create Category
+        $brand = new Brand;
+        $brand->image = $largethumbnail;
+        $brand->name = $request->input('name');  //$post->user_id = auth()->user()->id; //This Gets the Currently User Logged in
+        $brand->save();
+
+        return back()->with('success', 'Brand Added');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //Validation
+        $this->validate($request, [
+            'name' => 'required|unique:categories|max:160',
+            'image' => 'nullable|max:1999|mimes:jpeg,bmp,png'
         ]);
 
         //Handle File Upload
@@ -95,64 +186,18 @@ class CustomerController extends Controller
             $largethumbnail = 'noimage.jpg';
         }
 
-        $customer = new User;
-        $customer->name = $request->name;
-        $customer->avatar = $largethumbnail;
-        $customer->email = $request->email;
-        $customer->password = bcrypt($request->password);
-        $customer->save();
-
-        return back()->withInput()->with('success', 'Customer Added');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $customer = User::find($id);
-        $status = $customer->status;
-
-        if($status == 0) {
-            $customer->status = '1';
-            $customer->save();
+        //Update Item
+        $brand = Brand::find($id);
+        $brand->name = $request->input('name');
+        if($request->hasFile('image')){
+            if ($brand->image != 'nobrandimage.jpg') {
+                Storage::delete('public/assets/images/large_thumbnail'.$brand->image);
+            }
+            $brand->image = $largethumbnail;
         }
+        $brand->save();
 
-        if($status == 1) {
-            $customer->status = '0';
-            $customer->save();
-        }
-
-
-        $message = $customer->status ? 'Account Activated' : 'Account Deactivated';
-
-        return back()->withInput()->with('success', $message);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-
+        return back()->with('success', 'Brand Updated');
     }
 
     /**
@@ -163,14 +208,7 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        $customer = User::find($id);
-
-        //$cust_id = User::whereRaw('id = (select max(`id`) from users)')->get();
-        //$id_max = DB::table('users')->max('id') + 1;
-        //DB::statement("ALTER TABLE users AUTO_INCREMENT = $id_max");
-
-        $customer->delete();
-        return back()->withInput()->with('success', 'Account Deleted');
+        //
     }
 
     public function createThumbnail($path, $width, $height)

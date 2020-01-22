@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Staff;
+use Illuminate\Support\Facades\Storage;
+use Image;
 
 class StaffController extends Controller
 {
@@ -15,7 +17,7 @@ class StaffController extends Controller
      */
     public function index()
     {
-        $staffs = Staff::all();
+        $staffs = Staff::orderBy('id', 'asc')->paginate(10);
         return view('admin.staffs.index')->with('staffs', $staffs);
     }
 
@@ -47,7 +49,6 @@ class StaffController extends Controller
 
         //Handle File Upload
 
-        /* ============= SAVE FOR LATER ==============================
         if($request->hasFile('image')){
             // Get filename with extension
             $fileNameWithExt = $request->file('image')->getClientOriginalName();
@@ -70,20 +71,20 @@ class StaffController extends Controller
 
             // Upload Image
             $path = $request->file('image')->storeAs('public/assets/images', $fileNameToStore);
-            $smallpath = $request->file('image')->storeAs('public/assets/images/thumbnail', $smallthumbnail);
-            $mediumpath = $request->file('image')->storeAs('public/assets/images/thumbnail', $mediumthumbnail);
-            $largepath = $request->file('image')->storeAs('public/assets/images/thumbnail', $largethumbnail);
+            $smallpath = $request->file('image')->storeAs('public/assets/images/small_thumbnail', $smallthumbnail);
+            $mediumpath = $request->file('image')->storeAs('public/assets/images/medium_thumbnail', $mediumthumbnail);
+            $largepath = $request->file('image')->storeAs('public/assets/images/large_thumbnail', $largethumbnail);
 
             //create small thumbnail
-            $smallthumbnailpath = public_path('storage/assets/images/thumbnail/'.$smallthumbnail);
+            $smallthumbnailpath = public_path('storage/assets/images/small_thumbnail/'.$smallthumbnail);
             $this->createThumbnail($smallthumbnailpath, 150, 93);
 
             //create medium thumbnail
-            $mediumthumbnailpath = public_path('storage/assets/images/thumbnail/'.$mediumthumbnail);
+            $mediumthumbnailpath = public_path('storage/assets/images/medium_thumbnail/'.$mediumthumbnail);
             $this->createThumbnail($mediumthumbnailpath, 300, 185);
 
             //create large thumbnail
-            $largethumbnailpath = public_path('storage/assets/images/thumbnail/'.$largethumbnail);
+            $largethumbnailpath = public_path('storage/assets/images/large_thumbnail/'.$largethumbnail);
             $this->createThumbnail($largethumbnailpath, 550, 340);
 
         } else {
@@ -92,11 +93,11 @@ class StaffController extends Controller
             $mediumthumbnail = 'noimage.jpg';
             $largethumbnail = 'noimage.jpg';
         }
-        */
 
         $staff = new Staff;
         $staff->name = $request->name;
         $staff->email = $request->email;
+        $staff->image = $largethumbnail;
         $staff->password = bcrypt($request->password);
         $staff->save();
 
@@ -117,6 +118,7 @@ class StaffController extends Controller
     }
 
     public function edit($id) {
+
         $staff = Staff::find($id);
 
         $status = $staff->status;
@@ -160,5 +162,13 @@ class StaffController extends Controller
 
         $staff->delete();
         return back()->withInput()->with('success', 'Account Deleted');
+    }
+
+    public function createThumbnail($path, $width, $height)
+    {
+        $img = Image::make($path)->resize($width, $height, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+        $img->save($path);
     }
 }

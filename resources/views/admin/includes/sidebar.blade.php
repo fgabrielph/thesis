@@ -61,23 +61,29 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{route('categories.index')}}" class="nav-link">
                                 <i class="fas fa-square nav-icon"></i>
                                 <p>Categories</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{route('brands.index')}}" class="nav-link">
+                                <i class="fas fa-bolt nav-icon"></i>
+                                <p>Brands</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('items.index')}}" class="nav-link">
                                 <i class="fas fa-box-open nav-icon"></i>
                                 <p>Products</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="fas fa-bolt nav-icon"></i>
-                                <p>Attributes</p>
-                            </a>
-                        </li>
+{{--                        <li class="nav-item">--}}
+{{--                            <a href="#" class="nav-link">--}}
+{{--                                <i class="fas fa-bolt nav-icon"></i>--}}
+{{--                                <p>Attributes</p>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
                     </ul>
                 </li>
                 <li class="nav-item has-treeview">

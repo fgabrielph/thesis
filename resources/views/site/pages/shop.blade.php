@@ -1,10 +1,10 @@
 @extends('site.master')
 
-@section('title') {{Auth::user()->name}} @endsection
+@section('title') Shop @endsection
 
 @section('content')
 
-    HELLO {{Auth::user()->name}}
+    THIS IS SHOP
 
 @endsection
 

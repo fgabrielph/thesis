@@ -40,6 +40,7 @@
                                     <th class="text-center">ID</th>
                                     <th class="text-center">Name</th>
                                     <th class="text-center">Email</th>
+                                    <th class="text-center">Email Verified</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center"><i class="fas fa-bolt"></i></th>
                                 </tr>
@@ -50,6 +51,7 @@
                                         <td class="text-center">{{$customer->id}}</td>
                                         <td class="text-center">{{$customer->name}}</td>
                                         <td class="text-center">{{$customer->email}}</td>
+                                        <td class="text-center">{!! !empty($customer->email_verified_at) ? '<span class="badge bg-success">Verified</span>' : '<span class="badge bg-danger">Not Verified</span>'!!}</td>
                                         <td class="text-center">{!! $customer->status ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-danger">Deactivated</span>' !!}</td>
                                         <td class="text-center">
                                             <button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Actions</button>
@@ -69,7 +71,7 @@
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="col d-flex justify-content-center">
-                                                            <img src="../assets/images/agent-2.jpg" width="100%" alt="this is image">
+                                                            <img src="/storage/assets/images/large_thumbnail/{{$customer->avatar}}" width="100%" alt="this is image">
                                                         </div>
                                                         <div class="col">
                                                             <strong><h2>{{$customer->name}}</h2></strong>
@@ -102,12 +104,12 @@
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="col d-flex justify-content-center">
-                                                            <img src="../assets/images/agent-2.jpg" width="100%" alt="this is image">
+                                                            <img src="/storage/assets/images/large_thumbnail/{{$customer->avatar}}" width="100%" alt="this is image">
                                                         </div>
                                                         <div class="col">
                                                             <strong><h2>{{$customer->name}}</h2></strong>
                                                             <h3 class="text-success">{{$customer->email}}</h3>
-                                                            <p>THIS IS JOSEPH</p>
+                                                            <h1>{!! !empty($customer->email_verified_at) ? '<span class="badge bg-success">VERIFIED</span>' : '<span class="badge bg-danger">NOT VERIFIED</span>'!!}</h1>
                                                             <h5></h5>
 
                                                         </div>

@@ -36,23 +36,41 @@
                 height: 100vh;
             }
         }
+
+        body {
+            /*background: url("/assets/images/bg.jpg") no-repeat center center fixed;*/
+            /*-webkit-background-size: cover;*/
+            /*-moz-background-size: cover;*/
+            /*-o-background-size: cover;*/
+            /*background-size: cover;*/
+            overflow-x: hidden;
+        }
+
+        #opacitybg {
+            background-color: rgba(255,255,255, 1);
+        }
     </style>
 
 </head>
 <body>
 
+<div id="opacitybg">
+
 
         @include('site.includes.navbar')
+
+        @yield('others')
 
         <main class="mt-5 pt-5">
             @yield('content')
         </main>
 
+        <!--Facebook-->
+        <center><a class="btn btn-md black" type="button" role="button" style="border-radius: 100%"><i class="fab fa-facebook-f"></i></a><a class="btn btn-md black" type="button" role="button" style="border-radius: 100%"><i class="fab fa-twitter"></i></a></center>
 
+        @yield('footer')
 
-        @include('site.includes.footer')
-
-
+</div>
         <!-- SCRIPTS -->
         <!-- JQuery -->
         <script type="text/javascript" src="/assets/js/jquery-3.4.1.min.js"></script>

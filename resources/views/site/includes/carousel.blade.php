@@ -13,13 +13,13 @@
 
         <!--First slide-->
         <div class="carousel-item active">
-            <div class="view" style="background-image: url('/assets/images/card-img-1.jpg'); background-repeat: no-repeat; background-size: cover;">
+            <div class="view" style="background-image: url('/assets/images/factory.jpg'); background-size: cover;">
             </div>
         </div>
         <!--/First slide-->
 
         <div class="carousel-item">
-            <div class="view" style="background-image: url('/assets/images/card-img-1.jpg'); background-repeat: no-repeat; background-size: cover;">
+            <div class="view" style="background-image: url('/assets/images/factory2.jpg'); background-repeat: no-repeat; background-size: cover;">
             </div>
         </div>
 
