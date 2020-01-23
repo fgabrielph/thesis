@@ -136,7 +136,7 @@ class BrandController extends Controller
         //Validation
         $this->validate($request, [
             'name' => 'required|unique:categories|max:160',
-            'image' => 'nullable|max:1999|mimes:jpeg,bmp,png'
+            'image' => 'nullable|max:1999|'
         ]);
 
         //Handle File Upload
