@@ -35,8 +35,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     })->name('checkout.index');
 
     Route::post('/checkout/info', 'CheckoutController@getCheckout')->name('checkout.info');
-    Route::post('/store-payment', 'CheckoutController@storePayment')->name('payment.store');
-    Route::get('/paypal-success', 'CheckoutController@paypalsuccess')->name('payment.paypalSuccess');
 
 
     Route::get('/accounts/profile', function () {

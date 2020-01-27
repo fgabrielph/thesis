@@ -47,6 +47,8 @@
                                     echo "<span class='badge badge-info'>Processing";
                                 } elseif ($order->status == 2) {
                                     echo "<span class='badge badge-success'>Completed";
+                                } elseif ($order->status == 3) {
+                                    echo "<span class='badge badge-secondary'>Return";
                                 } else {
                                     echo "<span class='badge badge-danger'>Canceled";
                                 }
@@ -58,7 +60,12 @@
                                 <button type="button" data-toggle="dropdown" class="btn btn-sm btn-rounded btn-primary dropdown-toggle">Actions</button>
                                 <div class="dropdown-menu">
                                     <a href="#" data-toggle="modal" data-target="#view{{$order->id}}" class="dropdown-item"><span class="fas fa-search"></span> View</a>
-                                    <a href="#" data-toggle="modal" data-target="#edit{{$order->id}}" class="dropdown-item"><span class="fas fa-pencil-alt"></span> Edit</a>
+                                    <?php
+                                        if($order->status == 0) {
+                                            echo '<a href="#" data-toggle="modal" data-target="#cancel{{$order->id}}" class="dropdown-item"><span class="fas fa-pencil-alt"></span> Cancel</a>';
+                                        }
+
+                                    ?>
                                 </div>
                             </td>
                         </tr>
@@ -162,6 +169,29 @@
 
 @section('footer')
 
-    @include('site.includes.footer')
+    <!--Footer-->
+    <footer class="page-footer text-center font-small mt-4 wow fadeIn fixed-bottom">
+
+        <div class="orange">
+            <!--Call to action-->
+            <div class="pt-3">
+                <a class="btn btn-outline-white" href="#" role="button">Inquire Now</a>
+                <a class="btn btn-outline-white" href="#" role="button">Contacts</a>
+            </div>
+            <!--/.Call to action-->
+
+
+            <!--Copyright-->
+            <div class="footer-copyright py-3 black">
+                © 2019 Copyright:
+                <a href="#" target="_blank"> New MJC </a>
+            </div>
+            <!--/.Copyright-->
+
+        </div>
+
+
+    </footer>
+    <!--/.Footer-->
 
 @endsection

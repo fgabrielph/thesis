@@ -32,7 +32,7 @@
                     </li>
                     @foreach($categories as $category)
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('site.categories', $category->id)}}" >{{$category->name}} &nbsp; |</a>
+                            <a class="nav-link" href="{{route('site.categories', $category->id)}}" >{{$category->name}} </a>
                         </li>
                     @endforeach
                 </ul>
@@ -49,53 +49,70 @@
         </nav>
         <!--/.Navbar-->
 
-    <div class="container card">
-        <br>
-        <section class="text-center mb-4">
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
 
-            <!--Grid row-->
-            <div class="row wow fadeIn">
-            @foreach($items as $item)
-                <!--Grid column-->
+                <section class="text-center mb-4">
 
-                    <div class="col-lg-3 col-md-6 mb-4">
+                    <!--Grid row-->
+                    <div class="row wow fadeIn">
+                    @foreach($items as $item)
+                        <!--Grid column-->
 
-                        <!--Card-->
-                        <div class="card">
+                            <div class="col-lg-3 col-md-6 mb-4">
 
-                            <!--Card image-->
-                            <div class="view overlay">
-                                <img src="/storage/assets/images/large_thumbnail/{{$item->image}}" class="card-img-top" alt="">
-                                <a href="#" data-toggle="modal" data-target="#addtocart{{$item->id}}">
-                                    <div class="mask rgba-white-slight">Buy Now</div>
-                                </a>
+                                <!--Card-->
+                                <div class="card">
+
+                                    <!--Card image-->
+                                    <div class="view overlay">
+                                        <img src="/storage/assets/images/large_thumbnail/{{$item->image}}" class="card-img-top" alt="">
+                                        <a href="#" data-toggle="modal" data-target="#addtocart{{$item->id}}">
+                                            <div class="mask rgba-white-slight">Buy Now</div>
+                                        </a>
+                                    </div>
+                                    <!--Card image-->
+
+                                    <!--Card content-->
+                                    <div class="card-body text-center">
+                                        <!--Category & Title-->
+                                        <h5 class="grey-text">{{$item->categories->name}}</h5>
+                                        <h5>
+                                            <strong>
+                                                <a href="{{route('site.product', $item->id)}}">{{$item->name}}</a>
+                                                {{--                                        <span class="badge badge-pill danger-color">NEW</span>--}}
+                                            </strong>
+                                        </h5>
+
+                                    </div>
+                                    <!--Card content-->
+
+                                </div>
+                                <!--Card-->
+
                             </div>
-                            <!--Card image-->
-
-                            <!--Card content-->
-                            <div class="card-body text-center">
-                                <!--Category & Title-->
-                                <h5 class="grey-text">{{$item->categories->name}}</h5>
-                                <h5>
-                                    <strong>
-                                        <a href="{{route('site.product', $item->id)}}">{{$item->name}}</a>
-                                        {{--                                        <span class="badge badge-pill danger-color">NEW</span>--}}
-                                    </strong>
-                                </h5>
-
-                            </div>
-                            <!--Card content-->
-
-                        </div>
-                        <!--Card-->
-
+                            <!--Grid column-->
+                        @endforeach
                     </div>
-                    <!--Grid column-->
-                @endforeach
+                    <!--Grid row-->
+                </section>
+                <!--Section: Products v.3-->
+
             </div>
-            <!--Grid row-->
-        </section>
-        <!--Section: Products v.3-->
+
+
+            <div class="card-footer">
+                <div class="d-flex justify-content-center">
+                    {{$items->links()}}
+                </div>
+
+            </div>
+
+        </div>
+
+
+
     </div>
 
 @endsection

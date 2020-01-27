@@ -41,15 +41,6 @@
             </div>
             <!--/.Call to action-->
 
-            <hr class="my-4">
-
-            <!-- Social icons -->
-            <div class="pb-4">
-                <a href="https://www.facebook.com/mdbootstrap" target="_blank">
-                    <i class="fab fa-facebook-f mr-3"></i>
-                </a>
-            </div>
-            <!-- Social icons -->
 
             <!--Copyright-->
             <div class="footer-copyright py-3 black">

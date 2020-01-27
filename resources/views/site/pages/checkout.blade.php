@@ -30,7 +30,7 @@
 
                                 <!--firstName-->
                                 <div class="md-form ">
-                                    <input name="firstName" type="text" id="firstName" class="form-control">
+                                    <input value="{{ old('firstName') }}" name="firstName" type="text" id="firstName" class="form-control">
                                     <label for="firstName" class="">First name</label>
                                 </div>
 
@@ -42,7 +42,7 @@
 
                                 <!--lastName-->
                                 <div class="md-form">
-                                    <input name="lastName" type="text" id="lastName" class="form-control">
+                                    <input value="{{ old('lastName') }}" name="lastName" type="text" id="lastName" class="form-control">
                                     <label for="lastName" class="">Last name</label>
                                 </div>
 
@@ -60,7 +60,7 @@
 
                         <!--address-->
                         <div class="md-form mb-5">
-                            <input name="address" type="text" id="address" class="form-control" placeholder="">
+                            <input value="{{ old('address') }}" name="address" type="text" id="address" class="form-control" placeholder="">
                             <label for="address" class="">Address</label>
                         </div>
 
@@ -72,18 +72,18 @@
                             <div class="col-lg-4 col-md-6 mb-4">
 
                                 <label for="state">City</label>
-                                <input name="city" type="text" id="address-2" class="form-control" placeholder="City">
+                                <input value="{{ old('city') }}" name="city" type="text" id="address-2" class="form-control" placeholder="City">
 
                             </div>
                             <!--Grid column-->
                             <div class="col-lg-4 col-md-6 mb-4">
                                 <label for="state">Zip Code</label>
-                                <input name="zip" type="text" id="address-2" class="form-control" placeholder="Zip Code">
+                                <input value="{{ old('zip') }}" name="zip" type="text" id="address-2" class="form-control" placeholder="Zip Code">
                             </div>
 
                             <div class="col-lg-4 col-md-6 mb-4">
-                                <label for="state">Mobile Numer</label>
-                                <input name="mobile_num" type="text" id="address-2" class="form-control" placeholder="09123456789">
+                                <label for="state">Mobile Number</label>
+                                <input value="{{ old('mobile_num') }}" name="mobile_num" type="text" id="address-2" class="form-control" placeholder="09123456789">
                             </div>
 
 

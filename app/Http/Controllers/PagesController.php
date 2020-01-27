@@ -20,7 +20,7 @@ class PagesController extends Controller
     public function shop()
     {
         $data['categories'] = Category::orderBy('name', 'asc')->paginate(20);
-        $data['items'] = Item::all();
+        $data['items'] = Item::orderBy('created_at', 'desc')->paginate(8);
         $data['brands'] = Brand::all();
 
         return view('site.pages.shop', $data);
