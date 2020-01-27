@@ -57,7 +57,12 @@
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
-                                </button>
+                                </button> OR
+                                <a class="btn btn-secondary" href="{{route('register')}}">
+                                    Register
+                                </a>
+                                <br>
+
 
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
@@ -71,6 +76,7 @@
             </div>
         </div>
     </div>
+    <br>
     @include('site.includes.messages')
 </div>
 @endsection

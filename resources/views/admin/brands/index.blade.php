@@ -95,7 +95,7 @@
                                                     <div class="row">
 
                                                         <div class="col">
-                                                        {!! Form::open(['class' => 'form-horizontal', 'action' => ['Admin\BrandController@update', $brand->id], 'method' => 'POST']) !!}
+                                                        {!! Form::open(['class' => 'form-horizontal', 'action' => ['Admin\BrandController@update', $brand->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
 
                                                         <!-- Text input-->
                                                             <div class="form-group">

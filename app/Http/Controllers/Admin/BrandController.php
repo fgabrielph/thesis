@@ -135,7 +135,7 @@ class BrandController extends Controller
     {
         //Validation
         $this->validate($request, [
-            'name' => 'required|unique:categories|max:160',
+            'name' => 'required|unique:brands|max:160',
             'image' => 'nullable|max:1999|'
         ]);
 

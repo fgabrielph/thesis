@@ -24,7 +24,7 @@
                         <div class="card-body">
 
                             <!--Table-->
-                            <table class="table table-hover table-fixed">
+                            <table class="table table-hover table-fixed table-responsive">
 
                                 <thead class="thead-dark">
                                 <tr>
@@ -33,6 +33,7 @@
                                     <th>Name</th>
                                     <th>Quantity</th>
                                     <th>Price</th>
+                                    <th>Subtotal</th>
                                     <th><p></p></th>
                                 </tr>
                                 </thead>
@@ -55,17 +56,14 @@
                                             </form>
 
                                         </td>
-                                        <td>₱ {{number_format($item->model->price_stocks, 2)}}</td>
+                                        <td>₱{{number_format($item->model->price_stocks, 2)}}</td>
+                                        <td>₱{{number_format($item->qty * $item->model->price_stocks, 2)}}</td>
                                         <td>
                                             <form action="{{ route('cart.remove', $item->rowId) }}" method="POST">
                                                 {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}
                                                 <button type="submit" class="btn btn-sm btn-danger">Remove</button>
                                             </form>
-                                            {{--                                                    {!!Form::open(['action' => route('cart.destroy', $item->rowId), 'method' => 'POST'])!!}--}}
-                                            {{--                                                    {{Form::hidden('_method', 'DELETE')}}--}}
-                                            {{--                                                    {{Form::submit('Delete', ['class' => 'col-md-2 btn btn-danger btn-rounded'])}}--}}
-                                            {{--                                                    {!!Form::close()!!}--}}
                                         </td>
                                     </tr>
                                 @endforeach
@@ -92,23 +90,13 @@
                         <a href="{{ route('cart.clear') }}" class="btn btn-danger btn-block mb-4">Clear Cart</a>
                     </h4>
 
-                    <h6 class="d-flex justify-content-between">
-                        <span>Tax:</span>
-                        <strong>$10</strong>
-                    </h6>
-
-                    <h5 class="d-flex justify-content-between">
-                        <span>Subtotal: </span>
-                        <strong>$20</strong>
-                    </h5>
-
                     <h3 class="d-flex justify-content-between">
                         <span><b>Total: </b></span>
-                        <strong>$30</strong>
+                        <strong>₱{{Cart::total()}}</strong>
                     </h3>
 
                     <hr>
-                    <a href="#" class="btn btn-success btn-lg btn-block">Proceed To Checkout</a>
+                    <a href="{{route('checkout.index')}}" class="btn btn-success btn-lg btn-block">Proceed To Checkout</a>
 
                 </div>
                 <!--Grid column-->

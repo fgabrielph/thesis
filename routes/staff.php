@@ -14,7 +14,7 @@ Route::group(['prefix'  =>  'staff'], function () {
             }
 
             Auth::logout();
-            return back()->with('error', "You're Blocked");
+            return back()->with('error', "You're deactivated please contact admin");
 
         })->name('staff.dashboard');
 

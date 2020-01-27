@@ -34,7 +34,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body p-0">
-                            <table class="table table-hover">
+                            <table class="table table-hover table-responsive">
                                 <thead class="thead-dark">
                                 <tr>
                                     <th class="text-center">Product ID</th>

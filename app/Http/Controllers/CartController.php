@@ -53,7 +53,7 @@ class CartController extends Controller
             return back()->with('error', 'Please add a Quantity!');
 
         } else if($request->quantity > $stock) {
-            
+
             return back()->with('error', 'Item Requested is exceeds the stock!');
 
         } else {
@@ -105,10 +105,17 @@ class CartController extends Controller
         $stock = $product->stocks;
 
         if($qty < $stock) {
+            if($qty <= 0) {
+                return back()->with('error', 'Please check your quantity is less than product');
+            }
+
             Cart::update($id, $request->qty);
             return back()->with('success', 'Cart is updated');
+
         } else {
+
             return back()->with('error', 'Please check your quantity is more than product');
+
         }
     }
 

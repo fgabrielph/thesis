@@ -7,6 +7,7 @@ use App\Category;
 use App\Item;
 use App\Brand;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 
 class PagesController extends Controller
 {

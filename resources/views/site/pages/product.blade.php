@@ -45,7 +45,7 @@
                         {{Form::hidden('id', $item->id)}}
                         {{Form::hidden('name', $item->name)}}
                         Quantity: {{Form::number('quantity', '', ['class' => 'form-control', 'placeholder' => '0', 'style' => 'width: 100px'])}}
-                        {{Form::hidden('price', $item->price_stocks)}}
+                        {{Form::hidden('price', $item->price_stocks)}}<br>
                         <button class="btn btn-primary btn-md my-0 p" type="submit">Add to cart
                             <i class="fas fa-shopping-cart ml-1"></i>
                         </button>

@@ -26,7 +26,31 @@ Route::get('/cart/empty', 'CartController@clear')->name('cart.clear');
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
 
-    Route::get('/accounts/profile', 'AccountController@index')->name('account.index');
+    Route::get('/checkout', function () {
+        if(Auth::user()->status == 0) {
+            Auth::logout();
+            return redirect('login')->with('error', "You're Deactivated please contact NEW MJC");
+        }
+        return view('site.pages.checkout');
+    })->name('checkout.index');
+
+    Route::post('/checkout/info', 'CheckoutController@getCheckout')->name('checkout.info');
+    Route::post('/store-payment', 'CheckoutController@storePayment')->name('payment.store');
+    Route::get('/paypal-success', 'CheckoutController@paypalsuccess')->name('payment.paypalSuccess');
+
+
+    Route::get('/accounts/profile', function () {
+
+        if(Auth::user()->status == 0) {
+            Auth::logout();
+            return redirect('login')->with('error', "You're Deactivated please contact NEW MJC");
+        }
+        return view('site.accounts.profile');
+
+    })->name('account.index');
+
+    Route::resource('orders', 'OrderController');
+
 });
 
 Auth::routes(['verify' => true]);
