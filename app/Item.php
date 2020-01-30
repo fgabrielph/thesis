@@ -14,4 +14,8 @@ class Item extends Model
     public function categories(){
         return $this->belongsTo('App\Category', 'category_id');
     }
+
+    public function suborders(){
+        return $this->hasMany('App\Suborder', 'item_id');
+    }
 }

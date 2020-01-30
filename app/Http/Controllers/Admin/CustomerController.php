@@ -43,7 +43,7 @@ class CustomerController extends Controller
         //Validation
         $this->validate($request, [
             'name' => 'required|max:160',
-            'email' => 'required|unique:staff|email',
+            'email' => 'required|unique:users|email',
             'password' => 'required|min:8|max:16',
             'confirm_pass' => 'same:password'
         ]);

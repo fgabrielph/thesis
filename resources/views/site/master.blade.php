@@ -64,7 +64,7 @@
         <main class="mt-5 pt-5">
             @yield('content')
         </main>
-
+        <br>
         <!--Facebook-->
         <center><a class="btn btn-md black" type="button" role="button" style="border-radius: 100%"><i class="fab fa-facebook-f"></i></a><a class="btn btn-md black" type="button" role="button" style="border-radius: 100%"><i class="fab fa-twitter"></i></a></center>
 
@@ -85,5 +85,6 @@
             // Animations initialization
             new WOW().init();
         </script>
+
 </body>
 </html>

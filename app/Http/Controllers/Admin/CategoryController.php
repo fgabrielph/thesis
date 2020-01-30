@@ -83,7 +83,7 @@ class CategoryController extends Controller
     {
         //Validation
         $this->validate($request, [
-            'name' => 'required|unique:categories|max:160',
+            'name' => 'required|max:160',
         ]);
 
         //Update Category

@@ -12,13 +12,17 @@ class Order extends Model
         'order_number', 'user_id', 'status', 'grand_total', 'item_count', 'payment_status', 'payment_method',
         'first_name', 'last_name', 'address', 'city', 'country', 'zip_code', 'phone_number', 'notes'
     ];
+
     public function user() {
         return $this->belongsTo('App\User', 'user_id');
     }
 
-    public function orderItems()
-    {
-        return $this->belongsToMany('App\Item');
+    public function suborder() {
+        return $this->hasMany(Suborder::class);
+    }
+
+    public function invoice() {
+        return $this->hasOne('App\Invoice', 'invoice_id');
     }
 
 }

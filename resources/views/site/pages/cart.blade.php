@@ -108,7 +108,7 @@
         <center>
             <h3>No items in Cart!</h3>
             <a href="{{route('site.shop')}}" class="btn btn-primary btn-rounded">Continue Shopping</a>
-        </center>>
+        </center>
         @endif
 
 

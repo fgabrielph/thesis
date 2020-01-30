@@ -41,7 +41,7 @@ class BrandController extends Controller
     {
         //Validation
         $this->validate($request, [
-            'name' => 'required|unique:categories|max:160',
+            'name' => 'required|unique:brands|max:160',
         ]);
 
 
@@ -135,12 +135,11 @@ class BrandController extends Controller
     {
         //Validation
         $this->validate($request, [
-            'name' => 'required|unique:brands|max:160',
+            'name' => 'required|max:160',
             'image' => 'nullable|max:1999|'
         ]);
 
         //Handle File Upload
-
         if($request->hasFile('image')){
             // Get filename with extension
             $fileNameWithExt = $request->file('image')->getClientOriginalName();

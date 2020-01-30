@@ -10,6 +10,8 @@
 
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -30,5 +32,11 @@
 
 <!-- REQUIRED SCRIPTS -->
 <script src="{{asset('js/app.js')}}"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script>
+    $(document).ready( function () {
+        $('#orderTable').DataTable();
+    } );
+</script>
 </body>
 </html>

@@ -11,13 +11,13 @@
 |
 */
 
-//Page Controller Routes
+# Page Controller Routes
 Route::view('/', 'site.pages.homepage')->name('home');
 Route::get('/shop', 'PagesController@shop')->name('site.shop');
 Route::get('/shop/{id}', 'PagesController@categories')->name('site.categories');
 Route::get('/product/{id}', 'PagesController@show')->name('site.product');
 
-//Cart Controller Routes
+# Cart Controller Routes
 Route::get('/cart', 'CartController@index')->name('cart.index');
 Route::post('/cart', 'CartController@store')->name('cart.store');
 Route::put('/cart/update/{id}', 'CartController@update')->name('cart.update');
@@ -26,34 +26,35 @@ Route::get('/cart/empty', 'CartController@clear')->name('cart.clear');
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
 
-    Route::get('/checkout', function () {
-        if(Auth::user()->status == 0) {
-            Auth::logout();
-            return redirect('login')->with('error', "You're Deactivated please contact NEW MJC");
-        }
-        return view('site.pages.checkout');
-    })->name('checkout.index');
+    Route::get('/account/profile', 'AccountController@index')->name('account.index');
+    Route::put('/account/profile/{id}', 'AccountController@picture')->name('account.picture');
+    Route::post('/account/profile/name', 'AccountController@nameoremail')->name('account.name');
+    Route::post('/account/profile/address', 'AccountController@address')->name('account.address');
+    Route::post('/account/profile/birthday', 'AccountController@birthday')->name('account.birthday');
+    Route::post('/account/profile/change_password', 'AccountController@change_password')->name('account.password');
+    Route::post('/account/profile/change_mobile', 'AccountController@change_mobile')->name('account.mobile');
 
-    Route::post('/checkout/info', 'CheckoutController@getCheckout')->name('checkout.info');
+    # Checkout Controller Routes
+    Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');
 
+    # Cash on Deliver checkout
+    Route::get('checkout/cod', 'CheckoutController@cashondelivery')->name('cod.checkout');
 
-    Route::get('/accounts/profile', function () {
+    # PayPal checkout
+    Route::post('/checkout/paypal', 'CheckoutController@payWithpaypal')->name('paypal.checkout');
 
-        if(Auth::user()->status == 0) {
-            Auth::logout();
-            return redirect('login')->with('error', "You're Deactivated please contact NEW MJC");
-        }
-        return view('site.accounts.profile');
+    # PayPal status callback
+    Route::get('status', 'CheckoutController@getPaymentStatus');
 
-    })->name('account.index');
-
+    # Order Resource
     Route::resource('orders', 'OrderController');
+
+    # Get the Invoice
+    Route::get('/invoice/{id}', 'InvoiceController@show')->name('invoice.show');
 
 });
 
 Auth::routes(['verify' => true]);
-
-//Route::get('/home', 'HomeController@index')->name('home');
 
 require 'admin.php';
 require 'staff.php';

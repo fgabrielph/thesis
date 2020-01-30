@@ -9,13 +9,14 @@ Route::group(['prefix'  =>  'admin'], function () {
     // ============================ MIDDLEWARE ========================================================================================= //
     Route::group(['middleware' => ['auth:admin']], function () {
 
-        Route::get('/', function () { return view('admin.dashboard.index'); })->name('admin.dashboard');
+        Route::get('/', 'Admin\DashboardController@index')->name('admin.dashboard');
 
         Route::resource('staffs', 'Admin\StaffController');
         Route::resource('customers', 'Admin\CustomerController');
         Route::resource('categories', 'Admin\CategoryController');
         Route::resource('brands', 'Admin\BrandController');
         Route::resource('items', 'Admin\ItemController');
+        Route::resource('admin_orders', 'Admin\OrderController');
 
 
 

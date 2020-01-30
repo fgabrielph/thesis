@@ -63,11 +63,11 @@
                             <div class="col-lg-3 col-md-6 mb-4">
 
                                 <!--Card-->
-                                <div class="card">
+                                <div class="card" style="width: 100%; height: 100%">
 
                                     <!--Card image-->
                                     <div class="view overlay">
-                                        <img src="/storage/assets/images/large_thumbnail/{{$item->image}}" class="card-img-top" alt="">
+                                        <img src="/storage/assets/images/large_thumbnail/{{$item->image}}" class="card-img-top" alt="" width="100%">
                                         <a href="#" data-toggle="modal" data-target="#addtocart{{$item->id}}">
                                             <div class="mask rgba-white-slight">Buy Now</div>
                                         </a>

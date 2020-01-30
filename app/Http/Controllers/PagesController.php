@@ -28,8 +28,8 @@ class PagesController extends Controller
 
     public function categories($id) {
 
-        $data['items'] = Item::where('category_id', $id)->get();
-        $data['categories'] = Category::orderby('name','asc')->paginate(12);
+        $data['items'] = Item::where('category_id', $id)->paginate(8);
+        $data['categories'] = Category::orderby('name','asc')->get();
         $data['category_name'] = Category::find($id);
         return view('site.pages.category', $data);
 

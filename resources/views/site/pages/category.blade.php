@@ -5,9 +5,6 @@
 @section('content')
 
     <!--Navbar-->
-    <ul class="d-flex justify-content-center">
-        {{$categories->links()}}
-    </ul>
     <nav class="navbar navbar-expand-lg navbar-dark mdb-color black mt-3 mb-5">
 
         <!-- Navbar brand -->
@@ -66,7 +63,7 @@
                             <div class="col-lg-3 col-md-6 mb-4">
 
                                 <!--Card-->
-                                <div class="card">
+                                <div class="card" style="width: 100%; height: 100%">
 
                                     <!--Card image-->
                                     <div class="view overlay">
@@ -101,6 +98,13 @@
                     <!--Grid row-->
                 </section>
                 <!--Section: Products v.3-->
+            </div>
+
+            <div class="card-footer">
+                <div class="d-flex justify-content-center">
+                    {{$items->links()}}
+                </div>
+
             </div>
         </div>
     </div>

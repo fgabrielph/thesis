@@ -19,7 +19,7 @@
                 <div class="card">
 
                     <!--Card content-->
-                    <form action="{{route('checkout.info')}}" class="card-body"  method="POST" role="form">
+                    <form action="{{route('paypal.checkout')}}" class="card-body"  method="POST" role="form">
                     @csrf
 
                         <!--Grid row-->
@@ -111,7 +111,7 @@
                             </div>
                         </div>
                         <hr class="mb-4">
-                        <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+                        <button class="btn btn-primary btn-lg btn-block" type="submit">Checkout</button>
 
                     </form>
 
