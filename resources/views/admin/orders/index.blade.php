@@ -69,9 +69,8 @@
                                         </td>
                                         <td class="text-center">
                                             <button type="button" data-toggle="modal" data-target="#view{{$order->id}}" class="btn btn-md btn-primary"><span class="fas fa-search"></span> View</button>
-                                            <button type="button" data-toggle="dropdown" class="btn btn-md btn-primary">Actions</button>
+                                            <button type="button" data-toggle="dropdown" class="btn btn-md btn-info dropdown-toggle" style="color: white">Actions</button>
                                             <div class="dropdown-menu">
-
                                                 <a href="#" data-toggle="modal" data-target="#modify{{$order->id}}" class="dropdown-item"><span class="fas fa-pencil-alt"></span> Modify Status</a>
                                             </div>
                                         </td>
@@ -114,6 +113,53 @@
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Close</button>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="modify{{$order->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <form action="{{route('admin_orders.update', $order->id)}}" class="form-horizontal" method="POST">
+                                                    @csrf
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalCenterTitle">Update Order Status</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label class="col-md-4 control-label">Status: </label>
+                                                                    <div class="col-md-12">
+                                                                        <select class="form-control" name="status">
+                                                                            <option name="{{$order->status}}">{{$order->status}}</option>
+                                                                            <option value="Accepted">Accepted</option>
+                                                                            <option value="Dispatched">Dispatched</option>
+                                                                            <option value="Completed">Completed</option>
+                                                                            <?php
+                                                                            if($order->payment_status == 0) {
+                                                                            ?>
+                                                                                <option value="Canceled">Canceled</option>
+                                                                            <?php
+                                                                            }
+                                                                            ?>
+                                                                            <option value="Return">Return</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                        <input class="btn btn-primary" type="submit" value="Save Changes">
+                                                    </div>
+                                                    <input name="_method" type="hidden" value="PUT">
+                                                </form>
                                             </div>
                                         </div>
                                     </div>

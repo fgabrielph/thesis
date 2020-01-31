@@ -18,7 +18,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = User::orderBy('id', 'asc')->paginate(10);
+        $customers = User::orderBy('id', 'asc')->get();
+
         return view('admin.customers.index')->with('customers', $customers);
     }
 

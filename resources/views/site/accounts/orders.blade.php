@@ -43,15 +43,17 @@
                             <td><h5>{{ $order->item_count }}</h5></td>
                             <td><h5>
                                 <?php
-                                if ($order->status == 'pending') {
+                                if ($order->status == 'Pending') {
                                     echo "<span class='badge badge-warning'>Pending";
-                                } elseif ($order->status == 'processing') {
+                                } elseif ($order->status == 'Processing') {
                                     echo "<span class='badge badge-info'>Processing";
-                                } elseif ($order->status == 'completed') {
+                                } elseif ($order->status == 'Completed') {
                                     echo "<span class='badge badge-success'>Completed";
-                                } elseif ($order->status == 'return') {
+                                } elseif ($order->status == 'Accepeted') {
+                                    echo "<span class='badge badge-success'>Accepted";
+                                } elseif ($order->status == 'Return') {
                                     echo "<span class='badge badge-secondary'>Return";
-                                } elseif ($order->status == 'initialised') {
+                                } elseif ($order->status == 'Initialised') {
                                     echo "<span class='badge badge-primary'>Placed";
                                 } else {
                                     echo "<span class='badge badge-danger'>Canceled";

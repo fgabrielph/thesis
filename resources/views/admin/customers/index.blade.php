@@ -58,7 +58,13 @@
                                             <div class="dropdown-menu">
                                                 <a href="#" data-toggle="modal" data-target="#view{{$customer->id}}" class="dropdown-item"><span class="fas fa-search"></span> View</a>
                                                 <a href="{{route('customers.edit', $customer->id)}}" class="dropdown-item">{!! $customer->status ? '<span class="fas fa-times"></span>' : '<span class="fas fa-check"></span>' !!}  {{$customer->status ? 'Deactivate' : 'Activate'}}</a>
-                                                <a href="#" data-toggle="modal" data-target="#delete{{$customer->id}}" class="dropdown-item"><span class="fas fa-trash"></span> Delete</a>
+                                                <?php
+                                                    if(count($customer->orders) == 0) {
+                                                        ?>
+                                                        <a href="#" data-toggle="modal" data-target="#delete{{$customer->id}}" class="dropdown-item"><span class="fas fa-trash"></span> Delete</a>
+                                                 <?php
+                                                    }
+                                                ?>
                                             </div>
                                         </td>
                                     </tr>
@@ -136,7 +142,7 @@
                         <!-- /.card-body -->
                         <div class="card-footer clearfix">
                             <ul class="pagination pagination-sm m-0 float-right">
-                                {{$customers->links()}}
+{{--                                {{$customers->links()}}--}}
                             </ul>
                         </div>
                     </div>

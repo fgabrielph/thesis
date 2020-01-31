@@ -33,8 +33,8 @@
                             <h3 class="card-title">Manage Items</h3>
                         </div>
                         <!-- /.card-header -->
-                        <div class="card-body p-0">
-                            <table class="table table-hover table-responsive">
+                        <div class="card-body p-0" style="margin: 1%">
+                            <table id="orderTable" class="table table-hover">
                                 <thead class="thead-dark">
                                 <tr>
                                     <th class="text-center">Product ID</th>
@@ -58,7 +58,7 @@
                                         <td class="text-center">{{$item->stocks}}</td>
                                         <td class="text-center">{{number_format($item->price_stocks, 2)}}</td>
                                         <td class="text-center">{{$item->categories->name}}</td>
-                                        <td class="text-center"><p style="width: 600px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{$item->description}}</p></td>
+                                        <td class="text-center"><p style="width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{$item->description}}</p></td>
                                         <td class="text-center">
                                             <button type="button" data-toggle="dropdown" class="btn btn-rounded btn-secondary dropdown-toggle">Actions</button>
                                             <div class="dropdown-menu">
@@ -202,11 +202,10 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="card-footer clearfix">
+                        <!-- <div class="card-footer clearfix">
                             <ul class="pagination pagination-sm m-0 float-right">
-                                {{$items->links()}}
                             </ul>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
@@ -239,7 +238,7 @@
                                     {{Form::label('', 'Brand', ['class' => 'col-md-4 control-label', 'for' => 'input-select'])}}
                                     <div class="col-md-12">
                                         <select class="form-control" name="brand">
-                                            <option name="default">-- Select Brand --</option>
+                                            <option name="default" disabled selected>-- Select Brand --</option>
                                             @foreach($brands as $brand)
                                                 <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                             @endforeach
@@ -268,7 +267,7 @@
                                     {{Form::label('', 'Category', ['class' => 'col-md-4 control-label', 'for' => 'input-select'])}}
                                     <div class="col-md-12">
                                         <select class="form-control" name="category">
-                                            <option name="default">-- Select Category --</option>
+                                            <option name="default" disabled selected>-- Select Category --</option>
                                             @foreach($categories as $category)
                                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                                             @endforeach
