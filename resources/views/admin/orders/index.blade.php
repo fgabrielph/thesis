@@ -29,7 +29,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body p-0" style="margin: 1%">
-                            <table id="orderTable" class="table table-hover">
+                            <table id="defTable" class="table table-hover">
                                 <thead class="thead-dark">
                                     <tr>
                                         <th class="text-center">Order ID</th>
@@ -50,18 +50,24 @@
                                         <td class="text-center">
                                             <h4>
                                                 <?php
-                                                if ($order->status == 'pending') {
+                                                if ($order->status == 'pending' || $order->status == 'Pending') {
                                                     echo "<span class='badge badge-warning'>Pending";
-                                                } elseif ($order->status == 'processing') {
+                                                } elseif ($order->status == 'Processing') {
                                                     echo "<span class='badge badge-info'>Processing";
-                                                } elseif ($order->status == 'completed') {
+                                                } elseif ($order->status == 'Completed') {
                                                     echo "<span class='badge badge-success'>Completed";
-                                                } elseif ($order->status == 'return') {
+                                                } elseif ($order->status == 'Dispatched') {
+                                                    echo "<span class='badge badge-light'>Dispatched";
+                                                } elseif ($order->status == 'Accepted') {
+                                                    echo "<span class='badge badge-success'>Accepted";
+                                                } elseif ($order->status == 'Return') {
                                                     echo "<span class='badge badge-secondary'>Return";
-                                                } elseif ($order->status == 'initialised') {
+                                                } elseif ($order->status == 'Initialised') {
                                                     echo "<span class='badge badge-primary'>Placed";
-                                                } else {
+                                                } elseif ($order->status == 'Canceled') {
                                                     echo "<span class='badge badge-danger'>Canceled";
+                                                } elseif ($order->status == 'WaitingForPayment') {
+                                                    echo "<span class='badge badge-light'>Waiting for Payment";
                                                 }
                                                 echo "</span>";
                                                 ?>
@@ -69,9 +75,12 @@
                                         </td>
                                         <td class="text-center">
                                             <button type="button" data-toggle="modal" data-target="#view{{$order->id}}" class="btn btn-md btn-primary"><span class="fas fa-search"></span> View</button>
-                                            <button type="button" data-toggle="dropdown" class="btn btn-md btn-info dropdown-toggle" style="color: white">Actions</button>
+                                            <button type="button" data-toggle="dropdown" class="btn btn-md dropdown-toggle" style="color: white; background-color: orange">Actions</button>
                                             <div class="dropdown-menu">
                                                 <a href="#" data-toggle="modal" data-target="#modify{{$order->id}}" class="dropdown-item"><span class="fas fa-pencil-alt"></span> Modify Status</a>
+                                                @if(!(empty($order->image)))
+                                                    <a href="#" data-toggle="modal" data-target="#receipt{{$order->id}}" class="dropdown-item"><span class="fas fa-search"></span> View Receipt</a>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>
@@ -160,6 +169,26 @@
                                                     </div>
                                                     <input name="_method" type="hidden" value="PUT">
                                                 </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="receipt{{$order->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered" role="document">
+                                            <div class="modal-content" style="overflow-y: auto">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalCenterTitle">Uploaded Receipt</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col d-flex justify-content-center">
+                                                            <img src="/storage/assets/images/medium_thumbnail/{{$order->image}}" width="100%" alt="this is image">
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

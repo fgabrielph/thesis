@@ -18,7 +18,6 @@
             <div class="card-header">
                 <h1>Orders</h1>
             </div>
-
             <div class="card-body">
                 <table class="table">
                     <thead class="black white-text">
@@ -29,6 +28,7 @@
                         <th scope="col">Order Amount</th>
                         <th scope="col">Qty.</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Created At</th>
                         <th scope="col"><i class="fas fa-bolt"></i></th>
                     </tr>
                     </thead>
@@ -42,31 +42,46 @@
                             <td><h5>{{ number_format($order->grand_total, 2) }}</h5></td>
                             <td><h5>{{ $order->item_count }}</h5></td>
                             <td><h5>
-                                <?php
-                                if ($order->status == 'Pending') {
-                                    echo "<span class='badge badge-warning'>Pending";
-                                } elseif ($order->status == 'Processing') {
-                                    echo "<span class='badge badge-info'>Processing";
-                                } elseif ($order->status == 'Completed') {
-                                    echo "<span class='badge badge-success'>Completed";
-                                } elseif ($order->status == 'Accepeted') {
-                                    echo "<span class='badge badge-success'>Accepted";
-                                } elseif ($order->status == 'Return') {
-                                    echo "<span class='badge badge-secondary'>Return";
-                                } elseif ($order->status == 'Initialised') {
-                                    echo "<span class='badge badge-primary'>Placed";
-                                } else {
-                                    echo "<span class='badge badge-danger'>Canceled";
-                                }
-                                echo "</span>";
-                                ?>
+                                    <?php
+                                    if ($order->status == 'pending' || $order->status == 'Pending') {
+                                        echo "<span class='badge badge-warning'>Pending";
+                                    } elseif ($order->status == 'Processing') {
+                                        echo "<span class='badge badge-info'>Processing";
+                                    } elseif ($order->status == 'Completed') {
+                                        echo "<span class='badge badge-success'>Completed";
+                                    } elseif ($order->status == 'Dispatched') {
+                                        echo "<span class='badge badge-light'>Dispatched";
+                                    } elseif ($order->status == 'Accepted') {
+                                        echo "<span class='badge badge-success'>Accepted";
+                                    } elseif ($order->status == 'Return') {
+                                        echo "<span class='badge badge-secondary'>Return";
+                                    } elseif ($order->status == 'Initialised') {
+                                        echo "<span class='badge badge-primary'>Placed";
+                                    } elseif ($order->status == 'Canceled') {
+                                        echo "<span class='badge badge-danger'>Canceled";
+                                    } elseif ($order->status == 'WaitingForPayment') {
+                                        echo "<span class='badge badge-light'>Waiting for Payment";
+                                    }
+                                    echo "</span>";
+                                    ?>
                                 </h5>
                             </td>
+                            <td><h5>{{$order->created_at->toFormattedDateString()}}</h5></td>
                             <td>
                                 <button type="button" data-toggle="dropdown" class="btn btn-md btn-rounded btn-primary dropdown-toggle">Actions</button>
                                 <div class="dropdown-menu">
                                     <a href="#" data-toggle="modal" data-target="#view{{$order->id}}" class="dropdown-item"><span class="fas fa-search"></span> View</a>
                                     <a href="{{route('orders.show', $order->id)}}" class="dropdown-item"><span class="fas fa-pencil-alt"></span> View Detailed</a>
+                                    @if($order->payment_status == 0 && !($order->status == 'Pending') && !($order->status == 'Processing') && !($order->status == 'Accepted') && !($order->status == 'Canceled') && !($order->status == 'Dispatched') && !($order->status == 'Return'))
+                                        <a href="#" data-toggle="modal" data-target="#cancel{{$order->id}}" class="dropdown-item"><span class="fas fa-times"></span> Cancel</a>
+                                    @endif
+                                    @if($order->status == 'WaitingForPayment' && $order->payment_status == 0)
+                                        @if(!(empty($order->image)) && $order->payment_status == 0)
+                                            <a href="{{route('proof.add', $order->id)}}" class="dropdown-item"><span class="fas fa-pen"></span> Edit Proof of Payment</a>
+                                        @else
+                                            <a href="{{route('proof.add', $order->id)}}" class="dropdown-item"><span class="fas fa-plus"></span> Add Proof of Payment</a>
+                                        @endif
+                                    @endif
                                 </div>
                             </td>
                         </tr>
@@ -100,7 +115,15 @@
                                                 <b>Amount:</b> P {{ number_format($order->grand_total, 2) }}<br>
                                                 <b>Payment Method:</b> {{ $order->payment_method }}<br>
                                                 <b>Payment Status:</b> {{ $order->payment_status == 1 ? 'Completed' : 'Not Completed' }}<br>
-                                                <b>Order Status:</b> {{$order->status}}<br>
+                                                <b>Order Status:</b>
+                                                <?php
+                                                    if($order->status == 'WaitingForPayment') {
+                                                        echo 'Waiting for Payment';
+                                                    } else {
+                                                        echo $order->status;
+                                                    }
+                                                ?>
+                                                <br>
 
                                             </div>
                                         </div>
@@ -108,6 +131,33 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Close</button>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="cancel{{$order->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                             aria-hidden="true">
+
+                            <!-- Add .modal-dialog-centered to .modal-dialog to vertically center the modal -->
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+
+
+                                <div class="modal-content">
+                                    <form action="{{route('orders.update', $order->id)}}" class="form-horizontal" method="POST">
+                                        @csrf
+                                        <div class="modal-header">
+                                            <h3 class="modal-title" id="exampleModalLongTitle">Are you sure you want to Cancel?</h3>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+{{--                                        <input name="stat" value="Canceled" type="hidden">--}}
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-lg btn-danger" data-dismiss="modal">No</button>
+                                            <button type="submit" class="btn btn-lg btn-success">Yes</button>
+                                        </div>
+                                        <input type="hidden" name="_method" type="hidden" value="PUT">
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -121,6 +171,10 @@
 
             </div>
 
+        </div>
+        <br>
+        <div class="d-flex justify-content-center">
+            {{$orders->links()}}
         </div>
 
     </div>

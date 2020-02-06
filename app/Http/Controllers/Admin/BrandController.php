@@ -17,7 +17,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brands = Brand::orderBy('created_at', 'desc')->paginate(10);
+        $brands = Brand::all();
         return view('admin.brands.index')->with('brands', $brands);
     }
 
@@ -90,7 +90,7 @@ class BrandController extends Controller
             $fileNameToStore = 'noimage.jpg';
             $smallthumbnail = 'noimage.jpg';
             $mediumthumbnail = 'noimage.jpg';
-            $largethumbnail = 'noimage.jpg';
+            $largethumbnail = 'nobrandimage.jpg';
         }
 
         //Create Category

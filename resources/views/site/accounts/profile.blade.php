@@ -256,12 +256,14 @@
                             <thead class="black white-text">
                                 <th>Order</th>
                                 <th>Payment</th>
+                                <th>Created At</th>
                                 <th class="text-center"><span class="fas fa-bolt"></span></th>
                             </thead>
                             @foreach($orders as $order)
                                 <tr>
                                     <td>{{$order->order_number}}</td>
                                     <td><h5>{!! $order->payment_status ? '<span class="badge bg-success">Completed</span>' : '<span class="badge bg-danger">Not Completed</span>' !!}</h5></td>
+                                    <td>{{$order->created_at->toFormattedDateString()}}</td>
                                     <td class="text-center">
                                         <a href="{{route('orders.show', $order->id)}}" class="btn btn-md btn-primary"><span class="fas fa-pencil-alt"></span>&nbsp;View Invoice</a>
                                     </td>

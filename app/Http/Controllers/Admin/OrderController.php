@@ -15,7 +15,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::orderby('created_at', 'desc')->get();
+        $orders = Order::all();
 
         return view('admin.orders.index')->with('orders', $orders);
     }
@@ -75,6 +75,9 @@ class OrderController extends Controller
         $order = Order::find($id);
 
         $order->status = $request->status;
+        if(!(empty($order->image)) && $request->status == 'Accepted') {
+            $order->payment_status = 1;
+        }
         $order->save();
 
         return back()->with('success', 'Order Status Updated');

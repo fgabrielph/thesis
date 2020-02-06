@@ -55,10 +55,16 @@
                     </li>
 
                 @else
+                    <li class="nav-item">
+                        <a href="{{route('orders.index')}}" class="nav-link waves-effect" style="color: lightgreen">
+                            <i class="fas fa-cube"></i>
+                            <span class="clearfix d-none d-sm-inline-block"> Orders </span>
+                        </a>
+                    </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle waves-effect" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i></a>
+                        <a class="nav-link dropdown-toggle waves-effect" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i> {{ Auth::user()->name }}</a>
                         <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="{{route('account.index')}}">{{ Auth::user()->name }}</a>
+                            <a class="dropdown-item" href="{{route('account.index')}}">Profile</a>
                             <a class="dropdown-item" href="{{route('orders.index')}}">Orders</a>
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}

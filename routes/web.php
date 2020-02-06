@@ -14,6 +14,7 @@
 # Page Controller Routes
 Route::view('/', 'site.pages.homepage')->name('home');
 Route::get('/shop', 'PagesController@shop')->name('site.shop');
+Route::get('/inquire', 'PagesController@inquire')->name('site.inquire');
 Route::get('/shop/{id}', 'PagesController@categories')->name('site.categories');
 Route::get('/product/{id}', 'PagesController@show')->name('site.product');
 
@@ -38,16 +39,22 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');
 
     # Cash on Deliver checkout
-    Route::get('checkout/cod', 'CheckoutController@cashondelivery')->name('cod.checkout');
+    //Route::get('checkout/cod', 'CheckoutController@cashondelivery')->name('cod.checkout');
 
     # PayPal checkout
     Route::post('/checkout/paypal', 'CheckoutController@payWithpaypal')->name('paypal.checkout');
+
+    //Route::post('/checkout/checkpayment', 'CheckoutController@payment_method')->name('check.checkout');
 
     # PayPal status callback
     Route::get('status', 'CheckoutController@getPaymentStatus');
 
     # Order Resource
     Route::resource('orders', 'OrderController');
+
+    Route::put('/proof/{id}/upload', 'AddProofController@upload')->name('proof.upload');
+    Route::get('/proof/{id}/', 'AddProofController@addproof')->name('proof.add');
+
 
     # Get the Invoice
     Route::get('/invoice/{id}', 'InvoiceController@show')->name('invoice.show');

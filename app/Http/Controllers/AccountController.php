@@ -94,16 +94,16 @@ class AccountController extends Controller
             $this->createThumbnail($largethumbnailpath, 550, 340);
 
         } else {
-            $fileNameToStore = 'noimage.jpg';
-            $smallthumbnail = 'noimage.jpg';
-            $mediumthumbnail = 'noimage.jpg';
-            $largethumbnail = 'noimage.jpg';
+            $fileNameToStore = 'noavatar.jpg';
+            $smallthumbnail = 'noavatar.jpg';
+            $mediumthumbnail = 'noavatar.jpg';
+            $largethumbnail = 'noavatar.jpg';
         }
 
         //Update Item
         $user = Auth::user();
         if($request->hasFile('image')){
-            if ($user->avatar != 'nobrandimage.jpg') {
+            if ($user->avatar != 'noavatar.jpg') {
                 Storage::delete('public/assets/images/large_thumbnail'.$user->avatar);
             }
             $user->avatar = $largethumbnail;

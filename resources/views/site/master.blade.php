@@ -38,17 +38,35 @@
         }
 
         body {
-            /*background: url("/assets/images/bg.jpg") no-repeat center center fixed;*/
-            /*-webkit-background-size: cover;*/
-            /*-moz-background-size: cover;*/
-            /*-o-background-size: cover;*/
-            /*background-size: cover;*/
+            background: url("/assets/images/metal.jpg")  no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
             overflow-x: hidden;
         }
 
         #opacitybg {
-            background-color: rgba(255,255,255, 1);
+            background-color: rgba(255,255,255, 0.3);
         }
+
+        body::-webkit-scrollbar-track
+        {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            background-color: #F5F5F5;
+        }
+
+        body::-webkit-scrollbar
+        {
+            width: 6px;
+            background-color: #F5F5F5;
+        }
+
+        body::-webkit-scrollbar-thumb
+        {
+            background-color: #000000;
+        }
+
     </style>
 
 </head>
@@ -64,9 +82,8 @@
         <main class="mt-5 pt-5">
             @yield('content')
         </main>
-        <br>
-        <!--Facebook-->
-        <center><a class="btn btn-md black" type="button" role="button" style="border-radius: 100%"><i class="fab fa-facebook-f"></i></a><a class="btn btn-md black" type="button" role="button" style="border-radius: 100%"><i class="fab fa-twitter"></i></a></center>
+
+        <br><br>
 
         @yield('footer')
 
@@ -82,9 +99,12 @@
         <script type="text/javascript" src="/assets/js/mdb.min.js"></script>
         <!-- Initializations -->
         <script type="text/javascript">
+
+
             // Animations initialization
             new WOW().init();
         </script>
 
+@yield('js')
 </body>
 </html>

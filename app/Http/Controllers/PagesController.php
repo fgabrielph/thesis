@@ -19,11 +19,15 @@ class PagesController extends Controller
      */
     public function shop()
     {
-        $data['categories'] = Category::orderBy('name', 'asc')->paginate(20);
+        $data['categories'] = Category::orderBy('name', 'asc')->get();
         $data['items'] = Item::orderBy('created_at', 'desc')->paginate(8);
         $data['brands'] = Brand::all();
 
         return view('site.pages.shop', $data);
+    }
+
+    public function inquire() {
+        return view('site.pages.inquire');
     }
 
     public function categories($id) {

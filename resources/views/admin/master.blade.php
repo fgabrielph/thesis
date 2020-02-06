@@ -32,11 +32,22 @@
 
 <!-- REQUIRED SCRIPTS -->
 <script src="{{asset('js/app.js')}}"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+@yield('scripts')
 <script>
     $(document).ready( function () {
         $('#orderTable').DataTable();
+
+        $('#defTable').DataTable(
+            {
+                "order": [[0, 'desc']]
+            }
+        );
     } );
+
+
 </script>
+
+
+
 </body>
 </html>

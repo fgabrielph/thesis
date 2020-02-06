@@ -17,7 +17,7 @@ class StaffController extends Controller
      */
     public function index()
     {
-        $staffs = Staff::orderBy('id', 'asc')->paginate(10);
+        $staffs = Staff::all();
         return view('admin.staffs.index')->with('staffs', $staffs);
     }
 

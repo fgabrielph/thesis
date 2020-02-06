@@ -76,101 +76,179 @@ class CheckoutController extends Controller {
         $string_sub_total = Cart::subtotal();
         $formatted_sub_total = str_replace(',', '', $string_sub_total);
 
-        if($request->paymentMethod == 'cod') {
-            $this->cashondelivery($request);
-        }
+        switch ($request->paymentMethod) {
 
-        # We initialize the payer object and set the payment method to PayPal
-        $payer = new Payer();
-        $payer->setPaymentMethod('paypal');
+            case 'cod':
 
-        # We insert a new order in the order table with the 'initialised' status
-        $order = new Order();
-        $order->user_id = Auth::user()->id;
-        $order->order_number = 'ORD-'.strtoupper(uniqid());
-        $order->first_name = $request->firstName;
-        $order->last_name = $request->lastName;
-        $order->address = $request->address;
-        $order->city = $request->city;
-        $order->zip_code = $request->zip;
-        $order->phone_number = $request->mobile_num;
-        $order->notes = $request->notes;
-        $order->payment_method = $request->paymentMethod;
-        $order->payment_status = 0;
-        $order->item_count = Cart::count();
-        $order->grand_total = $formatted_grand_total;
-        $order->invoice_id = null;
-        $order->status = 'Initialised';
-        $order->save();
+                $order = new Order;
+                $order->order_number = 'ORD-'.strtoupper(uniqid());
+                $order->user_id = auth()->user()->id;
+                $order->first_name = $request->firstName;
+                $order->last_name = $request->lastName;
+                $order->address = $request->address;
+                $order->city = $request->city;
+                $order->zip_code = $request->zip;
+                $order->phone_number = $request->mobile_num;
+                $order->notes = $request->notes;
+                $order->payment_method = $request->paymentMethod;
+                $order->payment_status = 0;
+                $order->item_count = Cart::count();
+                $order->grand_total = $formatted_grand_total;
+                $order->status = 'Initialised';
+                $order->save();
 
-        # We need to update the order if the payment is complete, so we save it to the session
-        Session::put('orderId', $order->getKey());
+                foreach (Cart::content() as $item) {
 
-        # We get all the items from the cart and parse the array into the Item object
-        $items = [];
+                    $suborder = new Suborder();
+                    $suborder->order_id = $order->id;
+                    $suborder->item_id = $item->id;
+                    $suborder->price = $item->price;
+                    $suborder->quantity = $item->qty;
+                    $suborder->save();
 
-        foreach (Cart::content() as $item) {
-            $items[] = (new Item())
-                ->setName($item->name)
-                ->setCurrency('PHP')
-                ->setQuantity($item->qty)
-                ->setPrice($item->price);
-        }
+                }
 
-        # We create a new item list and assign the items to it
-        $itemList = new ItemList();
-        $itemList->setItems($items);
+                Cart::destroy();
 
-        # Disable all irrelevant PayPal aspects in payment
-        $inputFields = new InputFields();
-        $inputFields->setAllowNote(true)
-            ->setNoShipping(1)
-            ->setAddressOverride(0);
 
-        $webProfile = new WebProfile();
-        $webProfile->setName(uniqid())
-            ->setInputFields($inputFields)
-            ->setTemporary(true);
+                return Redirect::to('/cart')->with('success', 'Your order has been placed. Thank you.');
 
-        $createProfile = $webProfile->create($this->apiContext);
-
-        # We get the total price of the cart
-        $amount = new Amount();
-        $amount->setCurrency('PHP')
-            ->setTotal($formatted_sub_total);
-
-        $transaction = new Transaction();
-        $transaction->setAmount($amount);
-        $transaction->setItemList($itemList)
-            ->setDescription('Pay using with Paypal');
-
-        $redirectURLs = new RedirectUrls();
-        $redirectURLs->setReturnUrl(URL::to('status'))
-            ->setCancelUrl(URL::to('status'));
-
-        $payment = new Payment();
-        $payment->setIntent('Sale')
-            ->setPayer($payer)
-            ->setRedirectUrls($redirectURLs)
-            ->setTransactions(array($transaction));
-        $payment->setExperienceProfileId($createProfile->getId());
-        $payment->create($this->apiContext);
-
-        foreach ($payment->getLinks() as $link) {
-            if ($link->getRel() == 'approval_url') {
-                $redirectURL = $link->getHref();
                 break;
-            }
+
+            case 'bank':
+
+                $order = new Order;
+                $order->order_number = 'ORD-'.strtoupper(uniqid());
+                $order->user_id = auth()->user()->id;
+                $order->first_name = $request->firstName;
+                $order->last_name = $request->lastName;
+                $order->address = $request->address;
+                $order->city = $request->city;
+                $order->zip_code = $request->zip;
+                $order->phone_number = $request->mobile_num;
+                $order->notes = $request->notes;
+                $order->payment_method = $request->paymentMethod;
+                $order->payment_status = 0;
+                $order->item_count = Cart::count();
+                $order->grand_total = $formatted_grand_total;
+                $order->status = 'WaitingForPayment';
+                $order->save();
+
+                foreach (Cart::content() as $item) {
+
+                    $suborder = new Suborder();
+                    $suborder->order_id = $order->id;
+                    $suborder->item_id = $item->id;
+                    $suborder->price = $item->price;
+                    $suborder->quantity = $item->qty;
+                    $suborder->save();
+
+                }
+
+                Cart::destroy();
+
+
+                return Redirect::to('/cart')->with('success', 'Your order has been placed. Thank you.');
+                break;
+
+            default:
+
+                # We initialize the payer object and set the payment method to PayPal
+                $payer = new Payer();
+                $payer->setPaymentMethod('paypal');
+
+                # We insert a new order in the order table with the 'initialised' status
+                $order = new Order();
+                $order->user_id = Auth::user()->id;
+                $order->order_number = 'ORD-'.strtoupper(uniqid());
+                $order->first_name = $request->firstName;
+                $order->last_name = $request->lastName;
+                $order->address = $request->address;
+                $order->city = $request->city;
+                $order->zip_code = $request->zip;
+                $order->phone_number = $request->mobile_num;
+                $order->notes = $request->notes;
+                $order->payment_method = $request->paymentMethod;
+                $order->payment_status = 0;
+                $order->item_count = Cart::count();
+                $order->grand_total = $formatted_grand_total;
+                $order->invoice_id = null;
+                $order->status = 'Initialised';
+                $order->save();
+
+                # We need to update the order if the payment is complete, so we save it to the session
+                Session::put('orderId', $order->getKey());
+
+                # We get all the items from the cart and parse the array into the Item object
+                $items = [];
+
+                foreach (Cart::content() as $item) {
+                    $items[] = (new Item())
+                        ->setName($item->name)
+                        ->setCurrency('PHP')
+                        ->setQuantity($item->qty)
+                        ->setPrice($item->price);
+                }
+
+                # We create a new item list and assign the items to it
+                $itemList = new ItemList();
+                $itemList->setItems($items);
+
+                # Disable all irrelevant PayPal aspects in payment
+                $inputFields = new InputFields();
+                $inputFields->setAllowNote(true)
+                    ->setNoShipping(1)
+                    ->setAddressOverride(0);
+
+                $webProfile = new WebProfile();
+                $webProfile->setName(uniqid())
+                    ->setInputFields($inputFields)
+                    ->setTemporary(true);
+
+                $createProfile = $webProfile->create($this->apiContext);
+
+                # We get the total price of the cart
+                $amount = new Amount();
+                $amount->setCurrency('PHP')
+                    ->setTotal($formatted_sub_total);
+
+                $transaction = new Transaction();
+                $transaction->setAmount($amount);
+                $transaction->setItemList($itemList)
+                    ->setDescription('Pay using with Paypal');
+
+                $redirectURLs = new RedirectUrls();
+                $redirectURLs->setReturnUrl(URL::to('status'))
+                    ->setCancelUrl(URL::to('status'));
+
+                $payment = new Payment();
+                $payment->setIntent('Sale')
+                    ->setPayer($payer)
+                    ->setRedirectUrls($redirectURLs)
+                    ->setTransactions(array($transaction));
+                $payment->setExperienceProfileId($createProfile->getId());
+                $payment->create($this->apiContext);
+
+                foreach ($payment->getLinks() as $link) {
+                    if ($link->getRel() == 'approval_url') {
+                        $redirectURL = $link->getHref();
+                        break;
+                    }
+                }
+
+                # We store the payment ID into the session
+                Session::put('paypalPaymentId', $payment->getId());
+
+                if (isset($redirectURL)) {
+                    return Redirect::away($redirectURL);
+                }
+
+                return Redirect::to('/cart')->with('error', 'There was a problem processing your payment. Please contact support.');
+                break;
+
         }
 
-        # We store the payment ID into the session
-        Session::put('paypalPaymentId', $payment->getId());
 
-        if (isset($redirectURL)) {
-            return Redirect::away($redirectURL);
-        }
-
-        return Redirect::to('/cart')->with('error', 'There was a problem processing your payment. Please contact support.');
     }
 
     public function getPaymentStatus()
@@ -252,38 +330,6 @@ class CheckoutController extends Controller {
             'zip' => 'required|numeric',
             'mobile_num' => 'required|numeric|digits:11',
         ]);
-
-        dd($request->all());
-
-//        $order = new Order;
-//        $order->order_number = 'ORD-'.strtoupper(uniqid());
-//        $order->user_id = auth()->user()->id;
-//        $order->first_name = $request->firstName;
-//        $order->last_name = $request->lastName;
-//        $order->address = $request->address;
-//        $order->city = $request->city;
-//        $order->zip_code = $request->zip;
-//        $order->phone_number = $request->mobile_num;
-//        $order->notes = $request->notes;
-//        $order->payment_method = $request->paymentMethod;
-//        $order->payment_status = 0;
-//        $order->item_count = Cart::count();
-//        $order->grand_total = Cart::total();
-//        $order->status = 0;
-//        $order->save();
-
-//        if($request->paymentMethod == 'paypal') {
-//
-//
-//        }
-        # This will get the latest order of the logged user
-
-        //$orders = Order::orderBy('created_at', 'desc')->where('user_id', Auth::user()->id)->first();
-        //$orders->payment_status = 1;
-        //$orders->status = 1;
-        //$orders->save();
-
-        return 'Cash on Delivery';
 
     }
 

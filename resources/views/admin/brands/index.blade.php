@@ -33,8 +33,8 @@
                             <h3 class="card-title">Manage Brands</h3>
                         </div>
                         <!-- /.card-header -->
-                        <div class="card-body p-0">
-                            <table class="table table-hover">
+                        <div class="card-body p-0" style="margin: 1%">
+                            <table id="orderTable" class="table table-hover">
                                 <thead class="thead-dark">
                                 <tr>
                                     <th class="text-center">ID</th>
@@ -131,11 +131,6 @@
                             </table>
                         </div>
                         <!-- /.card-body -->
-                        <div class="card-footer clearfix">
-                            <ul class="pagination pagination-sm m-0 float-right">
-                                {{$brands->links()}}
-                            </ul>
-                        </div>
                     </div>
                     <!-- /.card -->
                 </div>

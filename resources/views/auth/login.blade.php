@@ -21,7 +21,6 @@
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
@@ -88,7 +87,7 @@
     <div class="orange">
     <!--Call to action-->
     <div class="pt-3">
-        <a class="btn btn-outline-white" href="#" role="button">Inquire Now</a>
+        <a class="btn btn-outline-white" href="{{route('site.inquire')}}" role="button">Inquire Now</a>
         <a class="btn btn-outline-white" href="#" role="button">Contacts</a>
     </div>
     <!--/.Call to action-->

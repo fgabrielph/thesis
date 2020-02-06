@@ -19,7 +19,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $data['items'] = Item::orderBy('created_at', 'desc')->get();
+        $data['items'] = Item::all();
         $data['brands'] = Brand::all();
         $data['categories'] = Category::all();
 

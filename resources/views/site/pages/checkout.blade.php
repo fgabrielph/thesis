@@ -19,7 +19,7 @@
                 <div class="card">
 
                     <!--Card content-->
-                    <form action="{{route('paypal.checkout')}}" class="card-body"  method="POST" role="form">
+                    <form action="{{route('paypal.checkout')}}" class="card-body"  method="POST" role="form" enctype="multipart/form-data">
                     @csrf
 
                         <!--Grid row-->
@@ -72,18 +72,18 @@
                             <div class="col-lg-4 col-md-6 mb-4">
 
                                 <label for="state">City</label>
-                                <input value="{{ old('city') }}" name="city" type="text" id="address-2" class="form-control" placeholder="City">
+                                <input value="{{ old('city') }}" name="city" type="text" id="address-2" class="form-control">
 
                             </div>
                             <!--Grid column-->
                             <div class="col-lg-4 col-md-6 mb-4">
                                 <label for="state">Zip Code</label>
-                                <input value="{{ old('zip') }}" name="zip" type="text" id="address-2" class="form-control" placeholder="Zip Code">
+                                <input value="{{ old('zip') }}" name="zip" type="text" id="address-2" class="form-control">
                             </div>
 
                             <div class="col-lg-4 col-md-6 mb-4">
                                 <label for="state">Mobile Number</label>
-                                <input value="{{ old('mobile_num') }}" name="mobile_num" type="text" id="address-2" class="form-control" placeholder="09123456789">
+                                <input value="{{ old('mobile_num') }}" name="mobile_num" type="text" id="address-2" class="form-control">
                             </div>
 
 
@@ -100,18 +100,30 @@
 
                         <hr>
 
+
                         <div class="d-block my-3">
-                            <div class="custom-control custom-radio">
-                                <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" value="cod" required>
-                                <label class="custom-control-label" for="credit">Cash on Delivery</label>
-                            </div>
-                            <div class="custom-control custom-radio">
-                                <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" value="paypal" required>
-                                <label class="custom-control-label" for="paypal">Paypal</label>
-                            </div>
+                            <fieldset id="radio_group">
+                                <div class="custom-control custom-radio">
+                                    <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" value="cod" required>
+                                    <label class="custom-control-label" for="credit">Cash on Delivery</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input id="bank" name="paymentMethod" type="radio" class="custom-control-input" value="bank" required>
+                                    <label class="custom-control-label" for="bank">Bank Transfer</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" value="paypal" required>
+                                    <label class="custom-control-label" for="paypal">Paypal</label>
+                                </div>
+                            </fieldset>
+
+
+
+
                         </div>
                         <hr class="mb-4">
-                        <button class="btn btn-primary btn-lg btn-block" type="submit">Checkout</button>
+
+                        <button class="btn btn-primary btn-lg btn-block" type="submit">Proceed</button>
 
                     </form>
 

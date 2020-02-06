@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
+    'failed' => 'These credentials do not match our records. or Your account is deactivated please contact New MJC',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
 ];

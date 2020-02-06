@@ -42,7 +42,13 @@
         </div>
 
         <br>
-        <a href="{{route('invoice.show', $order->invoice_id)}}" class="btn btn-primary"><span class="fas fa-receipt"></span> View Invoice</a>
+        <?php
+            if(!($order->invoice_id == null)) {
+        ?>
+            <a href="{{route('invoice.show', $order->invoice_id)}}" class="btn btn-primary"><span class="fas fa-receipt"></span> View Invoice</a>
+        <?php
+            }
+        ?>
         <a href="{{route('orders.index')}}" class="btn btn-primary"> Go Back</a>
     </div>
 

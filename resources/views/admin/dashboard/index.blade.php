@@ -70,10 +70,10 @@
                         <div class="card-body">
                             <table class="table table-striped table-hover">
                                 <thead class="thead-dark">
-                                    <tr>
-                                        <th>Item Name</th>
-                                        <th>Stocks</th>
-                                    </tr>
+                                <tr>
+                                    <th>Item Name</th>
+                                    <th>Stocks</th>
+                                </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($items as $item)
@@ -91,8 +91,74 @@
                     </div>
                 </div>
                 <!-- ./col -->
+
+                <div class="col-lg-8 col-6">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Number of Items as per Category</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                </button>
+                                {{-- <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button> --}}
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="chart" class="chart">
+                                <canvas id="barChart" style="height:345px; min-height:230px"></canvas>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+
+                    <!-- /.card -->
+
+                </div>
+                <!-- BAR CHART -->
+
             </div>
+
         </div>
+
     </section>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script>
+
+        var ctx = document.getElementById('barChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'horizontalBar',
+            data: {
+                labels: [
+                    @foreach($categories as $cat)
+                         '{{ $cat->name }}',
+                    @endforeach
+                ],
+                datasets: [{
+                    label: 'Number of Items',
+                    data: [
+                        @foreach($categories as $cat)
+                            '{{ $cat->items_count }}',
+                        @endforeach
+                    ],
+                    backgroundColor     : 'rgba(60,141,188,0.9)',
+                    borderColor         : 'rgba(60,141,188,0.8)',
+                    borderWidth         : 1,
+                }]
+            },
+            options: {
+                responsive              : true,
+                maintainAspectRatio     : false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+
 @endsection
+

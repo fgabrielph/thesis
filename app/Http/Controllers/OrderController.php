@@ -24,7 +24,7 @@ class OrderController extends Controller
     {
         //$data['orders'] = Order::orderBy('created_at', 'desc')->paginate(20);
         //$orders = Order::orderBy('created_at', 'desc')->where('user_id', Auth::user()->id);
-        $orders = auth()->user()->orders;
+        $orders = auth()->user()->orders()->paginate(5);
         //$orders = Order::orderBy('created_at', 'desc')->where('user_id', Auth::user()->id)->first(); //WORKING ATTRIBUTE GETTING THE RECENT ORDERS
 
 
@@ -64,11 +64,6 @@ class OrderController extends Controller
     {
         $order = Order::find($id);
 
-        if($order->invoice_id == null) {
-            return back()->with('error', 'This Order is not yet paid');
-        }
-        //$invoice = Invoice::where('invoice_id', $order->id)->get();
-
         return view('site.accounts.showorder')->with('order', $order);
     }
 
@@ -92,7 +87,13 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $order = Order::find($id);
+
+        $order->status = 'Canceled';
+        $order->save();
+
+        return back()->with('success', 'Your Order was Canceled');
     }
+
 
 }

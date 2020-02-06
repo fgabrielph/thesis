@@ -61,20 +61,12 @@
 
             <hr>
 
-            <h4 class="my-4 h4">Comments</h4>
+            <a href="{{route('site.shop')}}" class="btn btn-lg" style="background-color: orange; color: white">Go Back</a>
 
             <!--Grid row-->
             <div class="row wow fadeIn">
 
 
-                <!--Grid column-->
-                <div class="col-md-6">
-                    sample
-
-
-
-                </div>
-                <!--Grid column-->
 
 
             </div>
