@@ -4,19 +4,18 @@
 
 @section('content')
 
-    {{--    @foreach($orders as $order)--}}
-
-    {{--            {{$order->id}}--}}
-    {{--            <br>--}}
-    {{--            {{$order->order_number}}--}}
-
-    {{--    @endforeach--}}
-
     <div class="container">
         @include('site.includes.messages')
         <div class="card">
             <div class="card-header">
-                <h1>Orders</h1>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h1>Orders</h1>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <h1><a href="{{route('custom_order.index')}}" class="btn btn-lg blue-gradient">Custom Orders</a></h1>
+                    </div>
+                </div>
             </div>
             <div class="card-body">
                 <table class="table">
@@ -192,7 +191,7 @@
         <div class="orange">
             <!--Call to action-->
             <div class="pt-3">
-                <a class="btn btn-outline-white" href="#" role="button">Inquire Now</a>
+                <a class="btn btn-outline-white" href="{{route('site.inquire')}}" role="button">Inquire Now</a>
                 <a class="btn btn-outline-white" href="#" role="button">Contacts</a>
             </div>
             <!--/.Call to action-->

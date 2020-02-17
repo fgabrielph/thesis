@@ -106,7 +106,7 @@ class ItemController extends Controller
         $item->description = $request->input('description');
         $item->save();
 
-        return back()->with('success', 'Item Updated');
+        return back()->with('success', 'Item Added');
     }
 
     /**

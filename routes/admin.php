@@ -17,6 +17,7 @@ Route::group(['prefix'  =>  'admin'], function () {
         Route::resource('brands', 'Admin\BrandController');
         Route::resource('items', 'Admin\ItemController');
         Route::resource('admin_orders', 'Admin\OrderController');
+        Route::resource('customorders', 'Admin\CustomOrderController');
 
 
 

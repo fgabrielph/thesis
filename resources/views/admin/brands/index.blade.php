@@ -64,7 +64,7 @@
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="col d-flex justify-content-center">
-                                                            <img src="/storage/assets/images/large_thumbnail/{{$brand->image}}" width="100%" alt="this is image">
+                                                            <img src="/assets/images/large_thumbnail/{{$brand->image}}" width="100%" alt="this is image">
                                                         </div>
                                                         <div class="col">
                                                             <br><br><br>

@@ -38,16 +38,16 @@
         }
 
         body {
-            background: url("/assets/images/metal.jpg")  no-repeat center center fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
-            overflow-x: hidden;
+            /*background: url("/assets/images/metal.jpg")  no-repeat center center fixed;*/
+            /*-webkit-background-size: cover;*/
+            /*-moz-background-size: cover;*/
+            /*-o-background-size: cover;*/
+            /*background-size: cover;*/
+            /*overflow-x: hidden;*/
         }
 
         #opacitybg {
-            background-color: rgba(255,255,255, 0.3);
+            background-color: rgba(255,255,255, 0);
         }
 
         body::-webkit-scrollbar-track

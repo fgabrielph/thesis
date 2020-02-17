@@ -14,10 +14,12 @@
                     </div>
                         <img src="/storage/assets/images/large_thumbnail/{{Auth::user()->avatar}}" width="100%">
                 </div>
+                <br>
+                <h1><a href="{{route('custom_order.index')}}" class="btn btn-lg btn-block blue-gradient">Custom Orders</a></h1>
             </div>
 
             <div class="col-md-8">
-                <div class="card">
+                <div class="card" style="height: 480px">
                     <div class="card-header">
                         {{Auth::user()->name}}'s Dashboard
                     </div>

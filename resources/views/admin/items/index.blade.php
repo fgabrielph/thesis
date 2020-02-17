@@ -52,7 +52,7 @@
                                 @foreach ($items as $item)
                                     <tr class="table-light">
                                         <td class="text-center">{{$item->id}}</td>
-                                        <td class="text-center"><img src="/storage/assets/images/large_thumbnail/{{$item->image}}" style="width: 50px; height: 30px" alt="this is image"></td>
+                                        <td class="text-center"><img src="/assets/images/large_thumbnail/{{$item->image}}" style="width: 50px; height: 30px" alt="this is image"></td>
                                         <td class="text-center">{{$item->brands->name}}</td>
                                         <td class="text-center">{{$item->name}}</td>
                                         <td class="text-center">{{$item->stocks}}</td>
@@ -109,7 +109,7 @@
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="col d-flex justify-content-center">
-                                                            <img src="/storage/assets/images/large_thumbnail/{{$item->image}}" style="height: 300px; width: 400px; margin-top: 250px" alt="this is image">
+                                                            <img src="storage/assets/images/large_thumbnail/{{$item->image}}" style="height: 300px; width: 400px; margin-top: 250px" alt="this is image">
                                                         </div>
 
                                                         <div class="col">

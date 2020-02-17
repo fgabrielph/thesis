@@ -52,42 +52,35 @@ class CustomerController extends Controller
         //Handle File Upload
 
         if($request->hasFile('image')){
-            // Get filename with extension
+            # Get filename with extension
             $fileNameWithExt = $request->file('image')->getClientOriginalName();
-            // Get just filename
+            # Get just filename
             $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
-            // Get just ext
+            # Get just ext
             $extension = $request->file('image')->getClientOriginalExtension();
 
-            // Filename to store
+            # Filename to store:
             $fileNameToStore = $fileName.'_'.time().'.'.$extension;
 
-            //small thumbnail name
+            # small thumbnail name
             $smallthumbnail = $fileName.'_small_'.time().'.'.$extension;
 
-            //medium thumbnail name
+            # medium thumbnail name
             $mediumthumbnail = $fileName.'_medium_'.time().'.'.$extension;
 
-            //large thumbnail name
+            # large thumbnail name
             $largethumbnail = $fileName.'_large_'.time().'.'.$extension;
 
-            // Upload Image
-            $path = $request->file('image')->storeAs('public/assets/images', $fileNameToStore);
-            $smallpath = $request->file('image')->storeAs('public/assets/images/small_thumbnail', $smallthumbnail);
-            $mediumpath = $request->file('image')->storeAs('public/assets/images/medium_thumbnail', $mediumthumbnail);
-            $largepath = $request->file('image')->storeAs('public/assets/images/large_thumbnail', $largethumbnail);
+            # Upload Image:
 
-            //create small thumbnail
-            $smallthumbnailpath = public_path('storage/assets/images/small_thumbnail/'.$smallthumbnail);
-            $this->createThumbnail($smallthumbnailpath, 150, 93);
+            # Create small thumbnail
+            Image::make($request->file)->resize(150, 93, function ($constraint) { $constraint->aspectRatio(); })->save('assets/images/small_thumbnail/'.$smallthumbnail);
 
-            //create medium thumbnail
-            $mediumthumbnailpath = public_path('storage/assets/images/medium_thumbnail/'.$mediumthumbnail);
-            $this->createThumbnail($mediumthumbnailpath, 300, 185);
+            # Create medium thumbnail
+            Image::make($request->file)->resize(300, 185, function ($constraint) { $constraint->aspectRatio(); })->save('assets/images/medium_thumbnail/'.$mediumthumbnail);
 
-            //create large thumbnail
-            $largethumbnailpath = public_path('storage/assets/images/large_thumbnail/'.$largethumbnail);
-            $this->createThumbnail($largethumbnailpath, 550, 340);
+            # Create large thumbnail
+            Image::make($request->file)->resize(550, 340, function ($constraint) { $constraint->aspectRatio(); })->save('assets/images/large_thumbnail/'.$largethumbnail);
 
         } else {
             $fileNameToStore = 'noimage.jpg';
@@ -174,11 +167,11 @@ class CustomerController extends Controller
         return back()->withInput()->with('success', 'Account Deleted');
     }
 
-    public function createThumbnail($path, $width, $height)
+    /* public function createThumbnail($path, $width, $height)
     {
         $img = Image::make($path)->resize($width, $height, function ($constraint) {
             $constraint->aspectRatio();
         });
         $img->save($path);
-    }
+    } */
 }

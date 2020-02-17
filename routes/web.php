@@ -35,11 +35,13 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::post('/account/profile/change_password', 'AccountController@change_password')->name('account.password');
     Route::post('/account/profile/change_mobile', 'AccountController@change_mobile')->name('account.mobile');
 
+    # Inquiry Controller
+    Route::get('/custom_order', 'InquiryController@index')->name('custom_order.index');
+    Route::put('/inquiry', 'InquiryController@insert_order')->name('inquiry');
+    Route::get('/custom_order/{id}', 'InquiryController@show')->name('custom_order.show');
+
     # Checkout Controller Routes
     Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');
-
-    # Cash on Deliver checkout
-    //Route::get('checkout/cod', 'CheckoutController@cashondelivery')->name('cod.checkout');
 
     # PayPal checkout
     Route::post('/checkout/paypal', 'CheckoutController@payWithpaypal')->name('paypal.checkout');

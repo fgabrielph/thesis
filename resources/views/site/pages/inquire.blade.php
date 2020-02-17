@@ -13,34 +13,39 @@
                 </div>
             </div>
             <div class="card-body">
-                <form class="border border-light p-5">
+                <form action="{{route('inquiry')}}" class="border border-light p-5" method="POST" enctype="multipart/form-data">
+                    {{csrf_field()}}
+                    <label for="textInput">Name</label>
+                    <input type="text" id="defaultContactFormName" class="form-control mb-4" name="name" placeholder="Name">
 
-                    <input type="text" id="defaultContactFormName" class="form-control mb-4" placeholder="Name">
-
-                    <input type="email" id="defaultContactFormEmail" class="form-control mb-4" placeholder="E-mail">
-
-                    <label for="textInput">Item Name</label>
-                    <input type="text" id="textInput" class="form-control mb-4">
-
-                    <input class="form-control input-md" placeholder="0" name="quantity" type="number" value="">
+                    <label for="textInput">Contact Number</label>
+                    <input type="text" id="textInput" name="contactnum" class="form-control mb-4">
+                    <br>
+                    <div class="row">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-8">
+                            <img id="img" src="{{url('../assets/images/noimage.jpg')}}" class="img-fluid rounded mx-auto d-block"/>
+                        </div>
+                        <div class="col-md-2">
+                        </div>
+                    </div>
                     <br>
                     <div class="input-group mb-4">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Upload</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="fileInput" aria-describedby="fileInput">
-                            <label class="custom-file-label" for="fileInput">File Label</label>
+                            <input type="file" class="custom-file-input" id="fileInput" name="image" aria-describedby="fileInput">
+                            <label class="custom-file-label" for="fileInput">Choose a file</label>
                         </div>
                     </div>
 
-                    <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" placeholder="Message"></textarea>
+                    <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" name="description" placeholder="Message"></textarea>
 
-                    <div class="custom-control custom-checkbox mb-4">
-                        <input type="checkbox" class="custom-control-input" id="defaultContactFormCopy">
-                        <label class="custom-control-label" for="defaultContactFormCopy">Send me a copy of this message</label>
-                    </div>
+                    <br>
 
+                    <input name="_method" type="hidden" value="PUT">
                     <button class="btn peach-gradient btn-block" type="submit">Send</button>
                 </form>
 
@@ -75,4 +80,24 @@
     </footer>
     <!--/.Footer-->
 
+@endsection
+
+@section('js')
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    document.getElementById('img').src = e.target.result;
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#fileInput").change(function () {
+            readURL(this);
+        });
+    </script>
 @endsection
