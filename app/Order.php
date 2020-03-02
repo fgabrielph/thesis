@@ -25,4 +25,8 @@ class Order extends Model
         return $this->hasOne('App\Invoice', 'invoice_id');
     }
 
+    public function delivery() {
+        return $this->hasMany(Delivery::class);
+    }
+
 }

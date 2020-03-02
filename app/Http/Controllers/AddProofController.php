@@ -37,10 +37,13 @@ class AddProofController extends Controller
 
         # Handle File Upload
         if($request->hasFile('image')){
+
             # Get filename with extension
             $fileNameWithExt = $request->file('image')->getClientOriginalName();
+
             # Get just filename
             $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+
             # Get just extension
             $extension = $request->file('image')->getClientOriginalExtension();
 
@@ -51,12 +54,14 @@ class AddProofController extends Controller
             $mediumthumbnail = $fileName.'_medium_'.time().'.'.$extension;
 
             # Upload Image
-            $path = $request->file('image')->storeAs('public/assets/images', $fileNameToStore);
-            $mediumpath = $request->file('image')->storeAs('public/assets/images/medium_thumbnail', $mediumthumbnail);
+            $path = public_path('assets/images/' . $fileNameToStore);
+            $mediumpath = public_path('assets/images/medium_thumbnail/' . $mediumthumbnail);
+
+            # Create original image
+            Image::make($request->file('image'))->save($path);
 
             # Create medium thumbnail
-            $mediumthumbnailpath = public_path('storage/assets/images/medium_thumbnail/'.$mediumthumbnail);
-            $this->createThumbnail($mediumthumbnailpath, 750, 540);
+            Image::make($request->file('image'))->resize(750, 540)->save($mediumpath);
 
 
         } else {
@@ -70,11 +75,4 @@ class AddProofController extends Controller
         return back()->with('success', 'Image Uploaded');
     }
 
-    public function createThumbnail($path, $width, $height)
-    {
-        $img = Image::make($path)->resize($width, $height, function ($constraint) {
-            $constraint->aspectRatio();
-        });
-        $img->save($path);
-    }
 }

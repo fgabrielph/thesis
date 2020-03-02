@@ -39,6 +39,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/custom_order', 'InquiryController@index')->name('custom_order.index');
     Route::put('/inquiry', 'InquiryController@insert_order')->name('inquiry');
     Route::get('/custom_order/{id}', 'InquiryController@show')->name('custom_order.show');
+    Route::put('/custom_order/{id}/payment', 'InquiryController@addpaymentmethod')->name('custom_order.payment');
 
     # Checkout Controller Routes
     Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');

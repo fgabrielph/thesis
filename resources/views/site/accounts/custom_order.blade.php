@@ -30,17 +30,23 @@
                             <td><h5>{{$order->id}}</h5></td>
                             <td><h6>{{$order->name}}</h6></td>
                             <td><h6>{{$order->description}}</h6></td>
-                            <td><img src="/storage/assets/images/{{$order->image}}" width="40%"></td>
+                            <td><img src="/assets/images/{{$order->image}}" width="40%"></td>
                             <td><h5>@if($order->status == 0)
                                         <span class='badge badge-info'>Processing</span>
-                                        @elseif($order->status == 1)
-                                                <span class='badge badge-info'>Accepted</span>
+                                    @elseif($order->status == 1)
+                                        <span class='badge badge-info'>Accepted</span>
+                                    @elseif($order->status == 2)
+                                        <span class='badge badge-danger'>Declined</span>
                                     @endif
                                 </h5>
                             </td>
                             <td>
-                                <h5>@if($order->payment_status == 0)
+                                <h5>@if($order->payment_status == 0 && $order->status == 2)
+                                        <span class='badge badge-danger'>Declined Order</span>
+                                    @elseif($order->payment_status == 0)
                                         <span class='badge badge-danger'>Not yet Paid</span>
+                                    @elseif($order->payment_status == 2)
+                                        <span class='badge badge-warning'>Pending for Approval</span>
                                     @elseif($order->payment_status == 1)
                                         <span class='badge badge-info'>Paid</span>
                                     @endif

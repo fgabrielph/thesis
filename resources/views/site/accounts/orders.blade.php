@@ -71,10 +71,10 @@
                                 <div class="dropdown-menu">
                                     <a href="#" data-toggle="modal" data-target="#view{{$order->id}}" class="dropdown-item"><span class="fas fa-search"></span> View</a>
                                     <a href="{{route('orders.show', $order->id)}}" class="dropdown-item"><span class="fas fa-pencil-alt"></span> View Detailed</a>
-                                    @if($order->payment_status == 0 && !($order->status == 'Pending') && !($order->status == 'Processing') && !($order->status == 'Accepted') && !($order->status == 'Canceled') && !($order->status == 'Dispatched') && !($order->status == 'Return'))
+                                    @if($order->payment_status == 0 && $order->payment_method == 'cod')
                                         <a href="#" data-toggle="modal" data-target="#cancel{{$order->id}}" class="dropdown-item"><span class="fas fa-times"></span> Cancel</a>
                                     @endif
-                                    @if($order->status == 'WaitingForPayment' && $order->payment_status == 0)
+                                    @if($order->status == 'Pending' && $order->payment_method == 'bank')
                                         @if(!(empty($order->image)) && $order->payment_status == 0)
                                             <a href="{{route('proof.add', $order->id)}}" class="dropdown-item"><span class="fas fa-pen"></span> Edit Proof of Payment</a>
                                         @else
@@ -150,7 +150,6 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-{{--                                        <input name="stat" value="Canceled" type="hidden">--}}
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-lg btn-danger" data-dismiss="modal">No</button>
                                             <button type="submit" class="btn btn-lg btn-success">Yes</button>

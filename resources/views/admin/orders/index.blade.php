@@ -35,6 +35,7 @@
                                         <th class="text-center">Order ID</th>
                                         <th class="text-center">Order Number</th>
                                         <th class="text-center">Customer</th>
+                                        <th class="text-center">Payment Method</th>
                                         <th class="text-center">Payment Status</th>
                                         <th class="text-center">Status</th>
                                         <th class="text-center"><span class="fas fa-bolt"></span></th>
@@ -42,48 +43,54 @@
                                 </thead>
                                 <tbody>
                                 @foreach($orders as $order)
+                                    @if($order->status != 'On Delivery')
                                     <tr>
                                         <td class="text-center">{{$order->id}}</td>
                                         <td class="text-center">{{$order->order_number}}</td>
                                         <td class="text-center">{{$order->user->name}}</td>
+                                        <td>
+                                            <h5>
+                                                @if($order->payment_method == 'paypal')
+                                                    Paypal
+                                                @elseif($order->payment_method == 'cod')
+                                                    Cash on Delivery
+                                                @elseif($order->payment_method == 'bank')
+                                                    Bank Transfer
+                                                @endif
+                                            </h5>
+
+                                        </td>
                                         <td class="text-center"><h5>{!! $order->payment_status ? '<span class="badge bg-success">Paid</span>' : '<span class="badge bg-danger">Unpaid</span>' !!}</h5></td>
                                         <td class="text-center">
                                             <h4>
-                                                <?php
-                                                if ($order->status == 'pending' || $order->status == 'Pending') {
-                                                    echo "<span class='badge badge-warning'>Pending";
-                                                } elseif ($order->status == 'Processing') {
-                                                    echo "<span class='badge badge-info'>Processing";
-                                                } elseif ($order->status == 'Completed') {
-                                                    echo "<span class='badge badge-success'>Completed";
-                                                } elseif ($order->status == 'Dispatched') {
-                                                    echo "<span class='badge badge-light'>Dispatched";
-                                                } elseif ($order->status == 'Accepted') {
-                                                    echo "<span class='badge badge-success'>Accepted";
-                                                } elseif ($order->status == 'Return') {
-                                                    echo "<span class='badge badge-secondary'>Return";
-                                                } elseif ($order->status == 'Initialised') {
-                                                    echo "<span class='badge badge-primary'>Placed";
-                                                } elseif ($order->status == 'Canceled') {
-                                                    echo "<span class='badge badge-danger'>Canceled";
-                                                } elseif ($order->status == 'WaitingForPayment') {
-                                                    echo "<span class='badge badge-light'>Waiting for Payment";
-                                                }
-                                                echo "</span>";
-                                                ?>
+                                                @if($order->status == 'Pending')
+                                                    <span class="badge bg-warning">Pending</span>
+                                                @elseif($order->status == 'Canceled')
+                                                    <span class="badge bg-danger">Declined</span>
+                                                @elseif($order->status == 'Confirmed')
+                                                    <span class="badge bg-success">Confirmed</span>
+                                                @elseif($order->status == 'Return')
+                                                    <span class="badge bg-secondary">Returned</span>
+                                                @elseif($order->status == 'Completed')
+                                                    <span class="badge bg-success">Completed</span>
+                                                @endif
                                             </h4>
                                         </td>
-                                        <td class="text-center">
+                                        <td>
                                             <button type="button" data-toggle="modal" data-target="#view{{$order->id}}" class="btn btn-md btn-primary"><span class="fas fa-search"></span> View</button>
-                                            <button type="button" data-toggle="dropdown" class="btn btn-md dropdown-toggle" style="color: white; background-color: orange">Actions</button>
-                                            <div class="dropdown-menu">
-                                                <a href="#" data-toggle="modal" data-target="#modify{{$order->id}}" class="dropdown-item"><span class="fas fa-pencil-alt"></span> Modify Status</a>
-                                                @if(!(empty($order->image)))
-                                                    <a href="#" data-toggle="modal" data-target="#receipt{{$order->id}}" class="dropdown-item"><span class="fas fa-search"></span> View Receipt</a>
-                                                @endif
-                                            </div>
+                                            @if($order->payment_method == 'cod' && $order->status != 'Confirmed' && $order->status != 'Completed' && $order->status != 'Return')
+                                            <a href="{{route('admin_orders.status', ['status' => 'Confirmed', 'id' => $order->id])}}" class="btn btn-md btn-primary"><span class="fas fa-check-circle"></span> Confirm</a>
+                                            @endif
+                                            @if(!(empty($order->image)))
+                                                <a href="#" data-toggle="modal" data-target="#receipt{{$order->id}}" class="btn text-white" style="background-color: grey;"><span class="fas fa-receipt"></span> View Receipt</a>
+                                            @endif
+                                            @if($order->status == 'Confirmed')
+{{--                                                <a href="{{route('admin_orders.status', ['status' => 'On Delivery', 'id' => $order->id])}}" class="btn btn-md btn-success"><span class="fas fa-truck"></span> Deliver</a>--}}
+                                                <a href="#" data-toggle="modal" data-target="#deliver{{$order->id}}" class="btn btn-md btn-success"><span class="fas fa-truck"></span> Deliver</a>
+                                            @endif
                                         </td>
                                     </tr>
+
                                     <div id="view{{$order->id}}" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered modal-xl">
                                             <div class="modal-content">
@@ -126,53 +133,7 @@
                                         </div>
                                     </div>
 
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="modify{{$order->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <form action="{{route('admin_orders.update', $order->id)}}" class="form-horizontal" method="POST">
-                                                    @csrf
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalCenterTitle">Update Order Status</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <div class="form-group">
-                                                                    <label class="col-md-4 control-label">Status: </label>
-                                                                    <div class="col-md-12">
-                                                                        <select class="form-control" name="status">
-                                                                            <option name="{{$order->status}}">{{$order->status}}</option>
-                                                                            <option value="Accepted">Accepted</option>
-                                                                            <option value="Dispatched">Dispatched</option>
-                                                                            <option value="Completed">Completed</option>
-                                                                            <?php
-                                                                            if($order->payment_status == 0) {
-                                                                            ?>
-                                                                                <option value="Canceled">Canceled</option>
-                                                                            <?php
-                                                                            }
-                                                                            ?>
-                                                                            <option value="Return">Return</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                                        <input class="btn btn-primary" type="submit" value="Save Changes">
-                                                    </div>
-                                                    <input name="_method" type="hidden" value="PUT">
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Modal -->
+
                                     <div class="modal fade" id="receipt{{$order->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                         <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered" role="document">
                                             <div class="modal-content" style="overflow-y: auto">
@@ -185,13 +146,57 @@
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="col d-flex justify-content-center">
-                                                            <img src="/storage/assets/images/medium_thumbnail/{{$order->image}}" width="100%" alt="this is image">
+                                                            <img src="/assets/images/medium_thumbnail/{{$order->image}}" width="100%" alt="this is image">
                                                         </div>
                                                     </div>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    @if($order->status != 'Confirmed' && $order->status != 'Completed' && $order->status != 'Return')
+                                                    <a href="{{route('admin_orders.status', ['status' => 'Accept', 'id' => $order->id])}}" class="btn btn-lg btn-success">Accept</a>
+                                                    <a href="{{route('admin_orders.status', ['status' => 'Decline', 'id' => $order->id])}}" class="btn btn-lg btn-danger">Decline</a>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
+                                    @if($order->status == 'Confirmed')
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="deliver{{$order->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <form action="{{route('deliveries.eda', $order->id)}}" class="form-horizontal" method="POST">
+                                                    @csrf
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalCenterTitle">Estimated Day of Arrival</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label class="col-md-4 control-label">Date: </label>
+                                                                    <div class="col-md-12">
+                                                                        <input name="date" id="datepicker{{$order->id}}" type="text" class="form-control input-md" value="">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                        <input class="btn btn-primary" type="submit" value="Save Changes">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
+
+                                    @endif
                                 @endforeach
                                 </tbody>
                             </table>
@@ -201,5 +206,18 @@
             </div>
         </div>
     </div>
+
+@endsection
+
+@section('scripts')
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $( function() {
+            @foreach($orders as $order)
+            $( "#datepicker{{$order->id}}" ).datepicker();
+            @endforeach
+        } );
+    </script>
 
 @endsection

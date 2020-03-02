@@ -94,7 +94,7 @@ class CheckoutController extends Controller {
                 $order->payment_status = 0;
                 $order->item_count = Cart::count();
                 $order->grand_total = $formatted_grand_total;
-                $order->status = 'Initialised';
+                $order->status = 'Pending';
                 $order->save();
 
                 foreach (Cart::content() as $item) {
@@ -131,7 +131,7 @@ class CheckoutController extends Controller {
                 $order->payment_status = 0;
                 $order->item_count = Cart::count();
                 $order->grand_total = $formatted_grand_total;
-                $order->status = 'WaitingForPayment';
+                $order->status = 'Pending';
                 $order->save();
 
                 foreach (Cart::content() as $item) {
@@ -173,7 +173,7 @@ class CheckoutController extends Controller {
                 $order->item_count = Cart::count();
                 $order->grand_total = $formatted_grand_total;
                 $order->invoice_id = null;
-                $order->status = 'Initialised';
+                $order->status = 'Pending';
                 $order->save();
 
                 # We need to update the order if the payment is complete, so we save it to the session
@@ -274,7 +274,7 @@ class CheckoutController extends Controller {
 
         # Payment is processing but may still fail due e.g to insufficient funds
         $order = Order::find($orderId);
-        $order->status = 'Processing';
+        $order->status = 'Pending';
 
         if ($result->getState() == 'approved') {
 
@@ -292,7 +292,7 @@ class CheckoutController extends Controller {
 
             # We also update the order status
             $order->invoice_id = $invoice->getKey();
-            $order->status = 'Pending';
+            $order->status = 'Confirmed';
             $order->payment_status = 1;
             $order->save();
 

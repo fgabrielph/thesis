@@ -40,8 +40,8 @@
                             <label class="custom-file-label" for="fileInput">Choose a file</label>
                         </div>
                     </div>
-
-                    <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" name="description" placeholder="Message"></textarea>
+                    <label for="textInput">Description <b><i style="color: red">*Please include the Quantity of your order.</i></b></label>
+                    <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" name="description" placeholder="Description"></textarea>
 
                     <br>
 

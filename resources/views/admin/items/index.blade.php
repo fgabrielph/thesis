@@ -74,7 +74,7 @@
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="col d-flex justify-content-center">
-                                                            <img src="/storage/assets/images/large_thumbnail/{{$item->image}}" width="100%" alt="this is image">
+                                                            <img src="/assets/images/large_thumbnail/{{$item->image}}" width="100%" alt="this is image">
                                                         </div>
                                                         <div class="col">
                                                             <strong><h1>{{$item->name}}</h1></strong>
@@ -109,7 +109,7 @@
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="col d-flex justify-content-center">
-                                                            <img src="storage/assets/images/large_thumbnail/{{$item->image}}" style="height: 300px; width: 400px; margin-top: 250px" alt="this is image">
+                                                            <img src="/assets/images/large_thumbnail/{{$item->image}}" style="height: 300px; width: 400px; margin-top: 250px" alt="this is image">
                                                         </div>
 
                                                         <div class="col">

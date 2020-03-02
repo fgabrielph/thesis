@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Logs;
 use Illuminate\Http\Request;
 use App\Staff;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Image;
 
@@ -40,42 +42,45 @@ class StaffController extends Controller
         //Handle File Upload
 
         if($request->hasFile('image')){
-            // Get filename with extension
+
+            # Get filename with extension
             $fileNameWithExt = $request->file('image')->getClientOriginalName();
-            // Get just filename
+
+            # Get just filename
             $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
-            // Get just ext
+
+            # Get just extension
             $extension = $request->file('image')->getClientOriginalExtension();
 
-            // Filename to store
+            # Filename to store
             $fileNameToStore = $fileName.'_'.time().'.'.$extension;
 
-            //small thumbnail name
+            # Small thumbnail name
             $smallthumbnail = $fileName.'_small_'.time().'.'.$extension;
 
-            //medium thumbnail name
+            # Medium thumbnail name
             $mediumthumbnail = $fileName.'_medium_'.time().'.'.$extension;
 
-            //large thumbnail name
+            # Large thumbnail name
             $largethumbnail = $fileName.'_large_'.time().'.'.$extension;
 
-            // Upload Image
-            $path = $request->file('image')->storeAs('public/assets/images', $fileNameToStore);
-            $smallpath = $request->file('image')->storeAs('public/assets/images/small_thumbnail', $smallthumbnail);
-            $mediumpath = $request->file('image')->storeAs('public/assets/images/medium_thumbnail', $mediumthumbnail);
-            $largepath = $request->file('image')->storeAs('public/assets/images/large_thumbnail', $largethumbnail);
+            # Upload Image
+            $path = public_path('assets/images/' . $fileNameToStore);
+            $smallpath = public_path('assets/images/small_thumbnail/' . $smallthumbnail);
+            $mediumpath = public_path('assets/images/medium_thumbnail/' . $mediumthumbnail);
+            $largepath = public_path('assets/images/large_thumbnail/' . $largethumbnail);
 
-            //create small thumbnail
-            $smallthumbnailpath = public_path('storage/assets/images/small_thumbnail/'.$smallthumbnail);
-            $this->createThumbnail($smallthumbnailpath, 150, 93);
+            # Create original image
+            Image::make($request->file('image'))->save($path);
 
-            //create medium thumbnail
-            $mediumthumbnailpath = public_path('storage/assets/images/medium_thumbnail/'.$mediumthumbnail);
-            $this->createThumbnail($mediumthumbnailpath, 300, 185);
+            # Create small thumbnail
+            Image::make($request->file('image'))->resize(150, 93)->save($smallpath);
 
-            //create large thumbnail
-            $largethumbnailpath = public_path('storage/assets/images/large_thumbnail/'.$largethumbnail);
-            $this->createThumbnail($largethumbnailpath, 550, 340);
+            # Create medium thumbnail
+            Image::make($request->file('image'))->resize(300, 185)->save($mediumpath);
+
+            # Create large thumbnail
+            Image::make($request->file('image'))->resize(550, 340)->save($largepath);
 
         } else {
             $fileNameToStore = 'noimage.jpg';
@@ -105,11 +110,23 @@ class StaffController extends Controller
         if($status == 0) {
             $staff->status = '1';
             $staff->save();
+
+            # Status Log
+            $log = new Logs;
+            $log->action = 'Staff Activated';
+            $log->admin_id = Auth::user()->id;
+            $log->save();
         }
 
         if($status == 1) {
             $staff->status = '0';
             $staff->save();
+
+            # Status Log
+            $log = new Logs;
+            $log->action = 'Staff Deactivated';
+            $log->admin_id = Auth::user()->id;
+            $log->save();
         }
 
         $message = $staff->status ? 'Account Activated' : 'Account Deactivated';
@@ -140,14 +157,12 @@ class StaffController extends Controller
         $staff = Staff::find($id);
 
         $staff->delete();
-        return back()->withInput()->with('success', 'Account Deleted');
-    }
 
-    public function createThumbnail($path, $width, $height)
-    {
-        $img = Image::make($path)->resize($width, $height, function ($constraint) {
-            $constraint->aspectRatio();
-        });
-        $img->save($path);
+        # Status Log
+        $log = new Logs;
+        $log->action = 'Deleted an account';
+        $log->admin_id = Auth::user()->id;
+        $log->save();
+        return back()->withInput()->with('success', 'Account Deleted');
     }
 }

@@ -61,6 +61,10 @@ class CartController extends Controller
 
         }
 
+        if($request->buynow == 1) {
+            return view('site.pages.cart');
+        }
+
 
 
         return redirect()->back()->with('success', 'Item added to cart successfully.');

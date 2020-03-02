@@ -21,7 +21,7 @@
                             @if($order->image == null)
                                 <img id="img" src="{{url('../assets/images/error-img.png')}}" class="img-fluid rounded mx-auto d-block"/>
                             @else
-                                <img id="img" src="/storage/assets/images/medium_thumbnail/{{$order->image}}" class="img-fluid rounded mx-auto d-block" />
+                                <img id="img" src="/assets/images/medium_thumbnail/{{$order->image}}" class="img-fluid rounded mx-auto d-block" />
                             @endif
                         </div>
                         <div class="col-md-2">

@@ -58,13 +58,9 @@
                                             <div class="dropdown-menu">
                                                 <a href="#" data-toggle="modal" data-target="#view{{$customer->id}}" class="dropdown-item"><span class="fas fa-search"></span> View</a>
                                                 <a href="{{route('customers.edit', $customer->id)}}" class="dropdown-item">{!! $customer->status ? '<span class="fas fa-times"></span>' : '<span class="fas fa-check"></span>' !!}  {{$customer->status ? 'Deactivate' : 'Activate'}}</a>
-                                                <?php
-                                                    if(count($customer->orders) == 0) {
-                                                        ?>
-                                                        <a href="#" data-toggle="modal" data-target="#delete{{$customer->id}}" class="dropdown-item"><span class="fas fa-trash"></span> Delete</a>
-                                                 <?php
-                                                    }
-                                                ?>
+                                                @if(count($customer->orders) == 0)
+                                                    <a href="#" data-toggle="modal" data-target="#delete{{$customer->id}}" class="dropdown-item"><span class="fas fa-trash"></span> Delete</a>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>
@@ -77,7 +73,7 @@
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="col d-flex justify-content-center">
-                                                            <img src="/storage/assets/images/large_thumbnail/{{$customer->avatar}}" width="100%" alt="this is image">
+                                                            <img src="/assets/images/large_thumbnail/{{$customer->avatar}}" width="100%" alt="this is image">
                                                         </div>
                                                         <div class="col">
                                                             <strong><h2>{{$customer->name}}</h2></strong>
@@ -111,7 +107,7 @@
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="col d-flex justify-content-center">
-                                                            <img src="storage/assets/images/large_thumbnail/{{$customer->avatar}}" width="100%" alt="this is image">
+                                                            <img src="/assets/images/large_thumbnail/{{$customer->avatar}}" width="100%" alt="this is image">
                                                         </div>
                                                         <div class="col">
                                                             <strong><h2>{{$customer->name}}</h2></strong>

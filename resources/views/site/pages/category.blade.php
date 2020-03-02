@@ -78,7 +78,7 @@
 
                                             <!--Card image-->
                                             <div class="view overlay">
-                                                <img src="/storage/assets/images/large_thumbnail/{{$item->image}}" class="card-img-top" alt="">
+                                                <img src="/assets/images/large_thumbnail/{{$item->image}}" class="card-img-top" alt="">
                                                 <a href="#" data-toggle="modal" data-target="#addtocart{{$item->id}}">
                                                     <div class="mask rgba-white-slight">Buy Now</div>
                                                 </a>

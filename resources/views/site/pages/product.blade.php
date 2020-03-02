@@ -18,7 +18,7 @@
                 <!--Grid column-->
                 <div class="col-md-6 mb-4 d-flex justify-content-center">
 
-                    <img src="/storage/assets/images/large_thumbnail/{{$item->image}}" class="img-fluid" alt="">
+                    <img src="/assets/images/large_thumbnail/{{$item->image}}" class="img-fluid" alt="">
 
                 </div>
                 <!--Grid column-->

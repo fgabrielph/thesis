@@ -79,8 +79,8 @@
 
                                             <!--Card image-->
                                             <div class="view overlay">
-                                                <img src="/storage/assets/images/large_thumbnail/{{$item->image}}" class="card-img-top" alt="" width="100%">
                                                 <a href="#" data-toggle="modal" data-target="#addtocart{{$item->id}}">
+                                                    <img src="/assets/images/large_thumbnail/{{$item->image}}" class="card-img-top" alt="" width="100%">
                                                     <div class="mask rgba-white-slight">Buy Now</div>
                                                 </a>
                                             </div>
@@ -105,11 +105,60 @@
 
                                     </div>
                                     <!--Grid column-->
+
                                 @endforeach
                             </div>
                             <!--Grid row-->
                         </section>
                         <!--Section: Products v.3-->
+                        @foreach($items as $item)
+                            <!-- Modal -->
+                            <div class="modal fade" id="addtocart{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                                 aria-hidden="true">
+
+                                <!-- Add .modal-dialog-centered to .modal-dialog to vertically center the modal -->
+                                <div class="modal-lg modal-dialog modal-dialog-centered" role="document">
+
+
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">PRODUCT</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col d-flex justify-content-center">
+                                                    <img src="/assets/images/large_thumbnail/{{$item->image}}" width="100%" height="100%" alt="this is image">
+                                                </div>
+                                                <div class="col">
+                                                    <strong><h2>{{$item->name}}</h2></strong>
+                                                    <h3 class="text-success">₱ {{number_format($item->price_stocks, 2)}}</h3>
+                                                    <p>{{$item->description}}</p>
+                                                    Remaining:<div class="text-info">{{$item->stocks}}</div><br>
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            {!!Form::open(['action' => 'CartController@store', 'method' => 'POST'])!!}
+                                            {{Form::hidden('id', $item->id)}}
+                                            {{Form::hidden('name', $item->name)}}
+                                            Quantity: {{Form::number('quantity', '', ['class' => 'form-control', 'placeholder' => '0', 'style' => 'width: 100px'])}}
+                                            {{Form::hidden('price', $item->price_stocks)}}<br>
+                                            {{Form::hidden('buynow', 1)}}
+                                            <button class="btn btn-amber btn-lg my-0 p" type="submit">Buy Now</button>
+                                            {!!Form::close()!!}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal -->
+                        @endforeach
 
                     </div>
 

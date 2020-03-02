@@ -41,7 +41,7 @@
                                 @foreach(Cart::content() as $item)
                                     <tr>
                                         <td>{{$item->model->id}}</td>
-                                        <td><img src="/storage/assets/images/large_thumbnail/{{$item->model->image}}" alt="pic" width="100px"></td>
+                                        <td><img src="/assets/images/large_thumbnail/{{$item->model->image}}" alt="pic" width="100px"></td>
                                         <td>{{$item->model->name}}</td>
                                         @if($item->qty > $item->model->stocks)
                                             {{redirect()->route('site.shop')->with('error', 'Exceeded!')}}

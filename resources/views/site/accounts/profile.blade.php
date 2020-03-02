@@ -12,7 +12,7 @@
                     <div class="card-header">
                         Profile Picture
                     </div>
-                        <img src="/storage/assets/images/large_thumbnail/{{Auth::user()->avatar}}" width="100%">
+                        <img src="/assets/images/large_thumbnail/{{Auth::user()->avatar}}" width="100%">
                 </div>
                 <br>
                 <h1><a href="{{route('custom_order.index')}}" class="btn btn-lg btn-block blue-gradient">Custom Orders</a></h1>
@@ -82,7 +82,7 @@
                             <div class="modal-body">
                                 <div class="row">
                                     <div class="col d-flex justify-content-center">
-                                        <img src="/storage/assets/images/large_thumbnail/{{Auth::user()->avatar}}" width="100%" alt="this is image">
+                                        <img src="/assets/images/large_thumbnail/{{Auth::user()->avatar}}" width="100%" alt="this is image">
                                     </div>
                                 </div>
                                 <div class="row">

@@ -48,7 +48,7 @@
                                     <tr>
                                         <td class="text-center">{{$brand->id}}</td>
                                         <td class="text-center">{{$brand->name}}</td>
-                                        <td class="text-center"><img src="/storage/assets/images/large_thumbnail/{{$brand->image}}" style="width: 40px; height: 40px" alt="this is image"></td>
+                                        <td class="text-center"><img src="/assets/images/large_thumbnail/{{$brand->image}}" style="width: 40px; height: 40px" alt="this is image"></td>
                                         <td class="text-center"><button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Actions</button>
                                             <div class="dropdown-menu">
                                                 <a href="#" data-toggle="modal" data-target="#view{{$brand->id}}" class="dropdown-item"><span class="fas fa-search"></span> View</a>

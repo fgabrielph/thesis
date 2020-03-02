@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Item as Product;
 use Illuminate\Http\Request;
 use App\Order;
+use App\Suborder;
+use App\Delivery;
 
 class OrderController extends Controller
 {
@@ -75,12 +78,89 @@ class OrderController extends Controller
         $order = Order::find($id);
 
         $order->status = $request->status;
-        if(!(empty($order->image)) && $request->status == 'Accepted') {
+        if(!(empty($order->image)) && $request->status == 'Confirmed') {
             $order->payment_status = 1;
         }
         $order->save();
 
         return back()->with('success', 'Order Status Updated');
+    }
+
+    public function decide($choice, $id)
+    {
+        $order = Order::find($id);
+
+        switch($choice) {
+
+            case 'Accept':
+                $order->status = 'Confirmed';
+                $order->payment_status = 1;
+                $order->save();
+
+                # We Decrease the stocks based on sub orders
+                $suborders = Suborder::where('order_id', $id)->get();
+                foreach($suborders as $suborder){
+                    $item = $suborder->item_id;
+                    $quantity = $suborder->quantity;
+                    Product::where('id', $item)->decrement('stocks', $quantity);
+                }
+
+                return back()->with('success', 'Order has been modified');
+
+                break;
+
+            case 'Decline':
+
+                $order->status = 'Canceled';
+                $order->payment_status = 0;
+                $order->save();
+
+                return back()->with('success', 'Order has been modified');
+
+                break;
+
+            case 'Confirmed':
+
+                $order->status = 'Confirmed';
+                $order->payment_status = 1;
+                $order->save();
+
+                # We Decrease the stocks based on sub orders
+                $suborders = Suborder::where('order_id', $id)->get();
+                foreach($suborders as $suborder){
+                    $i = $suborder->item_id;
+                    $qty = $suborder->quantity;
+                    Product::where('id', $i)->decrement('stocks', $qty);
+                }
+
+
+                return back()->with('success', 'Order has been modified');
+
+                break;
+
+            case 'On Delivery':
+
+                $order->status = 'On Delivery';
+                $order->save();
+
+                $delivery = new Delivery;
+                $delivery->order_id = $order->id;
+                $delivery->status = 'On Delivery';
+                $delivery->customer_name = $order->first_name . ' ' . $order->last_name;
+                $delivery->save();
+
+                return back()->with('success', 'Order has been placed to Delivery Table');
+
+                break;
+
+            default:
+
+                return back()->with('error', 'Error Input Field');
+                break;
+
+        }
+
+
     }
 
     /**

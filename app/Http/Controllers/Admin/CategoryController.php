@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Category;
+use App\Logs;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -46,6 +48,12 @@ class CategoryController extends Controller
         $category = new Category;
         $category->name = $request->input('name');  //$post->user_id = auth()->user()->id; //This Gets the Currently User Logged in
         $category->save();
+
+        # Added Log
+        $log = new Logs;
+        $log->action = 'Added a category';
+        $log->admin_id = Auth::user()->id;
+        $log->save();
 
         return back()->with('success', 'Category Added');
     }
@@ -90,6 +98,12 @@ class CategoryController extends Controller
         $category = Category::find($id);
         $category->name = $request->input('name');  //$post->user_id = auth()->user()->id; //This Gets the Currently User Logged in
         $category->save();
+
+        # Updated Log
+        $log = new Logs;
+        $log->action = 'Updated an Category';
+        $log->admin_id = Auth::user()->id;
+        $log->save();
 
         return back()->with('success', 'Category Updated');
     }

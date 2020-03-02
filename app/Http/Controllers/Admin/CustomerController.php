@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Logs;
 use Illuminate\Http\Request;
 use App\User;
 use DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Image;
 
@@ -52,35 +54,45 @@ class CustomerController extends Controller
         //Handle File Upload
 
         if($request->hasFile('image')){
+
             # Get filename with extension
             $fileNameWithExt = $request->file('image')->getClientOriginalName();
+
             # Get just filename
             $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
-            # Get just ext
+
+            # Get just extension
             $extension = $request->file('image')->getClientOriginalExtension();
 
-            # Filename to store:
+            # Filename to store
             $fileNameToStore = $fileName.'_'.time().'.'.$extension;
 
-            # small thumbnail name
+            # Small thumbnail name
             $smallthumbnail = $fileName.'_small_'.time().'.'.$extension;
 
-            # medium thumbnail name
+            # Medium thumbnail name
             $mediumthumbnail = $fileName.'_medium_'.time().'.'.$extension;
 
-            # large thumbnail name
+            # Large thumbnail name
             $largethumbnail = $fileName.'_large_'.time().'.'.$extension;
 
-            # Upload Image:
+            # Upload Image
+            $path = public_path('assets/images/' . $fileNameToStore);
+            $smallpath = public_path('assets/images/small_thumbnail/' . $smallthumbnail);
+            $mediumpath = public_path('assets/images/medium_thumbnail/' . $mediumthumbnail);
+            $largepath = public_path('assets/images/large_thumbnail/' . $largethumbnail);
+
+            # Create original image
+            Image::make($request->file('image'))->save($path);
 
             # Create small thumbnail
-            Image::make($request->file)->resize(150, 93, function ($constraint) { $constraint->aspectRatio(); })->save('assets/images/small_thumbnail/'.$smallthumbnail);
+            Image::make($request->file('image'))->resize(150, 93)->save($smallpath);
 
             # Create medium thumbnail
-            Image::make($request->file)->resize(300, 185, function ($constraint) { $constraint->aspectRatio(); })->save('assets/images/medium_thumbnail/'.$mediumthumbnail);
+            Image::make($request->file('image'))->resize(300, 185)->save($mediumpath);
 
             # Create large thumbnail
-            Image::make($request->file)->resize(550, 340, function ($constraint) { $constraint->aspectRatio(); })->save('assets/images/large_thumbnail/'.$largethumbnail);
+            Image::make($request->file('image'))->resize(550, 340)->save($largepath);
 
         } else {
             $fileNameToStore = 'noimage.jpg';
@@ -124,12 +136,26 @@ class CustomerController extends Controller
         if($status == 0) {
             $customer->status = '1';
             $customer->save();
+
+            # Status Log
+            $log = new Logs;
+            $log->action = 'Customer Activated';
+            $log->admin_id = Auth::user()->id;
+            $log->save();
         }
 
         if($status == 1) {
             $customer->status = '0';
             $customer->save();
+
+            # Status Log
+            $log = new Logs;
+            $log->action = 'Customer Deactivated';
+            $log->admin_id = Auth::user()->id;
+            $log->save();
         }
+
+
 
 
         $message = $customer->status ? 'Account Activated' : 'Account Deactivated';
@@ -159,19 +185,14 @@ class CustomerController extends Controller
     {
         $customer = User::find($id);
 
-        //$cust_id = User::whereRaw('id = (select max(`id`) from users)')->get();
-        //$id_max = DB::table('users')->max('id') + 1;
-        //DB::statement("ALTER TABLE users AUTO_INCREMENT = $id_max");
-
         $customer->delete();
+
+        # Deleted Log
+        $log = new Logs;
+        $log->action = 'Deleted an account';
+        $log->admin_id = Auth::user()->id;
+        $log->save();
+
         return back()->withInput()->with('success', 'Account Deleted');
     }
-
-    /* public function createThumbnail($path, $width, $height)
-    {
-        $img = Image::make($path)->resize($width, $height, function ($constraint) {
-            $constraint->aspectRatio();
-        });
-        $img->save($path);
-    } */
 }
