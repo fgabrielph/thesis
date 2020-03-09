@@ -60,6 +60,10 @@
                 </table>
             </div>
         </div>
+        <br>
+        <div class="d-flex justify-content-center">
+            {{$custom_orders->links()}}
+        </div>
     </div>
 
 @endsection

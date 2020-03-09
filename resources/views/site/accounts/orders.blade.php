@@ -41,28 +41,19 @@
                             <td><h5>{{ number_format($order->grand_total, 2) }}</h5></td>
                             <td><h5>{{ $order->item_count }}</h5></td>
                             <td><h5>
-                                    <?php
-                                    if ($order->status == 'pending' || $order->status == 'Pending') {
-                                        echo "<span class='badge badge-warning'>Pending";
-                                    } elseif ($order->status == 'Processing') {
-                                        echo "<span class='badge badge-info'>Processing";
-                                    } elseif ($order->status == 'Completed') {
-                                        echo "<span class='badge badge-success'>Completed";
-                                    } elseif ($order->status == 'Dispatched') {
-                                        echo "<span class='badge badge-light'>Dispatched";
-                                    } elseif ($order->status == 'Accepted') {
-                                        echo "<span class='badge badge-success'>Accepted";
-                                    } elseif ($order->status == 'Return') {
-                                        echo "<span class='badge badge-secondary'>Return";
-                                    } elseif ($order->status == 'Initialised') {
-                                        echo "<span class='badge badge-primary'>Placed";
-                                    } elseif ($order->status == 'Canceled') {
-                                        echo "<span class='badge badge-danger'>Canceled";
-                                    } elseif ($order->status == 'WaitingForPayment') {
-                                        echo "<span class='badge badge-light'>Waiting for Payment";
-                                    }
-                                    echo "</span>";
-                                    ?>
+                                    @if($order->status == 'Pending')
+                                        <span class="badge bg-warning">Pending</span>
+                                    @elseif($order->status == 'Canceled')
+                                        <span class="badge bg-danger">Declined</span>
+                                    @elseif($order->status == 'Confirmed')
+                                        <span class="badge" style="background-color: greenyellow">Confirmed</span>
+                                    @elseif($order->status == 'Return')
+                                        <span class="badge bg-secondary">Returned</span>
+                                    @elseif($order->status == 'On Delivery')
+                                        <span class="badge bg-secondary">On Delivery</span>
+                                    @elseif($order->status == 'Completed')
+                                        <span class="badge bg-success">Completed</span>
+                                    @endif
                                 </h5>
                             </td>
                             <td><h5>{{$order->created_at->toFormattedDateString()}}</h5></td>
@@ -71,7 +62,7 @@
                                 <div class="dropdown-menu">
                                     <a href="#" data-toggle="modal" data-target="#view{{$order->id}}" class="dropdown-item"><span class="fas fa-search"></span> View</a>
                                     <a href="{{route('orders.show', $order->id)}}" class="dropdown-item"><span class="fas fa-pencil-alt"></span> View Detailed</a>
-                                    @if($order->payment_status == 0 && $order->payment_method == 'cod')
+                                    @if($order->payment_status == 0 && $order->payment_method == 'cod' && $order->status != 'Canceled')
                                         <a href="#" data-toggle="modal" data-target="#cancel{{$order->id}}" class="dropdown-item"><span class="fas fa-times"></span> Cancel</a>
                                     @endif
                                     @if($order->status == 'Pending' && $order->payment_method == 'bank')

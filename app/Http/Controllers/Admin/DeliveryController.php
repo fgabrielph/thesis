@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Delivery;
 use App\Order;
 use App\Http\Controllers\Controller;
+use App\Suborder;
 use Illuminate\Http\Request;
+use App\Item as Product;
+
 class DeliveryController extends Controller
 {
     /**
@@ -31,6 +34,18 @@ class DeliveryController extends Controller
 
                 $order = Order::find($delivery->order_id);
                 $order->status = 'Completed';
+                if($order->payment_method == 'cod') {
+
+                    $order->payment_status = 1;
+
+                    # We Decrease the stocks based on sub orders
+                    $suborders = Suborder::where('order_id', $order->id)->get();
+                    foreach($suborders as $suborder){
+                        $i = $suborder->item_id;
+                        $qty = $suborder->quantity;
+                        Product::where('id', $i)->decrement('stocks', $qty);
+                    }
+                }
                 $order->save();
 
                 return back()->with('success', 'Delivery Status has changed');

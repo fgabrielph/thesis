@@ -41,7 +41,7 @@ class AccountController extends Controller
         # $data['transaction'] = Suborder::with('order')->where('order_id', $paid)->paginate(3); GETTING ERRORS ON NEW USERS
 
 
-        $orders = Auth::user()->orders()->where('payment_status', 1)->paginate(3);
+        $orders = Auth::user()->orders()->orderby('updated_at', 'desc')->where('payment_status', 1)->paginate(3);
         return view('site.accounts.profile')->with('orders', $orders);
 
 

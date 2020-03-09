@@ -47,6 +47,11 @@ Route::group(['prefix'  =>  'admin'], function () {
         Route::get('reports/pdf/{name}/download', 'Admin\ReportsController@toPDF')->name('export');
 
 
+        # Data Visualization
+        Route::get('analysis/orders', 'Admin\DataAnalysisController@sales_order')->name('analysis.orders');
+        Route::get('analysis/demand', 'Admin\DataAnalysisController@demand_custom_order')->name('analysis.demand');
+        Route::post('analysis_forecast/orders/{id}', 'Admin\DataAnalysisController@forecast_order')->name('forecast.orders');
+        Route::post('analysis_forecast/demand/{id}', 'Admin\DataAnalysisController@forecast_custom_order')->name('forecast.demand');
 
 
     });

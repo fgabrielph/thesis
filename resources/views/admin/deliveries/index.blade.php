@@ -51,7 +51,7 @@
                                         </thead>
                                         <tbody>
                                         @foreach($deliveries as $delivery)
-                                            @if($delivery->status == 'On Delivery')
+                                            @if($delivery->status == 'On Delivery' && $delivery->order->status != 'Canceled')
                                             <tr>
                                                 <td>{{$delivery->id}}</td>
                                                 <td>{{$delivery->order->order_number}}</td>
@@ -89,7 +89,7 @@
                                         </thead>
                                         <tbody>
                                         @foreach($deliveries as $delivery)
-                                            @if($delivery->status == 'Return')
+                                            @if($delivery->status == 'Return' && $delivery->order->status != 'Canceled')
                                                 <tr>
                                                     <td>{{$delivery->id}}</td>
                                                     <td>{{$delivery->order->order_number}}</td>
@@ -107,7 +107,7 @@
                                                 </tr>
                                             @endif
 
-                                            @if($delivery->status == 'Return')
+                                            @if($delivery->status == 'Return' && $delivery->order->status != 'Canceled')
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="deliver{{$delivery->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
@@ -162,7 +162,7 @@
                                         </thead>
                                         <tbody>
                                         @foreach($deliveries as $delivery)
-                                            @if($delivery->status == 'Completed')
+                                            @if($delivery->status == 'Completed' && $delivery->order->status != 'Canceled')
                                                 <tr>
                                                     <td>{{$delivery->id}}</td>
                                                     <td>{{$delivery->order->order_number}}</td>

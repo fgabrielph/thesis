@@ -131,10 +131,25 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('admin.dashboard')}}" class="nav-link">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-chart-bar"></i>
-                        <p>Visualization</p>
+                        <p>Visualization <i class="right fas fa-angle-left"></i></p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('analysis.orders')}}" class="nav-link">
+                                <i class="fas fa-chart-line nav-icon"></i>
+                                <p>Order Sales</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('analysis.demand')}}" class="nav-link">
+                                <i class="fas fa-chart-bar nav-icon"></i>
+                                <p>Demand Custom Orders</p>
+                            </a>
+                        </li>
+                    </ul>
+
                 </li>
                 <li class="nav-item">
                     <a href="{{route('logs.index')}}" class="nav-link">

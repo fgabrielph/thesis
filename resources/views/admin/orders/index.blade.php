@@ -68,7 +68,7 @@
                                                 @elseif($order->status == 'Canceled')
                                                     <span class="badge bg-danger">Declined</span>
                                                 @elseif($order->status == 'Confirmed')
-                                                    <span class="badge bg-success">Confirmed</span>
+                                                    <span class="badge" style="background-color: greenyellow">Confirmed</span>
                                                 @elseif($order->status == 'Return')
                                                     <span class="badge bg-secondary">Returned</span>
                                                 @elseif($order->status == 'Completed')
@@ -78,7 +78,7 @@
                                         </td>
                                         <td>
                                             <button type="button" data-toggle="modal" data-target="#view{{$order->id}}" class="btn btn-md btn-primary"><span class="fas fa-search"></span> View</button>
-                                            @if($order->payment_method == 'cod' && $order->status != 'Confirmed' && $order->status != 'Completed' && $order->status != 'Return')
+                                            @if($order->payment_method == 'cod' && $order->status != 'Confirmed' && $order->status != 'Completed' && $order->status != 'Return' && $order->status != 'Canceled')
                                             <a href="{{route('admin_orders.status', ['status' => 'Confirmed', 'id' => $order->id])}}" class="btn btn-md btn-primary"><span class="fas fa-check-circle"></span> Confirm</a>
                                             @endif
                                             @if(!(empty($order->image)))

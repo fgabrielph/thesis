@@ -122,17 +122,22 @@ class OrderController extends Controller
             case 'Confirmed':
 
                 $order->status = 'Confirmed';
-                $order->payment_status = 1;
+
+//                if($order->payment_method != 'cod') {
+//
+//                    $order->payment_status = 1;
+//                    $order->save();
+//
+//                    # We Decrease the stocks based on sub orders
+//                    $suborders = Suborder::where('order_id', $id)->get();
+//                    foreach($suborders as $suborder){
+//                        $i = $suborder->item_id;
+//                        $qty = $suborder->quantity;
+//                        Product::where('id', $i)->decrement('stocks', $qty);
+//                    }
+//                }
+
                 $order->save();
-
-                # We Decrease the stocks based on sub orders
-                $suborders = Suborder::where('order_id', $id)->get();
-                foreach($suborders as $suborder){
-                    $i = $suborder->item_id;
-                    $qty = $suborder->quantity;
-                    Product::where('id', $i)->decrement('stocks', $qty);
-                }
-
 
                 return back()->with('success', 'Order has been modified');
 
