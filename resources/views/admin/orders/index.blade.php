@@ -47,7 +47,13 @@
                                     <tr>
                                         <td class="text-center">{{$order->id}}</td>
                                         <td class="text-center">{{$order->order_number}}</td>
-                                        <td class="text-center">{{$order->user->name}}</td>
+                                        <td class="text-center">
+                                            @if($order->user->name == 'N/A')
+                                                {{$order->first_name . ' ' . $order->last_name}}
+                                            @else
+                                                {{$order->user->name}}
+                                            @endif
+                                        </td>
                                         <td>
                                             <h5>
                                                 @if($order->payment_method == 'paypal')
@@ -56,6 +62,8 @@
                                                     Cash on Delivery
                                                 @elseif($order->payment_method == 'bank')
                                                     Bank Transfer
+                                                @elseif($order->payment_method == 'cash')
+                                                    Cash
                                                 @endif
                                             </h5>
 
@@ -111,7 +119,21 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-4">Placed By
-                                                            <address><strong>{{ $order->user->name }}</strong><br>Email: {{ $order->user->email }}</address>
+                                                            <address>
+                                                                <strong>
+                                                                    @if($order->user->name == 'N/A')
+                                                                        {{$order->first_name . ' ' . $order->last_name}}
+                                                                    @else
+                                                                        {{$order->user->name}}
+                                                                    @endif
+                                                                </strong>
+                                                                <br>Email:
+                                                                @if($order->user->email == 'N/A@walkin.com')
+                                                                    N/A
+                                                                @else
+                                                                    {{ $order->user->email }}
+                                                                @endif
+                                                            </address>
                                                         </div>
                                                         <div class="col-4">Ship To
                                                             <address><strong>{{ $order->first_name }} {{ $order->last_name }}</strong><br>{{ $order->address }}<br>{{ $order->city }}, {{ $order->country }} {{ $order->post_code }}<br>{{ $order->phone_number }}<br></address>

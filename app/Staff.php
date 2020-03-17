@@ -37,4 +37,9 @@ class Staff extends Authenticatable //implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function logs()
+    {
+        return $this->hasMany(Logs::class);
+    }
 }

@@ -33,8 +33,8 @@
                             <h3 class="card-title">Manage Customer</h3>
                         </div>
                         <!-- /.card-header -->
-                        <div class="card-body p-0">
-                            <table class="table table-hover">
+                        <div class="card-body p-0" style="margin: 1%">
+                            <table id="defTable" class="table table-hover">
                                 <thead class="thead-dark">
                                 <tr>
                                     <th class="text-center">ID</th>
@@ -47,6 +47,7 @@
                                 </thead>
                                 <tbody>
                                 @foreach($customers as $customer)
+                                    @if($customer->id != 9999)
                                     <tr>
                                         <td class="text-center">{{$customer->id}}</td>
                                         <td class="text-center">{{$customer->name}}</td>
@@ -58,7 +59,9 @@
                                             <div class="dropdown-menu">
                                                 <a href="#" data-toggle="modal" data-target="#view{{$customer->id}}" class="dropdown-item"><span class="fas fa-search"></span> View</a>
                                                 <a href="{{route('staff_customer.edit', $customer->id)}}" class="dropdown-item">{!! $customer->status ? '<span class="fas fa-times"></span>' : '<span class="fas fa-check"></span>' !!}  {{$customer->status ? 'Deactivate' : 'Activate'}}</a>
-                                                <a href="#" data-toggle="modal" data-target="#delete{{$customer->id}}" class="dropdown-item"><span class="fas fa-trash"></span> Delete</a>
+                                                @if(count($customer->orders) == 0)
+                                                    <a href="#" data-toggle="modal" data-target="#delete{{$customer->id}}" class="dropdown-item"><span class="fas fa-trash"></span> Delete</a>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>
@@ -71,17 +74,15 @@
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="col d-flex justify-content-center">
-                                                            <img src="/storage/assets/images/large_thumbnail/{{$customer->avatar}}" width="100%" alt="this is image">
+                                                            <img src="/assets/images/large_thumbnail/{{$customer->avatar}}" width="100%" alt="this is image">
                                                         </div>
                                                         <div class="col">
                                                             <strong><h2>{{$customer->name}}</h2></strong>
                                                             <h3 class="text-success">{{$customer->email}}</h3>
                                                             <p>STATUS: {{ $customer->status ? 'Active' : 'Deactivated' }}</p>
                                                             <h5></h5>
-
                                                         </div>
                                                     </div>
-
                                                 </div>
 
                                             </div>
@@ -104,7 +105,7 @@
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="col d-flex justify-content-center">
-                                                            <img src="/storage/assets/images/large_thumbnail/{{$customer->avatar}}" width="100%" alt="this is image">
+                                                            <img src="/assets/images/large_thumbnail/{{$customer->avatar}}" width="100%" alt="this is image">
                                                         </div>
                                                         <div class="col">
                                                             <strong><h2>{{$customer->name}}</h2></strong>
@@ -127,21 +128,12 @@
                                             </div>
                                         </div>
                                     </div> <!-- End of Modal Delete -->
-
+                                    @endif
                                 @endforeach
                                 </tbody>
                             </table>
                         </div>
                         <!-- /.card-body -->
-                        <div class="card-footer clearfix">
-                            <ul class="pagination pagination-sm m-0 float-right">
-                                <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-                            </ul>
-                        </div>
                     </div>
                     <!-- /.card -->
                 </div>

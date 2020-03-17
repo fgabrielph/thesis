@@ -49,6 +49,7 @@ class DashboardController extends Controller
         $cust_getMonth = array_values(array_unique($store_cust_month));
         //dd($cust_getMonth);
 
+
         # We get the sales to 12 as static since we plot data from January to December
         for($i = 1; $i <= count($cust_getMonth); $i++) {
             if($i == 10 || $i == 11 || $i == 12) {
@@ -59,6 +60,7 @@ class DashboardController extends Controller
 
             array_push($final_cust_sales, $value);
         }
+        //dd($final_cust_sales);
 
         $cust_forecasted = trader_sma($final_cust_sales, (count($final_cust_sales)));
         //dd($cust_forecasted);

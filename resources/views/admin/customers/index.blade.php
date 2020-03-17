@@ -47,6 +47,7 @@
                                 </thead>
                                 <tbody>
                                 @foreach($customers as $customer)
+                                    @if($customer->id != 9999)
                                     <tr>
                                         <td class="text-center">{{$customer->id}}</td>
                                         <td class="text-center">{{$customer->name}}</td>
@@ -130,7 +131,7 @@
                                             </div>
                                         </div>
                                     </div> <!-- End of Modal Delete -->
-
+                                    @endif
                                 @endforeach
                                 </tbody>
                             </table>

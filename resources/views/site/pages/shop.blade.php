@@ -9,6 +9,7 @@
         .sticky {
             position: fixed;
             width: 255px;
+            height: auto;
         }
 
         .scrollbar {

@@ -13,6 +13,8 @@
 
 # Page Controller Routes
 Route::view('/', 'site.pages.homepage')->name('home');
+Route::view('/about', 'site.pages.about')->name('about');
+Route::view('/contact', 'site.pages.contact')->name('contact');
 Route::get('/shop', 'PagesController@shop')->name('site.shop');
 Route::get('/inquire', 'PagesController@inquire')->name('site.inquire');
 Route::get('/shop/{id}', 'PagesController@categories')->name('site.categories');

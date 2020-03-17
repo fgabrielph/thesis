@@ -41,7 +41,13 @@
                                 @foreach($logs as $log)
                                     <tr>
                                         <td>{{$log->id}}</td>
-                                        <td>{{$log->admin->name}}</td>
+                                        <td>
+                                            @if($log->admin == null)
+                                                {{$log->staff->name}}
+                                            @else
+                                                {{$log->admin->name}}
+                                            @endif
+                                        </td>
                                         <td>{{$log->action}}</td>
                                         <td>{{$log->created_at->format('Y M d h:i:s')}}</td>
                                     </tr>

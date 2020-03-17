@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -20,14 +20,7 @@ class OrderController extends Controller
     {
         $orders = Order::all();
 
-//        $test = array();
-//        foreach($orders as $order){
-//            $try = $order->user->name;
-//            array_push($test, $try);
-//        }
-//        dd($test);
-
-        return view('admin.orders.index')->with('orders', $orders);
+        return view('staff.orders.index')->with('orders', $orders);
     }
 
     /**

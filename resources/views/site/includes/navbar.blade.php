@@ -28,10 +28,10 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link waves-effect" href="#">About</a>
+                    <a class="nav-link waves-effect" href="{{route('about')}}">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link waves-effect" href="#">Contact Us</a>
+                    <a class="nav-link waves-effect" href="{{route('contact')}}">Contact Us</a>
                 </li>
             </ul>
 

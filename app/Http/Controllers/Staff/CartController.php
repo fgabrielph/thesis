@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Staff;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Item;
+use Illuminate\Http\Request;
 use Cart;
 
 class CartController extends Controller
@@ -15,7 +16,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        return view('site.pages.cart');
+        return view('staff.walkin.cart');
     }
 
     /**
@@ -36,7 +37,6 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-
         $duplicates = Cart::search(function($cartItem, $rowId) use ($request) {
             return $cartItem->id === $request->id;
         });
@@ -61,15 +61,13 @@ class CartController extends Controller
 
         }
 
-        if($request->buynow == 1) {
-            return view('site.pages.cart');
-        }
+//        if($request->buynow == 1) {
+//            return view('site.pages.cart');
+//        }
 
 
 
         return redirect()->back()->with('success', 'Item added to cart successfully.');
-
-
     }
 
     /**
@@ -123,6 +121,12 @@ class CartController extends Controller
         }
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function destroy($id)
     {
         Cart::remove($id);

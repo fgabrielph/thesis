@@ -15,7 +15,7 @@
             <!--Grid column-->
             <div class="col-md-6 mb-4">
 
-                <img src="../assets/images/tool and dye making.jpg" class="img-fluid" alt="">
+                <img src="../assets/images/bldg.jpg" class="img-fluid" alt="">
 
             </div>
             <!--Grid column-->
@@ -60,10 +60,6 @@
 
                 <h4 class="my-4 h4">Services Offered</h4>
 
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus suscipit modi sapiente illo soluta odit
-                    voluptates,
-                    quibusdam officia. Neque quibusdam quas a quis porro? Molestias illo neque eum in laborum.</p>
-
             </div>
             <!--Grid column-->
 
@@ -76,7 +72,8 @@
             <!--Grid column-->
             <div class="col-lg-4 col-md-12 mb-4">
 
-                <img src="../assets/images/metal sheet.jpg" class="img-fluid" alt="">
+                <img src="../assets/images/metal sheet.jpg" class="img-fluid" alt=""><br><br>
+                <div class="text-center">Metal Fabrication</div>
 
             </div>
             <!--Grid column-->
@@ -84,7 +81,8 @@
             <!--Grid column-->
             <div class="col-lg-4 col-md-6 mb-4">
 
-                <img src="../assets/images/mould making.jpg" class="img-fluid" alt="">
+                <img src="../assets/images/mould making.jpg" class="img-fluid" alt=""><br><br>
+                <div class="text-center">Mold Making</div>
 
             </div>
             <!--Grid column-->
@@ -92,7 +90,8 @@
             <!--Grid column-->
             <div class="col-lg-4 col-md-6 mb-4">
 
-                <img src="../assets/images/Lathe Machine.jpg" class="img-fluid" alt="">
+                <img src="../assets/images/Lathe Machine.jpg" class="img-fluid" alt=""><br><br>
+                <div class="text-center">Lathe Machine Works</div>
 
             </div>
             <!--Grid column-->
