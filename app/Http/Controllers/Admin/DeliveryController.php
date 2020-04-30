@@ -18,6 +18,7 @@ class DeliveryController extends Controller
      */
     public function index()
     {
+
         $deliveries = Delivery::all();
         return view('admin.deliveries.index')->with('deliveries', $deliveries);
     }
@@ -88,9 +89,10 @@ class DeliveryController extends Controller
 
     public function EDA(Request $request, $id) {
 
+        //dd($request->date);
         # Validation
         $this->validate($request, [
-            'date' => 'required|max:160'
+            'date' => 'required|after:' . date("m/d/yy").'|before_or_equal:' . date("m/d/yy", strtotime("+1 week")).''
         ]);
 
         $order = Order::find($id);
@@ -110,9 +112,10 @@ class DeliveryController extends Controller
     }
 
     public function edit_EDA(Request $request, $id) {
+        //strtotime($request->date)
         # Validation
         $this->validate($request, [
-            'date' => 'required|max:160'
+            'date' => 'required|after:' . date("m/d/yy").'|before_or_equal:' . date("m/d/yy", strtotime("+1 week")).''
         ]);
 
         $delivery = Delivery::find($id);

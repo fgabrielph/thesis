@@ -124,8 +124,8 @@
                                                                     <div class="row">
                                                                         <div class="col">
                                                                             <div class="form-group">
-                                                                                <label class="col-md-4 control-label">Date: </label>
-                                                                                <div class="col-md-12">
+                                                                                <label class="col-md-5 control-label">Date: <b><i style="color: red">*Max is 7 days.</i></b></label>
+                                                                                <div class="col-md-11">
                                                                                     <input name="date" id="datepicker{{$delivery->id}}" type="text" class="form-control input-md" value="{{date('M d, Y', strtotime($delivery->ETA))}}">
                                                                                 </div>
                                                                             </div>
