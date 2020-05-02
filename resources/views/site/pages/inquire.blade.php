@@ -18,8 +18,35 @@
                     <label for="textInput">Name</label>
                     <input type="text" id="defaultContactFormName" class="form-control mb-4" name="name" placeholder="Name">
 
-                    <label for="textInput">Contact Number</label>
-                    <input type="text" id="textInput" name="contactnum" class="form-control mb-4">
+                    <label for="address" class="textInput">Address</label>
+                    <input value="{{ old('address') }}" name="address" type="text" id="address" class="form-control" placeholder="">
+
+                    <br>
+
+                    <!--Grid row-->
+                    <div class="row">
+
+                        <!--Grid column-->
+                        <div class="col-lg-4 col-md-6 mb-4">
+
+                            <label for="state">City</label>
+                            <input value="{{ old('city') }}" name="city" type="text" id="address-2" class="form-control">
+
+                        </div>
+                        <!--Grid column-->
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <label for="state">Zip Code</label>
+                            <input value="{{ old('zip_code') }}" name="zip_code" type="text" id="address-2" class="form-control">
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <label for="state">Contact Number</label>
+                            <input value="{{ old('contactnum') }}" name="contactnum" type="text" id="address-2" class="form-control">
+                        </div>
+                    </div>
+                    <!--Grid row-->
+
+                    <!--address-->
                     <br>
                     <div class="row">
                         <div class="col-md-2">

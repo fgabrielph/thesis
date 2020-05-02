@@ -32,6 +32,7 @@ class CheckoutController extends Controller
         $formatted_sub_total = str_replace(',', '', $string_sub_total);
 
         $order = new Order;
+        $order->user_id = 0;
         $order->order_number = 'ORD-'.strtoupper(uniqid());
         $order->first_name = $request->firstName;
         $order->last_name = $request->lastName;

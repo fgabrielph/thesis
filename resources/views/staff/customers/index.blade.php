@@ -47,7 +47,7 @@
                                 </thead>
                                 <tbody>
                                 @foreach($customers as $customer)
-                                    @if($customer->id != 9999)
+                                    @if($customer->id != 0)
                                     <tr>
                                         <td class="text-center">{{$customer->id}}</td>
                                         <td class="text-center">{{$customer->name}}</td>

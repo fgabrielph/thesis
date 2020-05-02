@@ -116,6 +116,11 @@ class CustomOrderController extends Controller
                 $customorder->save();
             }
 
+            if($customorder->completed == $stock) {
+                $customorder->status = 3;
+                $customorder->save();
+                return redirect(route('customorders.index'))->with('success', 'Item Completed');
+            }
             return back()->with('success', 'Completed Item is updated');
 
         } else {
@@ -168,6 +173,8 @@ class CustomOrderController extends Controller
 
         return back()->with('success', 'Payment Accepted');
     }
+
+//    public function deliver()
 
 
 

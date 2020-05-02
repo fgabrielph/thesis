@@ -36,6 +36,12 @@ Route::group(['prefix'  =>  'admin'], function () {
         Route::post('deliveries/{id}', 'Admin\DeliveryController@EDA')->name('deliveries.eda');
         Route::post('deliveries/edit/{id}', 'Admin\DeliveryController@edit_EDA')->name('deliveries.edit_eda');
 
+        #Custom Deliveries Controller
+        Route::resource('custom_deliveries', 'Admin\CustomDeliveryController');
+        Route::post('custom_deliveries/{id}', 'Admin\CustomDeliveryController@EDA')->name('custom_deliveries.eda');
+        Route::post('custom_deliveries/edit/{id}', 'Admin\CustomDeliveryController@edit_EDA')->name('custom_deliveries.edit_eda');
+        Route::get('custom_deliveries/{status}/{id}', 'Admin\CustomDeliveryController@change_status')->name('custom_deliveries.status');
+
         # Reports Controller
         Route::get('reports/list_items', 'Admin\ReportsController@list_items')->name('report.items');
         Route::get('reports/list_orders', 'Admin\ReportsController@list_orders')->name('report.orders');

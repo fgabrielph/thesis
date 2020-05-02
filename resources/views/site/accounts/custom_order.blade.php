@@ -20,6 +20,9 @@
                         <th scope="col">Image</th>
                         <th scope="col">Status</th>
                         <th scope="col">Payment Status</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">City</th>
+                        <th scope="col">Zip Code</th>
                         <th scope="col">Created At</th>
                         <th scope="col"><i class="fas fa-bolt"></i></th>
                     </tr>
@@ -52,6 +55,9 @@
                                     @endif
                                 </h5>
                             </td>
+                            <td><h5>{{$order->address}}</h5></td>
+                            <td><h5>{{$order->city}}</h5></td>
+                            <td><h5>{{$order->zip_code}}</h5></td>
                             <td><h5>{{$order->created_at->toFormattedDateString()}}</h5></td>
                             <td><a href="{{route('custom_order.show', $order->id)}}" class="btn btn-lg btn-primary"><i class="fas fa-eye"></i></a></td>
                         </tr>

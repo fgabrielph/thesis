@@ -85,6 +85,10 @@
                                                             <span class='badge badge-success'>Accepted</span>
                                                         @elseif($customorder->status == 2)
                                                             <span class="badge badge-danger">Declined</span>
+                                                        @elseif($customorder->status == 3)
+                                                            <span class="badge badge-success">Completed</span>
+                                                        @elseif($customorder->status == 5)
+                                                            <span class="badge badge-success">Delivered</span>
                                                         @endif
                                                     </h5><br>
                                                     <h5><b>Contact Number: {{$customorder->user->mobile_number}}</b></h5><br>

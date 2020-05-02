@@ -27,6 +27,9 @@ class InquiryController extends Controller
         $this->validate($request, [
             'name' => 'required|max:160',
             'contactnum' => 'required|numeric|digits:11',
+            'city' => 'required',
+            'address' => 'required',
+            'zip_code' => 'required|numeric',
             'description' => 'required',
         ]);
 
@@ -60,6 +63,9 @@ class InquiryController extends Controller
         $custom_order->user_id = Auth::user()->id;
         $custom_order->name = $request->name;
         $custom_order->image = $fileNameToStore;
+        $custom_order->address = $request->address;
+        $custom_order->city = $request->city;
+        $custom_order->zip_code = $request->zip_code;
         $custom_order->description = $request->description;
         $custom_order->save();
 

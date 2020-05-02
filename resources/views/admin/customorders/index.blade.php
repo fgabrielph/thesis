@@ -34,6 +34,9 @@
                                 <tr>
                                     <th class="text-center">Order ID</th>
                                     <th class="text-center">Placed by</th>
+                                    <th class="text-center">Address</th>
+                                    <th class="text-center">City</th>
+                                    <th class="text-center">Zip Code</th>
                                     <th class="text-center">Payment Status</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Quantity</th>
@@ -43,9 +46,13 @@
                                 </thead>
                                 <tbody>
                                 @foreach($custom_orders as $cust_order)
+                                    @if($cust_order->status != 4)
                                     <tr class="text-center">
                                         <td>{{$cust_order->id}}</td>
                                         <td>{{$cust_order->user->name}}</td>
+                                        <td><h5>{{$cust_order->address}}</h5></td>
+                                        <td><h5>{{$cust_order->city}}</h5></td>
+                                        <td><h5>{{$cust_order->zip_code}}</h5></td>
                                         <td>@if($cust_order->payment_status == 0)
                                             <h5><span class='badge badge-danger'>Not yet paid</span></h5>
                                             @elseif($cust_order->payment_status == 1)
@@ -57,23 +64,27 @@
                                         <td>@if($cust_order->status == 0)
                                                 <h5><span class='badge badge-warning'>Pending</span></h5>
                                             @elseif($cust_order->status == 1)
-                                                <h5><span class='badge badge-success'>Accepted</span></h5>
+                                                <h5><span class='badge badge-dark'>Accepted</span></h5>
                                             @elseif($cust_order->status == 2)
                                                 <h5><span class='badge badge-danger'>Declined</span></h5>
+                                            @elseif($cust_order->status == 3)
+                                                <h5><span class="badge badge-info text-white">Completed</span></h5>
+                                            @elseif($cust_order->status == 5)
+                                                <h5><span class="badge badge-success">Delivered</span></h5>
                                             @endif
                                         </td>
                                         <td>
                                             @if(empty($cust_order->quantity))
                                                 <h5>Not Available</h5>
                                             @else
-                                                <h5>{{$cust_order->quantity}}</h5>
+                                                <h5>{{$cust_order->completed}} / {{$cust_order->quantity}}</h5>
                                             @endif
                                         </td>
                                         <td>
                                             @if(empty($cust_order->price))
                                                 <h5>Not Available</h5>
                                             @else
-                                                <h5>{{$cust_order->price}}</h5>
+                                                <h5>P {{ number_format($cust_order->price, 2) }}</h5>
                                             @endif
                                         </td>
                                         <td><a href="{{route('customorders.show', $cust_order->id)}}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
@@ -89,6 +100,8 @@
                                                         <a href="#" data-toggle="modal" data-target="#accept{{$cust_order->id}}" class="btn text-white" style="background-color: red;"><span class="fas fa-receipt"></span> View Info</a>
                                                     @endif
                                                 @endif
+                                            @elseif($cust_order->status == 3)
+                                                <a href="#" data-toggle="modal" data-target="#deliver{{$cust_order->id}}" class="btn btn-md btn-success">Deliver</a> <!-- TO BE CONTINUED -->
                                             @endif
                                         </td>
                                     </tr>
@@ -158,6 +171,43 @@
                                         </div>
                                     </div>
                                     @endif
+
+                                    @if($cust_order->status == 3)
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="deliver{{$cust_order->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <form action="{{route('custom_deliveries.eda', $cust_order->id)}}" class="form-horizontal" method="POST">
+                                                        @csrf
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalCenterTitle">Estimated Day of Arrival</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label class="col-md-5 control-label">Date: <b><i style="color: red">*Max is 7 days.</i></b></label>
+                                                                        <div class="col-md-11">
+                                                                            <input name="date" id="datepicker{{$cust_order->id}}" type="text" class="form-control input-md" value="">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                            <input class="btn btn-primary" type="submit" value="Save Changes">
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+
+                                    @endif
                                 @endforeach
                                 </tbody>
                             </table>
@@ -167,5 +217,18 @@
             </div>
         </div>
     </div>
+
+@endsection
+
+@section('scripts')
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $( function() {
+            @foreach($custom_orders as $order)
+            $( "#datepicker{{$order->id}}" ).datepicker();
+            @endforeach
+        } );
+    </script>
 
 @endsection
