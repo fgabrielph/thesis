@@ -28,6 +28,16 @@ class ItemController extends Controller
         return view('admin.items.index', $data);
     }
 
+    public function lowitem()
+    {
+        $data['brands'] = Brand::all();
+        $data['categories'] = Category::all();
+        $data['items'] = Item::where('stocks', '<=', 5)->get();
+
+        return view('admin.items.lowitems', $data);
+
+    }
+
     /**
      * Store a newly created resource in storage.
      *

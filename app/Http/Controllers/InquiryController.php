@@ -10,7 +10,7 @@ use Image;
 class InquiryController extends Controller
 {
     public function index() {
-        $custom_orders = auth()->user()->custom_orders()->orderBy('created_at', 'desc')->paginate(5);
+        $custom_orders = auth()->user()->custom_orders()->orderBy('created_at', 'desc')->get();
 
         return view('site.accounts.custom_order')->with('custom_orders', $custom_orders);
     }

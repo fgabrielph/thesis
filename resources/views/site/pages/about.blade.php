@@ -14,7 +14,7 @@
             <!--Grid column-->
             <div class="col-md-6 mb-4">
 
-                <img src="../assets/images/tool and dye making.jpg" class="img-fluid" alt="">
+                <img src="../assets/images/picture.jpg" class="img-fluid" alt="">
 
             </div>
             <!--Grid column-->

@@ -36,17 +36,23 @@
 @yield('scripts')
 <script>
     $(document).ready( function () {
-        $('#orderTable').DataTable();
+        $('#orderTable').DataTable(
+            {
+                "stateSave": true
+            }
+        );
 
         $('#defTable').DataTable(
             {
-                "order": [[0, 'desc']]
+                "order": [[0, 'desc']],
+                "stateSave": true
             }
         );
 
         $('#atkTable').DataTable(
             {
-                "order": [[0, 'desc']]
+                "order": [[0, 'desc']],
+                "stateSave": true
             }
         );
     } );

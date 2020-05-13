@@ -4,6 +4,7 @@
 
 @section('content')
 
+    <br>
     <div class="container">
         @include('site.includes.messages')
         <div class="card">
@@ -11,7 +12,7 @@
                 <h1>Custom Orders</h1>
             </div>
             <div class="card-body">
-                <table class="table text-center table-responsive table-bordered">
+                <table id="defTable" class="table text-center table-responsive table-bordered">
                     <thead class="black white-text">
                     <tr>
                         <th scope="col">Custom Order No.</th>
@@ -40,6 +41,14 @@
                                         <span class='badge badge-info'>Accepted</span>
                                     @elseif($order->status == 2)
                                         <span class='badge badge-danger'>Declined</span>
+                                    @elseif($order->status == 3)
+                                        <span class='badge badge-success'>Completed</span>
+                                    @elseif($order->status == 4)
+                                        <span class='badge badge-warning'>On Delivery</span>
+                                    @elseif($order->status == 5)
+                                        <span class='badge badge-dark'>Delivered</span>
+                                    @elseif($order->status == 6)
+                                        <span class='badge badge-light'>Return</span>
                                     @endif
                                 </h5>
                             </td>
@@ -67,9 +76,9 @@
             </div>
         </div>
         <br>
-        <div class="d-flex justify-content-center">
-            {{$custom_orders->links()}}
-        </div>
+{{--        <div class="d-flex justify-content-center">--}}
+{{--            {{$custom_orders->links()}}--}}
+{{--        </div>--}}
     </div>
 
 @endsection

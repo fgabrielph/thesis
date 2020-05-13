@@ -15,6 +15,7 @@ Route::group(['prefix'  =>  'staff'], function () {
         Route::resource('staff_categories', 'Staff\CategoryController');
         Route::resource('staff_brands', 'Staff\BrandController');
         Route::resource('staff_items', 'Staff\ItemController');
+        Route::get('low_items', 'Staff\ItemController@lowitem')->name('staff.lowitems');
         Route::resource('staff_orders', 'Staff\OrderController');
         Route::get('staff_orders/status/{status}/{id}', 'Admin\OrderController@decide')->name('staff_orders.status');
 

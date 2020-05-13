@@ -26,7 +26,7 @@ class DashboardController extends Controller
         //dd($number_of_lowitem);
 
         if($number_of_lowitem <= 5) {
-            $alert = $number_of_lowitem . 'item(s) low stock';
+            $alert = $number_of_lowitem . ' item(s) low stock';
         }
 
         $all_orders = Order::all();

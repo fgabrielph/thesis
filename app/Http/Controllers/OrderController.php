@@ -24,7 +24,7 @@ class OrderController extends Controller
     {
         //$data['orders'] = Order::orderBy('created_at', 'desc')->paginate(20);
         //$orders = Order::orderBy('created_at', 'desc')->where('user_id', Auth::user()->id);
-        $orders = auth()->user()->orders()->orderBy('created_at', 'desc')->paginate(5);
+        $orders = auth()->user()->orders()->orderBy('created_at', 'desc')->get();
         //$orders = Order::orderBy('created_at', 'desc')->where('user_id', Auth::user()->id)->first(); //WORKING ATTRIBUTE GETTING THE RECENT ORDERS
 
 

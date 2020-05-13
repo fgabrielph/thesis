@@ -18,9 +18,9 @@
                 </div>
             </div>
             <div class="card-body">
-                <table class="table">
+                <table id="defTable" class="table">
                     <thead class="black white-text">
-                    <tr>
+                    <tr class="text-center">
                         <th scope="col">Order No.</th>
                         <th scope="col">First Name</th>
                         <th scope="col">Last Name</th>
@@ -162,9 +162,9 @@
 
         </div>
         <br>
-        <div class="d-flex justify-content-center">
-            {{$orders->links()}}
-        </div>
+{{--        <div class="d-flex justify-content-center">--}}
+{{--            {{$orders->links()}}--}}
+{{--        </div>--}}
 
     </div>
 
@@ -175,29 +175,31 @@
 
 @section('footer')
 
-    <!--Footer-->
-    <footer class="page-footer text-center font-small mt-4 wow fadeIn fixed-bottom">
+{{--    <!--Footer-->--}}
+{{--    <footer class="page-footer text-center font-small mt-4 wow fadeIn fixed-bottom">--}}
 
-        <div class="orange">
-            <!--Call to action-->
-            <div class="pt-3">
-                <a class="btn purple-gradient waves-effect waves-light" href="{{route('site.inquire')}}" role="button">Inquire Now</a>
-                <a class="btn btn-outline-white" href="#" role="button">Contacts</a>
-            </div>
-            <!--/.Call to action-->
-
-
-            <!--Copyright-->
-            <div class="footer-copyright py-3 black">
-                © 2019 Copyright:
-                <a href="#" target="_blank"> New MJC </a>
-            </div>
-            <!--/.Copyright-->
-
-        </div>
+{{--        <div class="orange">--}}
+{{--            <!--Call to action-->--}}
+{{--            <div class="pt-3">--}}
+{{--                <a class="btn purple-gradient waves-effect waves-light" href="{{route('site.inquire')}}" role="button">Inquire Now</a>--}}
+{{--                <a class="btn btn-outline-white" href="{{route('contact')}}" role="button">Contacts</a>--}}
+{{--            </div>--}}
+{{--            <!--/.Call to action-->--}}
 
 
-    </footer>
-    <!--/.Footer-->
+{{--            <!--Copyright-->--}}
+{{--            <div class="footer-copyright py-3 black">--}}
+{{--                © 2019 Copyright:--}}
+{{--                <a href="#" target="_blank"> New MJC </a>--}}
+{{--            </div>--}}
+{{--            <!--/.Copyright-->--}}
+
+{{--        </div>--}}
+
+
+{{--    </footer>--}}
+{{--    <!--/.Footer-->--}}
+
+@include('site.includes.footer')
 
 @endsection

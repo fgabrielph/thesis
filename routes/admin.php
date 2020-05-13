@@ -16,6 +16,7 @@ Route::group(['prefix'  =>  'admin'], function () {
         Route::resource('categories', 'Admin\CategoryController');
         Route::resource('brands', 'Admin\BrandController');
         Route::resource('items', 'Admin\ItemController');
+        Route::get('low_items', 'Admin\ItemController@lowitem')->name('admin.lowitems');
         Route::resource('admin_orders', 'Admin\OrderController');
         Route::get('admin_orders/status/{status}/{id}', 'Admin\OrderController@decide')->name('admin_orders.status');
 

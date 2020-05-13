@@ -4,6 +4,7 @@
 
 @section('content')
 
+    <br>
     <div class="container">
         <h3 class="text-center">Visit and Contact Us</h3>
         <div class="row mt-3">
@@ -20,6 +21,19 @@
             </div>
         </div>
     </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+
+
+
+
+
 
 @endsection
 

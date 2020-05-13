@@ -29,6 +29,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body p-0" style="margin: 1%">
+                            @if(!empty($items))
                             <table id="orderTable" class="table table-hover">
                                 <thead class="thead-dark">
                                 <tr>
@@ -194,6 +195,10 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                            @else
+
+                            No Items on Low Stock!
+                            @endif
                         </div>
                         <!-- <div class="card-footer clearfix">
                             <ul class="pagination pagination-sm m-0 float-right">

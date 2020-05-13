@@ -7,7 +7,13 @@
     <section class="content">
         <div class="container-fluid">
             <br>
-            @include('admin.includes.messages')
+            @include('staff.includes.messages')
+            @if($lowitem != 0)
+                <div class="alert alert-danger alert-dismissible">
+                    <a href="{{route('staff.lowitems')}}" class="btn btn-primary float-right" style="text-decoration: none">View Now</a>
+                    <h4>There are {{$lowitem}} item(s) low in stock</h4>
+                </div>
+            @endif
             <div class="card">
                 <div class="card-header">
                     <h1>WELCOME {{ Auth::user()->name }}</h1>

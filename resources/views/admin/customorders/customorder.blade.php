@@ -74,8 +74,10 @@
                                                             <span class='badge badge-danger'>Not yet Paid</span>
                                                         @elseif($customorder->payment_status == 2)
                                                             <h5><span class='badge badge-warning'>Waiting for Approval</span></h5>
-                                                        @else
+                                                        @elseif($customorder->payment_status == 1)
                                                             <span class="badge badge-success">Paid</span>
+                                                        @elseif($customorer->payment_status == 3)
+                                                            <span class="badge-info">Partially Paid</span>
                                                         @endif
                                                     </h5><br>
                                                     <h5><b>Status: </b>
