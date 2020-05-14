@@ -15,6 +15,10 @@
 Route::view('/', 'site.pages.homepage')->name('home');
 Route::view('/about', 'site.pages.about')->name('about');
 Route::view('/contact', 'site.pages.contact')->name('contact');
+Route::view('/privacy_policy','site.pages.privacypolicy')->name('policy');
+Route::view('/terms_and_conditions','site.pages.terms')->name('terms');
+Route::view('/refunds_returns', 'site.pages.returns_policy')->name('rr');
+Route::view('/faqs', 'site.pages.faqs')->name('faqs');
 Route::get('/shop', 'PagesController@shop')->name('site.shop');
 Route::get('/inquire', 'PagesController@inquire')->name('site.inquire');
 Route::get('/shop/{id}', 'PagesController@categories')->name('site.categories');

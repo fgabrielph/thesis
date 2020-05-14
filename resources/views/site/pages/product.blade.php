@@ -77,6 +77,8 @@
     </main>
     <!--Main layout-->
 
+    <br>
+
 @endsection
 
 @section('footer')

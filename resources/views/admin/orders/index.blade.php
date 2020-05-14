@@ -86,8 +86,9 @@
                                         </td>
                                         <td>
                                             <button type="button" data-toggle="modal" data-target="#view{{$order->id}}" class="btn btn-md btn-primary"><span class="fas fa-search"></span> View</button>
+                                            <a href="{{route('admin_orders.show', $order->id)}}" class="btn btn-md btn-secondary"><span class="fas fa-tasks"></span> View Contents</a>
                                             @if($order->payment_method == 'cod' && $order->status != 'Confirmed' && $order->status != 'Completed' && $order->status != 'Return' && $order->status != 'Canceled')
-                                            <a href="{{route('admin_orders.status', ['status' => 'Confirmed', 'id' => $order->id])}}" class="btn btn-md btn-primary"><span class="fas fa-check-circle"></span> Confirm</a>
+                                            <a href="{{route('admin_orders.status', ['status' => 'Confirmed', 'id' => $order->id])}}" class="btn btn-md btn-success"><span class="fas fa-check-circle"></span> Confirm</a>
                                             @endif
                                             @if(!(empty($order->image)))
                                                 <a href="#" data-toggle="modal" data-target="#receipt{{$order->id}}" class="btn text-white" style="background-color: grey;"><span class="fas fa-receipt"></span> View Receipt</a>

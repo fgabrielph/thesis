@@ -188,6 +188,14 @@
                                         <span class='badge badge-success'>Accepted</span>
                                     @elseif($custom_order->status == 2)
                                         <span class="badge badge-danger">Declined</span>
+                                    @elseif($custom_order->status == 3)
+                                        <span class='badge badge-success'>Completed</span>
+                                    @elseif($custom_order->status == 4)
+                                        <span class='badge badge-warning'>On Delivery</span>
+                                    @elseif($custom_order->status == 5)
+                                        <span class='badge badge-dark'>Delivered</span>
+                                    @elseif($custom_order->status == 6)
+                                        <span class='badge badge-light'>Return</span>
                                     @endif
                                 </h5><br>
                                 <h5><b>Contact Number: {{$custom_order->user->mobile_number}}</b></h5><br>

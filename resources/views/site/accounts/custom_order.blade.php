@@ -12,7 +12,7 @@
                 <h1>Custom Orders</h1>
             </div>
             <div class="card-body">
-                <table id="defTable" class="table text-center table-responsive table-bordered">
+                <table id="defTable" class="table text-center ">
                     <thead class="black white-text">
                     <tr>
                         <th scope="col">Custom Order No.</th>
@@ -80,6 +80,15 @@
 {{--            {{$custom_orders->links()}}--}}
 {{--        </div>--}}
     </div>
+
+    @if(empty($custom_orders) || count($custom_orders) <= 3)
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    @endif
 
 @endsection
 

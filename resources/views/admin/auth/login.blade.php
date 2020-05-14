@@ -12,20 +12,22 @@
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
 </head>
-<body class="hold-transition login-page">
+
+<body class="hold-transition login-page" style="background-image: url('/assets/images/Background.png');">
 <div class="login-box">
     <div class="login-logo">
-        <b>Admin</b> MJC
+        <img src="/assets/images/Dz5gMSnB2dt7wZHjluX6nGrgj.png" width="90%">
+{{--        <b>Admin</b> MJC--}}
     </div>
     <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body">
-            <p class="login-box-msg">Sign in to start your session</p>
+            <p class="login-box-msg">Admin Login</p>
 
             <form action="{{ route('admin.login.post') }}" method="post">
                 @csrf
                 <div class="input-group mb-3">
-                    <input type="email" class="form-control" name="email" placeholder="Email">
+                    <input type="email" class="form-control" name="email" placeholder="Username / Email">
                     <div class="input-group-append">
                         <div class="input-group-text">
 {{--                            <span class="fa-envelope"></span>--}}
@@ -41,16 +43,16 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-8">
-                        <div class="icheck-primary">
-                            <input type="checkbox" id="remember">
-                            <label for="remember">
-                                Remember Me
-                            </label>
-                        </div>
-                    </div>
+{{--                    <div class="col-8">--}}
+{{--                        <div class="icheck-primary">--}}
+{{--                            <input type="checkbox" id="remember">--}}
+{{--                            <label for="remember">--}}
+{{--                                Remember Me--}}
+{{--                            </label>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                     <!-- /.col -->
-                    <div class="col-4">
+                    <div class="col-12">
                         <button type="submit" class="btn btn-primary btn-block">Sign In</button>
                     </div>
                     <!-- /.col -->

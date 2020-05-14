@@ -27,6 +27,7 @@ class OrderController extends Controller
         $orders = auth()->user()->orders()->orderBy('created_at', 'desc')->get();
         //$orders = Order::orderBy('created_at', 'desc')->where('user_id', Auth::user()->id)->first(); //WORKING ATTRIBUTE GETTING THE RECENT ORDERS
 
+        //dd(count($orders));
 
        //dd($orders->id);
         return view('site.accounts.orders')->with('orders', $orders);

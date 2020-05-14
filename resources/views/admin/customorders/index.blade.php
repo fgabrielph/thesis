@@ -50,9 +50,9 @@
                                     <tr class="text-center">
                                         <td>{{$cust_order->id}}</td>
                                         <td>{{$cust_order->user->name}}</td>
-                                        <td><h5>{{$cust_order->address}}</h5></td>
-                                        <td><h5>{{$cust_order->city}}</h5></td>
-                                        <td><h5>{{$cust_order->zip_code}}</h5></td>
+                                        <td>{{$cust_order->address}}</td>
+                                        <td>{{$cust_order->city}}</td>
+                                        <td>{{$cust_order->zip_code}}</td>
                                         <td>@if($cust_order->payment_status == 0)
                                             <h5><span class='badge badge-danger'>Not yet paid</span></h5>
                                             @elseif($cust_order->payment_status == 1)

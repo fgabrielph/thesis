@@ -5,6 +5,7 @@
 @section('content')
 
     <div class="container">
+        <br><br><br>
         @include('site.includes.messages')
         <div class="card">
             <div class="card-header">
@@ -35,7 +36,7 @@
 
                     @forelse ($orders as $order)
                         <tr>
-                            <th scope="row"><h4>{{ $order->order_number }}</h4></th>
+                            <th scope="row"><h5>{{ $order->order_number }}</h5></th>
                             <td><h5>{{ $order->first_name }}</h5></td>
                             <td><h5>{{ $order->last_name }}</h5></td>
                             <td><h5>{{ number_format($order->grand_total, 2) }}</h5></td>
@@ -168,38 +169,20 @@
 
     </div>
 
-
+    @if(empty($orders) || count($orders) <= 2)
+    <br>
+    <br>
+    <br>
+    @endif
 
 
 @endsection
 
 @section('footer')
 
-{{--    <!--Footer-->--}}
-{{--    <footer class="page-footer text-center font-small mt-4 wow fadeIn fixed-bottom">--}}
 
-{{--        <div class="orange">--}}
-{{--            <!--Call to action-->--}}
-{{--            <div class="pt-3">--}}
-{{--                <a class="btn purple-gradient waves-effect waves-light" href="{{route('site.inquire')}}" role="button">Inquire Now</a>--}}
-{{--                <a class="btn btn-outline-white" href="{{route('contact')}}" role="button">Contacts</a>--}}
-{{--            </div>--}}
-{{--            <!--/.Call to action-->--}}
+    @include('site.includes.footer')
 
 
-{{--            <!--Copyright-->--}}
-{{--            <div class="footer-copyright py-3 black">--}}
-{{--                © 2019 Copyright:--}}
-{{--                <a href="#" target="_blank"> New MJC </a>--}}
-{{--            </div>--}}
-{{--            <!--/.Copyright-->--}}
-
-{{--        </div>--}}
-
-
-{{--    </footer>--}}
-{{--    <!--/.Footer-->--}}
-
-@include('site.includes.footer')
 
 @endsection

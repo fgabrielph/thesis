@@ -4,6 +4,7 @@
 
 @section('content')
 
+    <br><br>
     <div class="container wow fadeIn">
         <!-- Heading -->
         <h2 class="my-5 h2 text-center">Cart</h2>
@@ -98,6 +99,23 @@
                     <hr>
                     <a href="{{route('checkout.index')}}" class="btn btn-success btn-lg btn-block">Proceed To Checkout</a>
 
+                    <figure class="itemside">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <aside class="aside"><img src="/assets/images/COD.png"></aside>
+                            </div>
+                            <div class="col-md-4">
+                                <aside class="aside"><img src="/assets/images/paypal.png"></aside>
+                            </div>
+                            <div class="col-md-4">
+                                <aside class="aside"><img src="/assets/images/pay-bank.png"></aside>
+                            </div>
+                        </div>
+
+                    </figure>
+
+                    <p style="color: red; font-size: 20px;"><i><strong>* Free delivery within metro manila. For Shipping outside Metro Manila please contact 364-8556 or email  <a href="mailto:mjctrdgmfg@gmail.com">mjctrdgmfg@gmail.com</a></strong></i></p>
+
                 </div>
                 <!--Grid column-->
 
@@ -105,8 +123,10 @@
             <!--Grid row-->
 
         @else
+
         <center>
-            <h3>No items in Cart!</h3>
+            <h3>Oh no!</h3>
+            <img src="/assets/images/emptycart.png" alt="Empty" style="width:50%;"><br>
             <a href="{{route('site.shop')}}" class="btn btn-primary btn-rounded">Continue Shopping</a>
         </center>
         @endif
@@ -118,29 +138,6 @@
 
 @section('footer')
 
-    <!--Footer-->
-    <footer class="page-footer text-center font-small mt-4 wow fadeIn fixed-bottom">
-
-        <div class="orange">
-            <!--Call to action-->
-            <div class="pt-3">
-                <a class="btn btn-outline-white" href="{{route('site.inquire')}}" role="button">Inquire Now</a>
-                <a class="btn btn-outline-white" href="#" role="button">Contacts</a>
-            </div>
-            <!--/.Call to action-->
-
-
-            <!--Copyright-->
-            <div class="footer-copyright py-3 black">
-                © 2019 Copyright:
-                <a href="#" target="_blank"> New MJC </a>
-            </div>
-            <!--/.Copyright-->
-
-        </div>
-
-
-    </footer>
-    <!--/.Footer-->
+    @include('site.includes.footer')
 
 @endsection

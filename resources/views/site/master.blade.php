@@ -80,7 +80,7 @@
 
         @yield('others')
 
-        <main class="mt-5 pt-5">
+        <main class="mt-4">
             @yield('content')
         </main>
 

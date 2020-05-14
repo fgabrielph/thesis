@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 3 | Log in</title>
+    <title>{{config('app.name')}} | Log in</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -12,18 +12,18 @@
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" style="background-image: url('/assets/images/staffbg.png');">
 
 
 <div class="login-box">
     @include('staff.includes.messages')
     <div class="login-logo">
-        <b>Staff</b> MJC
+        <img src="/assets/images/Dz5gMSnB2dt7wZHjluX6nGrgj.png" width="90%">
     </div>
     <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body">
-            <p class="login-box-msg">Sign in to start your session</p>
+            <p class="login-box-msg">Staff Login</p>
 
             <form action="{{ route('staff.login.post') }}" method="post">
                 @csrf
