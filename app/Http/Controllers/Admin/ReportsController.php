@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Delivery;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use PDF;
@@ -11,6 +12,8 @@ use App\Staff;
 use App\CustomOrder;
 use App\Order;
 use App\User;
+use App\Brand;
+use App\Category;
 
 class ReportsController extends Controller
 {
@@ -47,6 +50,21 @@ class ReportsController extends Controller
         $admins = Admin::all();
         return view('admin.reports.list_admins')->with('admins', $admins);
 
+    }
+
+    public function list_deliveries() {
+
+        $deliveries = Delivery::all();
+        return view('admin.reports.list_delivery')->with('deliveries', $deliveries);
+    }
+
+    public function list_critical_level() {
+
+        $data['brands'] = Brand::all();
+        $data['categories'] = Category::all();
+        $data['items'] = Item::where('stocks', '<=', 5)->get();
+
+        return view('admin.reports.list_critical_level', $data);
     }
 
     public function toPDF($select) {
@@ -102,6 +120,27 @@ class ReportsController extends Controller
 
                 break;
 
+            case 'deliveries':
+
+                $deliveries = Delivery::all();
+
+                $pdf = PDF::loadview('admin.reports.pdf.deliveries', compact('deliveries'));
+
+                return $pdf->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->stream('list_deliveries.pdf');
+
+                break;
+
+            case 'critical_level':
+
+                $data['brands'] = Brand::all();
+                $data['categories'] = Category::all();
+                $data['items'] = Item::where('stocks', '<=', 5)->get();
+
+                $pdf = PDF::loadview('admin.reports.pdf.critical_level', $data);
+
+                return $pdf->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->stream('list_critical_items.pdf');
+
+                break;
 
         }
 

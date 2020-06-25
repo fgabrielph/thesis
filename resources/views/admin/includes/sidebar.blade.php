@@ -134,6 +134,19 @@
                                 <p>List of Admins</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{route('report.deliveries')}}" class="nav-link">
+                                <i class="fas fa-list nav-icon"></i>
+                                <p>List of Deliveries</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('report.critical_level')}}" class="nav-link">
+                                <i class="fas fa-list nav-icon"></i>
+                                <p>List of Critical Level Items</p>
+                            </a>
+                        </li>
+
                     </ul>
                 </li>
                 <li class="nav-item">

@@ -63,7 +63,6 @@
                                                 <td>{{date('M d, Y', strtotime($delivery->ETA))}}</td>
                                                 <td>
                                                     <a href="{{route('deliveries.status', ['status' => 'Completed', 'id' => $delivery->id])}}" class="btn btn-lg btn-success">Complete</a>
-                                                    <a href="{{route('deliveries.status', ['status' => 'Return', 'id' => $delivery->id])}}" class="btn btn-lg btn-primary">Return</a>
                                                 </td>
 
                                             </tr>
@@ -158,6 +157,7 @@
                                             <th>Status</th>
                                             <th>Date Created</th>
                                             <th>Date Completed</th>
+                                            <th>Actions</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -176,6 +176,7 @@
                                                     @else
                                                         <td>{{$delivery->updated_at->format('M d Y -- h:iA')}}</td>
                                                     @endif
+                                                    <td><a href="{{route('deliveries.status', ['status' => 'Return', 'id' => $delivery->id])}}" class="btn btn-lg btn-primary">Return?</a></td>
 
                                                 </tr>
                                             @endif

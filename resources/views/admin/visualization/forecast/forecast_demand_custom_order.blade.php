@@ -93,7 +93,7 @@
                         @endforeach
 
                         @foreach($forecasted as $forecast)
-                        {{ $forecast }},
+                        {{ round($forecast) }},
                         @endforeach
                     ],
                     borderColor        : 'red',

@@ -49,6 +49,8 @@ Route::group(['prefix'  =>  'admin'], function () {
         Route::get('reports/list_custom_orders', 'Admin\ReportsController@list_custom_orders')->name('report.custom_orders');
         Route::get('reports/list_staffs', 'Admin\ReportsController@list_staffs')->name('report.staffs');
         Route::get('reports/list_admins', 'Admin\ReportsController@list_admins')->name('report.admins');
+        Route::get('reports/list_deliveries', 'Admin\ReportsController@list_deliveries')->name('report.deliveries');
+        Route::get('reports/list_critical_level', 'Admin\ReportsController@list_critical_level')->name('report.critical_level');
 
         # To PDF Function
         Route::get('reports/pdf/{name}/download', 'Admin\ReportsController@toPDF')->name('export');
