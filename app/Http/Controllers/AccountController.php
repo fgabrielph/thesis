@@ -120,13 +120,15 @@ class AccountController extends Controller
 
         # Validation
         $this->validate($request, [
-            'name' => 'required|max:160',
+            'first_name' => 'required|max:160',
+            'last_name' => 'required|max:160',
             'email' => 'required|email'
         ]);
 
         $user = Auth::user();
 
-        $user->name = $request->name;
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
         $user->email = $request->email;
 
         $user->save();

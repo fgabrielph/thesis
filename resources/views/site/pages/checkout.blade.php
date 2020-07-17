@@ -4,6 +4,7 @@
 
 @section('content')
 
+    <br><br><br>
     <div class="container wow fadeIn">
 
         <!-- Heading -->
@@ -30,7 +31,7 @@
 
                                 <!--firstName-->
                                 <div class="md-form ">
-                                    <input value="{{ old('firstName') }}" name="firstName" type="text" id="firstName" class="form-control">
+                                    <input value="{{ Auth::user()->first_name }}" name="firstName" type="text" id="firstName" class="form-control">
                                     <label for="firstName" class="">First name</label>
                                 </div>
 
@@ -42,7 +43,7 @@
 
                                 <!--lastName-->
                                 <div class="md-form">
-                                    <input value="{{ old('lastName') }}" name="lastName" type="text" id="lastName" class="form-control">
+                                    <input value="{{ Auth::user()->last_name }}" name="lastName" type="text" id="lastName" class="form-control">
                                     <label for="lastName" class="">Last name</label>
                                 </div>
 
@@ -60,7 +61,7 @@
 
                         <!--address-->
                         <div class="md-form mb-5">
-                            <input value="{{ old('address') }}" name="address" type="text" id="address" class="form-control" placeholder="">
+                            <input value="{{ Auth::user()->address }}" name="address" type="text" id="address" class="form-control" placeholder="">
                             <label for="address" class="">Address</label>
                         </div>
 
@@ -83,7 +84,7 @@
 
                             <div class="col-lg-4 col-md-6 mb-4">
                                 <label for="state">Mobile Number</label>
-                                <input value="{{ old('mobile_num') }}" name="mobile_num" type="text" id="address-2" class="form-control">
+                                <input value="{{ Auth::user()->mobile_number }}" name="mobile_num" type="text" id="address-2" class="form-control">
                             </div>
 
 
@@ -98,7 +99,14 @@
                         </div>
 
 
-                        <hr>
+
+                        <input class="mb-3" type="checkbox" value="" id="checker"> Receiver
+                        <!--deliver to-->
+                        <div id="receiver" class="md-form mb-5" style="display: none">
+                            <input name="deliver_to" type="text" id="deliver_to" class="form-control" placeholder="Enter Receiver's Full Name">
+                            <label for="deliver_to" class="">Deliver to</label>
+                        </div>
+
 
 
                         <div class="d-block my-3">
@@ -174,6 +182,22 @@
 @section('footer')
 
     @include('site.includes.footer')
+
+@endsection
+
+@section('js')
+
+    <script>
+
+        $('#checker').change(function(){
+            if ($(this).prop('checked')) {
+                $('#receiver').show();
+            }else{
+                $('#receiver').hide();
+            }
+        })
+
+    </script>
 
 @endsection
 

@@ -10,7 +10,7 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0 text-dark">Custom Order Number {{$customorder->id}}</h1>
-                    <p>Placed by {{$customorder->user->name}}</p>
+                    <p>Placed by {{$customorder->user->first_name . ' ' . $customorder->user->last_name}}</p>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -66,7 +66,7 @@
                                         <div class="row">
                                             <div class="col-md-7">
                                                 <div class="card-body">
-                                                    <h5><b>Placed By: </b>{{$customorder->user->name}}</h5><br>
+                                                    <h5><b>Placed By: </b>{{$customorder->user->first_name . ' ' . $customorder->user->last_name}}</h5><br>
                                                     <h5><b>Payment Status: </b>
                                                         @if($customorder->payment_status == 0 && $customorder->status == 2)
                                                             <span class='badge badge-danger'>Declined Order</span>

@@ -96,7 +96,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-4">Placed By
-                                                <address><strong>{{ $order->user->name }}</strong><br>Email: {{ $order->user->email }}</address>
+                                                <address><strong>{{ $order->user->first_name . " " . $order->user->last_name}}</strong><br>Email: {{ $order->user->email }}</address>
                                             </div>
                                             <div class="col-4">Ship To
                                                 <address><strong>{{ $order->first_name }} {{ $order->last_name }}</strong><br>{{ $order->address }}<br>{{ $order->city }}, {{ $order->country }} {{ $order->post_code }}<br>{{ $order->phone_number }}<br></address>
@@ -107,13 +107,11 @@
                                                 <b>Payment Method:</b> {{ $order->payment_method }}<br>
                                                 <b>Payment Status:</b> {{ $order->payment_status == 1 ? 'Completed' : 'Not Completed' }}<br>
                                                 <b>Order Status:</b>
-                                                <?php
-                                                    if($order->status == 'WaitingForPayment') {
-                                                        echo 'Waiting for Payment';
-                                                    } else {
-                                                        echo $order->status;
-                                                    }
-                                                ?>
+                                                @if($order->status == 'WaitingForPayment')
+                                                    Waiting for Payment
+                                                @else
+                                                    {{$order->status}}
+                                                @endif
                                                 <br>
 
                                             </div>

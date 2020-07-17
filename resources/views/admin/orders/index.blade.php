@@ -48,10 +48,10 @@
                                         <td class="text-center">{{$order->id}}</td>
                                         <td class="text-center">{{$order->order_number}}</td>
                                         <td class="text-center">
-                                            @if($order->user->name == 'N/A')
+                                            @if($order->user->first_name == 'N/A')
                                                 {{$order->first_name . ' ' . $order->last_name}}
                                             @else
-                                                {{$order->user->name}}
+                                                {{$order->user->first_name . ' ' . $order->user->last_name}}
                                             @endif
                                         </td>
                                         <td>
@@ -125,7 +125,7 @@
                                                                     @if($order->user->name == 'N/A')
                                                                         {{$order->first_name . ' ' . $order->last_name}}
                                                                     @else
-                                                                        {{$order->user->name}}
+                                                                        {{$order->user->first_name . ' ' . $order->user->last_name}}
                                                                     @endif
                                                                 </strong>
                                                                 <br>Email:

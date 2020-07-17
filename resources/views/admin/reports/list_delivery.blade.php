@@ -9,8 +9,8 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Orders</h1>
-                    <p>list of custom orders</p>
+                    <h1 class="m-0 text-dark">Deliveries</h1>
+                    <p>list of deliveries</p>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <a href="{{route('export', 'deliveries')}}" class="btn btn-primary float-right">
@@ -40,8 +40,9 @@
                                     <th>Customer Name</th>
                                     <th>Address</th>
                                     <th>Status</th>
-                                    <th>Created at</th>
+                                    <th>Dispatched at</th>
                                     <th>Estimated Day of Arrival</th>
+                                    <th>Re-scheduled or Postponed at</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -57,6 +58,15 @@
                                         @else
                                             <td>N/A</td>
                                         @endif
+
+                                        @if($delivery->created_at == $delivery->updated_at)
+                                            <td>N/A</td>
+                                        @elseif($delivery->status != 'Completed')
+                                            <td>{{$delivery->updated_at->format('m/d/Y')}} at {{$delivery->updated_at->format('g:i A')}}</td>
+                                        @else
+                                            <td>Completed</td>
+                                        @endif
+
                                     </tr>
                                 @endforeach
                                 </tbody>

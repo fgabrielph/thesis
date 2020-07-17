@@ -54,8 +54,9 @@
         <th>Customer Name</th>
         <th>Address</th>
         <th>Status</th>
-        <th>Created at</th>
+        <th>Dispatched at</th>
         <th>Estimated Day of Arrival</th>
+        <th>Re-scheduled or Postponed at</th>
     </tr>
     </thead>
     <tbody>
@@ -65,11 +66,19 @@
             <td>{{$delivery->customer_name}}</td>
             <td>{{$delivery->order->address}}</td>
             <td>{{$delivery->status}}</td>
-            <td>{{$delivery->created_at->format('m/d/Y')}}</td>
+            <td>{{$delivery->created_at->format('m/d/Y')}} at {{$delivery->created_at->format('g:i A')}}</td>
             @if(!empty($delivery->ETA))
                 <td>{{$delivery->ETA}}</td>
             @else
                 <td>N/A</td>
+            @endif
+
+            @if($delivery->created_at == $delivery->updated_at)
+                <td>N/A</td>
+            @elseif($delivery->status != 'Completed')
+                <td>{{$delivery->updated_at->format('m/d/Y')}} at {{$delivery->updated_at->format('g:i A')}}</td>
+            @else
+                <td>Completed</td>
             @endif
         </tr>
     @endforeach
@@ -79,7 +88,7 @@
 <div class="footer">
     Requested by {{Auth::user()->name}}
     <br>
-    Requested on {{now()->format('Y M d h:i')}}
+    Requested on {{now()->format('Y M d h:i A')}}
 </div>
 </body>
 </html>

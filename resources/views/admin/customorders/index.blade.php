@@ -49,7 +49,7 @@
                                     @if($cust_order->status != 4)
                                     <tr class="text-center">
                                         <td>{{$cust_order->id}}</td>
-                                        <td>{{$cust_order->user->name}}</td>
+                                        <td>{{$cust_order->user->first_name . ' ' . $cust_order->user->last_name}}</td>
                                         <td>{{$cust_order->address}}</td>
                                         <td>{{$cust_order->city}}</td>
                                         <td>{{$cust_order->zip_code}}</td>

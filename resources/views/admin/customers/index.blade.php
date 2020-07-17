@@ -50,7 +50,7 @@
                                     @if($customer->id != 0)
                                     <tr>
                                         <td class="text-center">{{$customer->id}}</td>
-                                        <td class="text-center">{{$customer->name}}</td>
+                                        <td class="text-center">{{$customer->first_name . ' ' . $customer->last_name}}</td>
                                         <td class="text-center">{{$customer->email}}</td>
                                         <td class="text-center">{!! !empty($customer->email_verified_at) ? '<span class="badge bg-success">Verified</span>' : '<span class="badge bg-danger">Not Verified</span>'!!}</td>
                                         <td class="text-center">{!! $customer->status ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-danger">Deactivated</span>' !!}</td>
@@ -77,7 +77,7 @@
                                                             <img src="/assets/images/large_thumbnail/{{$customer->avatar}}" width="100%" alt="this is image">
                                                         </div>
                                                         <div class="col">
-                                                            <strong><h2>{{$customer->name}}</h2></strong>
+                                                            <strong><h2>{{$customer->first_name . ' ' . $customer->last_name}}</h2></strong>
                                                             <h3 class="text-success">{{$customer->email}}</h3>
                                                             <p>STATUS: {{ $customer->status ? 'Active' : 'Deactivated' }}</p>
                                                             <h1>{!! !empty($customer->email_verified_at) ? '<span class="badge bg-success">VERIFIED</span>' : '<span class="badge bg-danger">NOT VERIFIED</span>'!!}</h1>
@@ -111,7 +111,7 @@
                                                             <img src="/assets/images/large_thumbnail/{{$customer->avatar}}" width="100%" alt="this is image">
                                                         </div>
                                                         <div class="col">
-                                                            <strong><h2>{{$customer->name}}</h2></strong>
+                                                            <strong><h2>{{$customer->first_name . ' ' . $customer->last_name}}</h2></strong>
                                                             <h3 class="text-success">{{$customer->email}}</h3>
                                                             <h1>{!! !empty($customer->email_verified_at) ? '<span class="badge bg-success">VERIFIED</span>' : '<span class="badge bg-danger">NOT VERIFIED</span>'!!}</h1>
                                                             <h5></h5>
@@ -164,9 +164,16 @@
                     {!! Form::open(['class' => 'form-horizontal', 'action' => 'Admin\CustomerController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
 
                     <div class="form-group">
-                        {{Form::label('', 'Name', ['class' => 'col-md-4 control-label'])}}
+                        {{Form::label('', 'First Name', ['class' => 'col-md-4 control-label'])}}
                         <div class="col-md-12">
-                            {{Form::text('name', '', ['class' => 'form-control input-md',  'placeholder' => 'Name'])}}
+                            {{Form::text('first_name', '', ['class' => 'form-control input-md',  'placeholder' => 'First Name'])}}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {{Form::label('', 'Last Name', ['class' => 'col-md-4 control-label'])}}
+                        <div class="col-md-12">
+                            {{Form::text('last_name', '', ['class' => 'form-control input-md',  'placeholder' => 'Last Name'])}}
                         </div>
                     </div>
 

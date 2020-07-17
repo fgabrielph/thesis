@@ -3,7 +3,7 @@
 @section('title') {{Auth::user()->name}} @endsection
 
 @section('content')
-
+    <br><br><br>
     <div class="container">
         @include('site.includes.messages')
         <div class="row">
@@ -21,13 +21,15 @@
             <div class="col-md-8">
                 <div class="card" style="height: 480px">
                     <div class="card-header">
-                        {{Auth::user()->name}}'s Dashboard
+                        {{Auth::user()->first_name . " " . Auth::user()->last_name}}'s Dashboard
                     </div>
                     <div class="card-body">
                         <form action="{{route('account.name')}}" method="POST">
                             @csrf
-                            <label><strong>Name: </strong></label>
-                            <input class="form-control input-md" type="text" name="name" value="{{Auth::user()->name}}"><br>
+                            <label><strong>First Name: </strong></label>
+                            <input class="form-control input-md" type="text" name="first_name" value="{{Auth::user()->first_name}}"><br>
+                            <label><strong>Last Name: </strong></label>
+                            <input class="form-control input-md" type="text" name="last_name" value="{{Auth::user()->last_name}}"><br>
                             <label><strong>Email: </strong></label>
                             <input class="form-control input-md" type="text" name="email" value="{{Auth::user()->email}}"><br>
                             <button class="btn btn-sm btn-amber" type="submit">Update</button>

@@ -45,7 +45,8 @@ class CustomerController extends Controller
     {
         //Validation
         $this->validate($request, [
-            'name' => 'required|max:160',
+            'first_name' => 'required|max:160',
+            'last_name' => 'required|max:160',
             'email' => 'required|unique:users|email',
             'password' => 'required|min:8|max:16',
             'confirm_pass' => 'same:password'
@@ -102,7 +103,8 @@ class CustomerController extends Controller
         }
 
         $customer = new User;
-        $customer->name = $request->name;
+        $customer->first_name = $request->first_name;
+        $customer->last_name = $request->last_name;
         $customer->avatar = $largethumbnail;
         $customer->email = $request->email;
         $customer->password = bcrypt($request->password);
