@@ -1,6 +1,6 @@
 @extends('admin.master')
 
-@section('title') Order Analysis @endsection
+@section('title') Sales Report Monthy @endsection
 
 @section('content')
 
@@ -9,8 +9,8 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Orders</h1>
-                    <p>Order Sales</p>
+                    <h1 class="m-0 text-dark">Sales</h1>
+                    <p>Monthly Sales Reports</p>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -20,25 +20,9 @@
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
+
             <div class="row">
                 <div class="col-lg-12">
-                    @include('admin.includes.messages')
-                    <form action="{{route('forecast.orders', 'forecast')}}" method="POST">
-                        @csrf
-                        <div class="input-group mb-3" style="width: 20%;">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" for="inputGroupSelect01">Forecast</label>
-                            </div>
-                            <select class="custom-select" id="inputGroupSelect01" name='forecast'>
-                                <option selected value="0">Next Month</option>
-                                <option selected value="1">2 Month</option>
-                                <option value="3">Quarterly</option>
-                                <option value="6">Semi-annually</option>
-                                <option value="12">Annually</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
                     <br>
                     <div class="card card-primary">
 
@@ -61,19 +45,25 @@
             </div>
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
                             <div class="card-title">
                                 Tabular
                             </div>
+                            <div class="float-right">
+                                <a href="{{route('export', 'sales')}}" class="btn btn-primary float-right">
+                                    Export Table
+                                </a>
+                            </div><!-- /.col -->
+                            <br>
                             <div class="card-body">
                                 <table class="table table-hover table-bordered">
                                     <thead class="thead-dark">
-                                        <tr class="text-center">
-                                            <th>Month</th>
-                                            <th>Actual Sales</th>
-                                        </tr>
+                                    <tr class="text-center">
+                                        <th>Month</th>
+                                        <th>Actual Sales</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
                                     @for($i = 0; $i < count($sales); $i++)
@@ -143,5 +133,6 @@
             }
         });
     </script>
+
 
 @endsection

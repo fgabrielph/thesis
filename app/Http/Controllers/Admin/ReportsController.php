@@ -67,6 +67,28 @@ class ReportsController extends Controller
         return view('admin.reports.list_critical_level', $data);
     }
 
+    public function monthly_sales() {
+
+        # Get all Orders DYNAMICALLY
+        $allmonths = Order::where('payment_status', 1)->get();
+        $store_month = array();
+        foreach ($allmonths as $all_m) {
+            array_push($store_month, date('Y-m', strtotime($all_m->created_at)));
+        }
+        $getMonth = array_values(array_unique($store_month));
+
+        # We Calculate the Sales
+        $final_sales = array();
+        foreach($getMonth as $s) {
+            $value = Order::where('created_at', "like", '%'. $s .'%')->where('payment_status', 1)->sum('grand_total');
+            array_push($final_sales, $value);
+        }
+
+        $months = array("January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+
+        return view('admin.reports.list_sales')->with('sales', $final_sales)->with('months', $months);
+    }
+
     public function toPDF($select) {
 
         switch($select) {
@@ -142,6 +164,30 @@ class ReportsController extends Controller
 
                 break;
 
+            case 'sales':
+
+                # Get all Orders DYNAMICALLY
+                $allmonths = Order::where('payment_status', 1)->get();
+                $store_month = array();
+                foreach ($allmonths as $all_m) {
+                    array_push($store_month, date('Y-m', strtotime($all_m->created_at)));
+                }
+                $getMonth = array_values(array_unique($store_month));
+
+                # We Calculate the Sales
+                $final_sales = array();
+                foreach($getMonth as $s) {
+                    $value = Order::where('created_at', "like", '%'. $s .'%')->where('payment_status', 1)->sum('grand_total');
+                    array_push($final_sales, $value);
+                }
+
+                $months = array("January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+
+                $pdf = PDF::loadview('admin.reports.pdf.monthly_sales', compact('final_sales'), compact('months'));
+
+                return $pdf->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->stream('monthly_sales.pdf');
+
+                break;
         }
 
     }
