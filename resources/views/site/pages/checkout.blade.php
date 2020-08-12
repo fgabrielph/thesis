@@ -107,6 +107,12 @@
                             <label for="deliver_to" class="">Deliver to</label>
                         </div>
 
+                        <!--deliver to address-->
+                        <div id="receiver_address" class="md-form mb-5" style="display: none">
+                            <input name="deliver_to_address" type="text" id="deliver_to_address" class="form-control" placeholder="Enter Receiver's Address">
+                            <label for="deliver_to_address" class="">Address of the Receiver</label>
+                        </div>
+
 
 
                         <div class="d-block my-3">
@@ -192,8 +198,20 @@
         $('#checker').change(function(){
             if ($(this).prop('checked')) {
                 $('#receiver').show();
-            }else{
+                $('#receiver_address').show();
+
+                $('#deliver_to').prop('required', true);
+                $('#deliver_to_address').prop('required', true);
+
+            }else {
                 $('#receiver').hide();
+                $('#receiver_address').hide();
+
+                $('#deliver_to').removeAttr('required');
+                $('#deliver_to_address').removeAttr('required');
+
+                $('#deliver_to').val("");
+                $('#deliver_to_address').val("");
             }
         })
 

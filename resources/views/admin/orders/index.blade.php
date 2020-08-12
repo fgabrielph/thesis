@@ -137,7 +137,23 @@
                                                             </address>
                                                         </div>
                                                         <div class="col-4">Ship To
-                                                            <address><strong>{{ $order->first_name }} {{ $order->last_name }}</strong><br>{{ $order->address }}<br>{{ $order->city }}, {{ $order->country }} {{ $order->post_code }}<br>{{ $order->phone_number }}<br></address>
+                                                            <address>
+                                                                <strong>
+                                                                    @if(!empty($order->deliver_to))
+                                                                        {{ $order->deliver_to }}
+                                                                    @else
+                                                                        {{ $order->first_name }} {{ $order->last_name }}
+                                                                    @endif
+                                                                </strong>
+                                                                <br>
+                                                                    @if(!empty($order->deliver_to_address))
+                                                                        {{ $order->deliver_to_address }}
+                                                                    @else
+                                                                        {{ $order->address }}
+                                                                    @endif
+                                                                 <br>{{ $order->city }}, {{ $order->country }} {{ $order->post_code }}<br>
+                                                                {{ $order->phone_number }}<br>
+                                                            </address>
                                                         </div>
                                                         <div class="col-4">
                                                             <b>Order ID:</b> {{ $order->id }}<br>

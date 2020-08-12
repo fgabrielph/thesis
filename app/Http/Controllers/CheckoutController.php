@@ -86,6 +86,7 @@ class CheckoutController extends Controller {
                 $order->first_name = $request->firstName;
                 $order->last_name = $request->lastName;
                 $order->deliver_to = $request->deliver_to;
+                $order->deliver_to_address = $request->deliver_to_address;
                 $order->address = $request->address;
                 $order->city = $request->city;
                 $order->zip_code = $request->zip;
@@ -124,6 +125,7 @@ class CheckoutController extends Controller {
                 $order->first_name = $request->firstName;
                 $order->last_name = $request->lastName;
                 $order->deliver_to = $request->deliver_to;
+                $order->deliver_to_address = $request->deliver_to_address;
                 $order->address = $request->address;
                 $order->city = $request->city;
                 $order->zip_code = $request->zip;
@@ -166,6 +168,7 @@ class CheckoutController extends Controller {
                 $order->first_name = $request->firstName;
                 $order->last_name = $request->lastName;
                 $order->deliver_to = $request->deliver_to;
+                $order->deliver_to_address = $request->deliver_to_address;
                 $order->address = $request->address;
                 $order->city = $request->city;
                 $order->zip_code = $request->zip;

@@ -63,8 +63,18 @@
     @foreach($deliveries as $delivery)
         <tr>
             <td>{{$delivery->id}}</td>
-            <td>{{$delivery->customer_name}}</td>
-            <td>{{$delivery->order->address}}</td>
+            @if(!empty($delivery->order->deliver_to))
+                <td>{{$delivery->order->deliver_to}}</td>
+            @else
+                <td>{{$delivery->customer_name}}</td>
+            @endif
+
+            @if(!empty($delivery->order->deliver_to_address))
+                <td>{{$delivery->order->deliver_to_address}}</td>
+            @else
+                <td>{{$delivery->order->address}}</td>
+            @endif
+
             <td>{{$delivery->status}}</td>
             <td>{{$delivery->created_at->format('m/d/Y')}} at {{$delivery->created_at->format('g:i A')}}</td>
             @if(!empty($delivery->ETA))

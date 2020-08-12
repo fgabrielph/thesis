@@ -55,9 +55,17 @@
                                             <tr>
                                                 <td>{{$delivery->id}}</td>
                                                 <td>{{$delivery->order->order_number}}</td>
-                                                <td>{{$delivery->customer_name}}</td>
+                                                @if(!empty($delivery->order->deliver_to))
+                                                    <td>{{$delivery->order->deliver_to}}</td>
+                                                @else
+                                                    <td>{{$delivery->customer_name}}</td>
+                                                @endif
                                                 <td>{{$delivery->order->city}}</td>
-                                                <td>{{$delivery->order->address}}</td>
+                                                @if(!empty($delivery->order->deliver_to_address))
+                                                    <td>{{$delivery->order->deliver_to_address}}</td>
+                                                @else
+                                                    <td>{{$delivery->order->address}}</td>
+                                                @endif
                                                 <td><h4><span class="badge bg-secondary">{{$delivery->status}}</span></h4></td>
                                                 <td>{{$delivery->created_at->toFormattedDateString()}}</td>
                                                 <td>{{date('M d, Y', strtotime($delivery->ETA))}}</td>
@@ -92,9 +100,17 @@
                                                 <tr>
                                                     <td>{{$delivery->id}}</td>
                                                     <td>{{$delivery->order->order_number}}</td>
-                                                    <td>{{$delivery->customer_name}}</td>
+                                                    @if(!empty($delivery->order->deliver_to))
+                                                        <td>{{$delivery->order->deliver_to}}</td>
+                                                    @else
+                                                        <td>{{$delivery->customer_name}}</td>
+                                                    @endif
                                                     <td>{{$delivery->order->city}}</td>
-                                                    <td>{{$delivery->order->address}}</td>
+                                                    @if(!empty($delivery->order->deliver_to_address))
+                                                        <td>{{$delivery->order->deliver_to_address}}</td>
+                                                    @else
+                                                        <td>{{$delivery->order->address}}</td>
+                                                    @endif
                                                     <td><h4><span class="badge bg-secondary">{{$delivery->status}}</span></h4></td>
                                                     <td>{{$delivery->created_at->toFormattedDateString()}}</td>
                                                     <td>{{date('M d, Y', strtotime($delivery->ETA))}}</td>
@@ -166,9 +182,17 @@
                                                 <tr>
                                                     <td>{{$delivery->id}}</td>
                                                     <td>{{$delivery->order->order_number}}</td>
-                                                    <td>{{$delivery->customer_name}}</td>
+                                                    @if(!empty($delivery->order->deliver_to))
+                                                        <td>{{$delivery->order->deliver_to}}</td>
+                                                    @else
+                                                        <td>{{$delivery->customer_name}}</td>
+                                                    @endif
                                                     <td>{{$delivery->order->city}}</td>
-                                                    <td>{{$delivery->order->address}}</td>
+                                                    @if(!empty($delivery->order->deliver_to_address))
+                                                        <td>{{$delivery->order->deliver_to_address}}</td>
+                                                    @else
+                                                        <td>{{$delivery->order->address}}</td>
+                                                    @endif
                                                     <td><h4><span class="badge bg-success">{{$delivery->status}}</span></h4></td>
                                                     <td>{{$delivery->created_at->toFormattedDateString()}}</td>
                                                     @if(empty($delivery->updated_at))
