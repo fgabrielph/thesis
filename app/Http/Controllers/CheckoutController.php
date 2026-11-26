@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Item;
 use App\Order;
 use App\Suborder;
 use Cart;
@@ -33,6 +34,22 @@ class CheckoutController extends Controller
 
         if (! in_array($request->paymentMethod, ['cod', 'bank'], true)) {
             return Redirect::back()->with('error', 'Unsupported payment method.');
+        }
+
+        foreach (Cart::content() as $cartItem) {
+            $item = Item::find($cartItem->id);
+
+            if (! $item) {
+                return Redirect::back()->with('error', 'An item in your cart is no longer available.');
+            }
+
+            if ((float) $cartItem->price !== (float) $item->price_stocks) {
+                return Redirect::back()->with('error', 'An item price changed. Please review your cart.');
+            }
+
+            if ($cartItem->qty > $item->stocks) {
+                return Redirect::back()->with('error', 'An item no longer has enough stock. Please review your cart.');
+            }
         }
 
         $string_grand_total = Cart::total();

@@ -39,7 +39,7 @@ class CartController extends Controller
         } elseif ($request->quantity > $stock) {
             return back()->with('error', 'Item Requested is exceeds the stock!');
         } else {
-            Cart::add($request->id, $request->name, $request->quantity, $request->price)->associate('App\Item');
+            Cart::add($product->id, $product->name, $request->quantity, $product->price_stocks)->associate('App\Item');
         }
         if ($request->buynow == 1) {
             return view('site.pages.cart');
