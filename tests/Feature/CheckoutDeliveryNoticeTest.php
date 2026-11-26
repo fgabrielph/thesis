@@ -26,6 +26,8 @@ class CheckoutDeliveryNoticeTest extends TestCase
 
         $this->get(route('cart.index'))
             ->assertOk()
+            ->assertSee('data-storefront', false)
+            ->assertSee('sf-order-summary', false)
             ->assertSee('Free delivery within metro manila');
 
         $user = User::create([
