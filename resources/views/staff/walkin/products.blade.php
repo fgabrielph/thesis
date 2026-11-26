@@ -137,14 +137,14 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            {!!Form::open(['action' => 'Staff\CartController@store', 'method' => 'POST'])!!}
-                                            {{Form::hidden('id', $item->id)}}
-                                            {{Form::hidden('name', $item->name)}}
-                                            Quantity: {{Form::number('quantity', '', ['class' => 'form-control', 'placeholder' => '0', 'style' => 'width: 100px'])}}
-                                            {{Form::hidden('price', $item->price_stocks)}}<br>
-{{--                                                {{Form::hidden('buynow', 1)}}--}}
+                                            <form action="{{ action('Staff\CartController@store') }}" method="POST">@csrf
+                                            <input type="hidden" name="id" value="{{ $item->id }}">
+                                            <input type="hidden" name="name" value="{{ $item->name }}">
+                                            Quantity: <input class="form-control" placeholder="0" style="width: 100px" type="number" name="quantity" value="{{ old('quantity') }}">
+                                            <input type="hidden" name="price" value="{{ $item->price_stocks }}"><br>
+{{--                                                <input type="hidden" name="buynow" value="{{ 1 }}">--}}
                                             <button class="btn btn-outline-success btn-lg my-0 p" type="submit">Buy Now</button>
-                                            {!!Form::close()!!}
+                                            </form>
 
                                         </div>
                                     </div>

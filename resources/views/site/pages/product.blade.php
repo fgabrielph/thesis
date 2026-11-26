@@ -41,15 +41,15 @@
 
                         <p class="font-weight-normal">Stocks: {{$item->stocks}}</p>
 
-                        {!!Form::open(['action' => 'CartController@store', 'method' => 'POST'])!!}
-                        {{Form::hidden('id', $item->id)}}
-                        {{Form::hidden('name', $item->name)}}
-                        Quantity: {{Form::number('quantity', '', ['class' => 'form-control', 'placeholder' => '0', 'style' => 'width: 100px'])}}
-                        {{Form::hidden('price', $item->price_stocks)}}<br>
+                        <form action="{{ action('CartController@store') }}" method="POST">@csrf
+                        <input type="hidden" name="id" value="{{ $item->id }}">
+                        <input type="hidden" name="name" value="{{ $item->name }}">
+                        Quantity: <input class="form-control" placeholder="0" style="width: 100px" type="number" name="quantity" value="{{ old('quantity') }}">
+                        <input type="hidden" name="price" value="{{ $item->price_stocks }}"><br>
                         <button class="btn btn-primary btn-md my-0 p" type="submit">Add to cart
                             <i class="fas fa-shopping-cart ml-1"></i>
                         </button>
-                        {!!Form::close()!!}
+                        </form>
                     </div>
                     <!--Content-->
 
