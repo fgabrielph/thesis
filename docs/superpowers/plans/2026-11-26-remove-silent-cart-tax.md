@@ -184,6 +184,8 @@ Run: `php artisan config:clear` then `php artisan tinker --execute 'echo config(
 
 Expected: `0`.
 
+On deploy, rebuild the config cache after release: `php artisan config:cache`. A cache built before this release keeps `tax` at `21`.
+
 Clear the browser cart before checking totals: sessions created before deploy keep the stored 21% `priceTax` until their items are removed or re-added. Confirm `/cart` shows `₱5,000.00` for two items at `₱2,500.00`, and `/checkout` shows the same total.
 
 ## Out of Scope
