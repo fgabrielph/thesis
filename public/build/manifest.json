@@ -1,4 +1,25 @@
 {
+  "_bootstrap-DRirRUrj.css": {
+    "file": "assets/bootstrap-DRirRUrj.css",
+    "src": "_bootstrap-DRirRUrj.css"
+  },
+  "_bootstrap.esm-okd1uo41.js": {
+    "file": "assets/bootstrap.esm-okd1uo41.js",
+    "name": "bootstrap.esm",
+    "css": [
+      "assets/bootstrap-DRirRUrj.css"
+    ],
+    "assets": [
+      "assets/fa-brands-400-D_cYUPeE.woff2",
+      "assets/fa-brands-400-D1LuMI3I.ttf",
+      "assets/fa-regular-400-BjRzuEpd.woff2",
+      "assets/fa-regular-400-DZaxPHgR.ttf",
+      "assets/fa-solid-900-CTAAxXor.woff2",
+      "assets/fa-solid-900-D0aA9rwL.ttf",
+      "assets/fa-v4compatibility-C9RhG_FT.woff2",
+      "assets/fa-v4compatibility-CCth-dXg.ttf"
+    ]
+  },
   "node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.ttf": {
     "file": "assets/fa-brands-400-D1LuMI3I.ttf",
     "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.ttf"
@@ -32,22 +53,27 @@
     "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-v4compatibility.woff2"
   },
   "resources/js/app.js": {
-    "file": "assets/app-DjFOZZcK.js",
+    "file": "assets/app-AW8b0b33.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
-    "css": [
-      "assets/app-BU5qIOTb.css"
+    "imports": [
+      "_bootstrap.esm-okd1uo41.js"
     ],
-    "assets": [
-      "assets/fa-brands-400-D_cYUPeE.woff2",
-      "assets/fa-brands-400-D1LuMI3I.ttf",
-      "assets/fa-regular-400-BjRzuEpd.woff2",
-      "assets/fa-regular-400-DZaxPHgR.ttf",
-      "assets/fa-solid-900-CTAAxXor.woff2",
-      "assets/fa-solid-900-D0aA9rwL.ttf",
-      "assets/fa-v4compatibility-C9RhG_FT.woff2",
-      "assets/fa-v4compatibility-CCth-dXg.ttf"
+    "css": [
+      "assets/app-DzJRigYQ.css"
+    ]
+  },
+  "resources/js/storefront.js": {
+    "file": "assets/storefront-D8nRq-HJ.js",
+    "name": "storefront",
+    "src": "resources/js/storefront.js",
+    "isEntry": true,
+    "imports": [
+      "_bootstrap.esm-okd1uo41.js"
+    ],
+    "css": [
+      "assets/storefront-BfMPo350.css"
     ]
   }
 }

@@ -1,270 +1,111 @@
-@extends ('site.master')
+@extends ('site.layouts.storefront')
 
 @section ('title') Checkout @endsection
 
 @section ('content')
-    <br
-    /><br
-    /><br />
-    <div class="container wow fadeIn">
-        <!-- Heading -->
-        <h2 class="my-5 h2 text-center">Checkout</h2>
+    <h1 class="h3 text-center mb-4">Checkout</h1>
 
-        <!--Grid row-->
-        <div class="row">
-            <!--Grid column-->
-            <div class="col-md-8 mb-4">
-                @include ('site.includes.messages')
-                <!--Card-->
-                <div class="card">
-                    <!--Card content-->
-                    <form
-                        action="{{route('checkout.store')}}"
-                        class="card-body"
-                        method="POST"
-                        role="form"
-                        enctype="multipart/form-data"
-                    >
-                        @csrf
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card">
+                <form action="{{route('checkout.store')}}" method="POST" class="card-body">
+                    @csrf
 
-                        <!--Grid row-->
-                        <div class="row">
-                            <!--Grid column-->
-                            <div class="col-md-6 mb-2">
-                                <!--firstName-->
-                                <div class="md-form">
-                                    <input
-                                        value="{{ Auth::user()->first_name }}"
-                                        name="firstName"
-                                        type="text"
-                                        id="firstName"
-                                        class="form-control"
-                                    />
-                                    <label for="firstName" class="">First name</label>
-                                </div>
-                            </div>
-                            <!--Grid column-->
-
-                            <!--Grid column-->
-                            <div class="col-md-6 mb-2">
-                                <!--lastName-->
-                                <div class="md-form">
-                                    <input
-                                        value="{{ Auth::user()->last_name }}"
-                                        name="lastName"
-                                        type="text"
-                                        id="lastName"
-                                        class="form-control"
-                                    />
-                                    <label for="lastName" class="">Last name</label>
-                                </div>
-                            </div>
-                            <!--Grid column-->
-                        </div>
-                        <!--Grid row-->
-
-                        <!--email-->
-                        <div class="md-form mb-5">
-                            <input
-                                type="text"
-                                id="email"
-                                class="form-control"
-                                name="email"
-                                value="{{ auth()->user()->email }}"
-                                disabled
+                    <div class="row">
+                        <div class="col-md-6">
+                            <x-storefront.form-field
+                                name="firstName"
+                                label="First name"
+                                :value="Auth::user()->first_name"
+                                required
                             />
-                            <label for="email" class="">Email </label>
                         </div>
-
-                        <!--address-->
-                        <div class="md-form mb-5">
-                            <input
-                                value="{{ Auth::user()->address }}"
-                                name="address"
-                                type="text"
-                                id="address"
-                                class="form-control"
-                                placeholder=""
+                        <div class="col-md-6">
+                            <x-storefront.form-field
+                                name="lastName"
+                                label="Last name"
+                                :value="Auth::user()->last_name"
+                                required
                             />
-                            <label for="address" class="">Address</label>
                         </div>
+                    </div>
 
-                        <!--Grid row-->
-                        <div class="row">
-                            <!--Grid column-->
-                            <div class="col-lg-4 col-md-6 mb-4">
-                                <div class="md-form mb-0">
-                                    <input
-                                        value="{{ old('city') }}"
-                                        name="city"
-                                        type="text"
-                                        id="city"
-                                        class="form-control"
-                                    />
-                                    <label for="city">City</label>
-                                </div>
-                            </div>
-                            <!--Grid column-->
-                            <div class="col-lg-4 col-md-6 mb-4">
-                                <div class="md-form mb-0">
-                                    <input
-                                        value="{{ old('zip') }}"
-                                        name="zip"
-                                        type="text"
-                                        id="zip"
-                                        class="form-control"
-                                    />
-                                    <label for="zip">Zip Code</label>
-                                </div>
-                            </div>
+                    <x-storefront.form-field
+                        name="email"
+                        label="Email"
+                        type="email"
+                        :value="Auth::user()->email"
+                        disabled
+                    />
 
-                            <div class="col-lg-4 col-md-6 mb-4">
-                                <div class="md-form mb-0">
-                                    <input
-                                        value="{{ Auth::user()->mobile_number }}"
-                                        name="mobile_num"
-                                        type="text"
-                                        id="mobile_num"
-                                        class="form-control"
-                                    />
-                                    <label for="mobile_num">Mobile Number</label>
-                                </div>
-                            </div>
+                    <x-storefront.form-field name="address" label="Address" :value="Auth::user()->address" required />
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <x-storefront.form-field name="city" label="City" :value="old('city')" required />
                         </div>
-                        <!--Grid row-->
-
-                        <!--address-->
-                        <div class="md-form mb-5">
-                            <input name="notes" type="text" id="notes" class="form-control" />
-                            <label for="notes" class="">Notes</label>
+                        <div class="col-md-4">
+                            <x-storefront.form-field name="zip" label="Zip Code" :value="old('zip')" required />
                         </div>
-
-                        <div class="form-check mb-3">
-                            <input class="form-check-input" type="checkbox" value="" id="checker" />
-                            <label class="form-check-label" for="checker">Deliver to a different person</label>
-                        </div>
-                        <!--deliver to-->
-                        <div id="receiver" class="md-form mb-5" style="display: none">
-                            <input
-                                name="deliver_to"
-                                type="text"
-                                id="deliver_to"
-                                class="form-control"
-                                placeholder="Enter Receiver's Full Name"
+                        <div class="col-md-4">
+                            <x-storefront.form-field
+                                name="mobile_num"
+                                label="Mobile Number"
+                                :value="Auth::user()->mobile_number"
+                                required
                             />
-                            <label for="deliver_to" class="">Deliver to</label>
                         </div>
+                    </div>
 
-                        <!--deliver to address-->
-                        <div id="receiver_address" class="md-form mb-5" style="display: none">
+                    <x-storefront.form-field name="notes" label="Notes" />
+
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" value="1" id="checker" />
+                        <label class="form-check-label" for="checker">Deliver to a different person</label>
+                    </div>
+
+                    <div id="receiver" hidden>
+                        <x-storefront.form-field name="deliver_to" label="Deliver to" />
+                    </div>
+
+                    <div id="receiver_address" hidden>
+                        <x-storefront.form-field name="deliver_to_address" label="Address of the receiver" />
+                    </div>
+
+                    <fieldset class="mb-4">
+                        <legend class="form-label fs-6">Payment method</legend>
+
+                        <div class="form-check">
                             <input
-                                name="deliver_to_address"
-                                type="text"
-                                id="deliver_to_address"
-                                class="form-control"
-                                placeholder="Enter Receiver's Address"
+                                class="form-check-input"
+                                type="radio"
+                                name="paymentMethod"
+                                id="credit"
+                                value="cod"
+                                required
                             />
-                            <label for="deliver_to_address" class="">Address of the Receiver</label>
+                            <label class="form-check-label" for="credit">Cash on Delivery</label>
                         </div>
-
-                        <div class="d-block my-3">
-                            <fieldset id="radio_group">
-                                <div class="custom-control custom-radio">
-                                    <input
-                                        id="credit"
-                                        name="paymentMethod"
-                                        type="radio"
-                                        class="custom-control-input"
-                                        value="cod"
-                                        required
-                                    />
-                                    <label class="custom-control-label" for="credit">Cash on Delivery</label>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input
-                                        id="bank"
-                                        name="paymentMethod"
-                                        type="radio"
-                                        class="custom-control-input"
-                                        value="bank"
-                                        required
-                                    />
-                                    <label class="custom-control-label" for="bank">Bank Transfer</label>
-                                </div>
-                            </fieldset>
+                        <div class="form-check">
+                            <input
+                                class="form-check-input"
+                                type="radio"
+                                name="paymentMethod"
+                                id="bank"
+                                value="bank"
+                                required
+                            />
+                            <label class="form-check-label" for="bank">Bank Transfer</label>
                         </div>
-                        <hr class="mb-4" />
+                    </fieldset>
 
-                        <button class="btn btn-primary btn-lg btn-block" type="submit">Place order</button>
-                    </form>
-                </div>
-                <!--/.Card-->
+                    <button class="btn btn-primary btn-lg w-100" type="submit">Place order</button>
+                </form>
             </div>
-            <!--Grid column-->
-
-            <!--Grid column-->
-            <div class="col-md-4 mb-4">
-                <!-- Heading -->
-                <h4 class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-muted">Your cart</span>
-                    <span class="badge badge-danger badge-pill">{{count(Cart::content())}}</span>
-                </h4>
-
-                <!-- Cart -->
-                <ul class="list-group mb-3 z-depth-1">
-                    @foreach (Cart::content() as $item)
-                        <li class="list-group-item d-flex justify-content-between lh-condensed">
-                            <div>
-                                <h6 class="my-0">{{$item->name}}</h6>
-                                <small class="text-muted">pcs. x{{$item->qty}}</small>
-                            </div>
-                            <span class="text-muted"
-                                >₱ {{number_format($item->qty * $item->model->price_stocks, 2)}}</span
-                            >
-                        </li>
-                    @endforeach
-
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Total (PHP)</span>
-                        <strong>₱ {{Cart::Total()}}</strong>
-                    </li>
-                </ul>
-                <!-- Cart -->
-
-                @include ('site.includes.delivery-notice')
-            </div>
-            <!--Grid column-->
         </div>
-        <!--Grid row-->
+
+        <div class="col-lg-4">
+            <x-storefront.order-summary :items="Cart::content()" :total="Cart::total()" />
+        </div>
     </div>
-
-@endsection
-
-@section ('footer')
-    @include ('site.includes.footer')
-
-@endsection
-
-@section ('js')
-    <script>
-        $('#checker').change(function () {
-            if ($(this).prop('checked')) {
-                $('#receiver').show();
-                $('#receiver_address').show();
-
-                $('#deliver_to').prop('required', true);
-                $('#deliver_to_address').prop('required', true);
-            } else {
-                $('#receiver').hide();
-                $('#receiver_address').hide();
-
-                $('#deliver_to').removeAttr('required');
-                $('#deliver_to_address').removeAttr('required');
-
-                $('#deliver_to').val('');
-                $('#deliver_to_address').val('');
-            }
-        });
-    </script>
-
 @endsection

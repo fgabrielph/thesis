@@ -24,9 +24,15 @@ class CheckoutDeliveryNoticeTest extends TestCase
             'price' => $item->price_stocks,
         ]);
 
-        $this->get(route('cart.index'))
+        $cart = $this->get(route('cart.index'))
             ->assertOk()
-            ->assertSee('Free delivery within metro manila');
+            ->assertSee('data-storefront', false)
+            ->assertSee('sf-order-summary', false)
+            ->assertSee('Free delivery within metro manila')
+            ->assertSee('name="proID"', false)
+            ->assertSee('name="qty"', false);
+
+        $this->assertSame(1, substr_count($cart->getContent(), 'Free delivery within metro manila'));
 
         $user = User::create([
             'first_name' => 'Test',
@@ -36,9 +42,11 @@ class CheckoutDeliveryNoticeTest extends TestCase
         ]);
         $user->forceFill(['email_verified_at' => now()])->save();
 
-        $this->actingAs($user)
+        $checkout = $this->actingAs($user)
             ->get(route('checkout.index'))
             ->assertOk()
             ->assertSee('Free delivery within metro manila');
+
+        $this->assertSame(1, substr_count($checkout->getContent(), 'Free delivery within metro manila'));
     }
 }

@@ -30,7 +30,7 @@ class CartTaxTest extends TestCase
 
         $this->get(route('cart.index'))
             ->assertOk()
-            ->assertSee('₱'.number_format($item->price_stocks * $quantity, 2));
+            ->assertSee('₱ '.number_format($item->price_stocks * $quantity, 2));
     }
 
     public function test_checkout_stores_grand_total_without_tax(): void
