@@ -8,13 +8,13 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "barryvdh/laravel-dompdf": "^3.1",
         "dompdf/dompdf": "^3.1.6",
-        "hardevine/shoppingcart": "^3.4",
         "intervention/image": "^2.7",
-        "laravel/framework": "^12.71",
-        "laravel/tinker": "^2.11"
+        "laravel/framework": "^13.0",
+        "laravel/tinker": "^3.0",
+        "redx1t/shoppingcart": "^3.6"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -23,7 +23,7 @@
         "laravel/ui": "^4.6",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.1",
-        "phpunit/phpunit": "^11.5",
+        "phpunit/phpunit": "^12.0",
         "spatie/laravel-ignition": "^2.9"
     },
     "config": {
