@@ -1,6 +1,6 @@
 @extends ('admin.master')
 
-@section ('title') Item @endsection
+@section ('title') Items @endsection
 
 @section ('content')
     <!-- Content Header (Page header) -->
@@ -41,7 +41,7 @@
                             <table id="defTable" class="table table-hover">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th class="text-center">Product ID</th>
+                                        <th class="text-center">Item ID</th>
                                         <th class="text-center">Image</th>
                                         <th class="text-center">Brand</th>
                                         <th class="text-center">Name</th>
