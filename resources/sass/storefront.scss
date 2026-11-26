@@ -5,6 +5,8 @@
 
 :root {
     --sf-brand: #ffa500;
+    --sf-brand-hover: #e69500;
+    --sf-brand-active: #cc8400;
     --sf-on-brand: #111111;
     --sf-ink: #111111;
     --sf-muted: #6b7280;
@@ -28,7 +30,6 @@ body[data-storefront] {
 
 .sf-page {
     min-height: 60vh;
-    overflow-x: hidden;
 }
 
 .sf-navbar {
@@ -135,10 +136,14 @@ body[data-storefront] {
     --bs-btn-bg: var(--sf-brand);
     --bs-btn-border-color: var(--sf-brand);
     --bs-btn-color: var(--sf-on-brand);
-    --bs-btn-hover-bg: #e69500;
-    --bs-btn-hover-border-color: #e69500;
+    --bs-btn-hover-bg: var(--sf-brand-hover);
+    --bs-btn-hover-border-color: var(--sf-brand-hover);
     --bs-btn-hover-color: var(--sf-on-brand);
-    --bs-btn-active-bg: #cc8400;
-    --bs-btn-active-border-color: #cc8400;
+    --bs-btn-active-bg: var(--sf-brand-active);
+    --bs-btn-active-border-color: var(--sf-brand-active);
     --bs-btn-active-color: var(--sf-on-brand);
+}
+
+.sf-cart-card {
+    overflow: hidden;
 }

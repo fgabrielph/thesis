@@ -8,7 +8,7 @@
     @if (Cart::content()->count() > 0)
         <div class="row g-4">
             <div class="col-lg-8">
-                <div class="card">
+                <div class="card sf-cart-card">
                     <div class="table-responsive">
                         <table class="table table-hover align-middle mb-0">
                             <thead class="table-dark">
@@ -58,7 +58,7 @@
                                             </form>
                                         </td>
                                         <td>
-                                            <x-storefront.money :amount="$item->qty * $item->model->price_stocks" />
+                                            <x-storefront.money :amount="$item->qty * $item->price" />
                                         </td>
                                         <td>
                                             <form action="{{route('cart.remove', $item->rowId)}}" method="POST">

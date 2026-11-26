@@ -19,6 +19,7 @@ class StorefrontShopTest extends TestCase
         $this->get(route('site.shop'))
             ->assertOk()
             ->assertSee('data-storefront', false)
+            ->assertSee('name="buynow"', false)
             ->assertSee('₱ '.number_format($item->price_stocks, 2));
     }
 

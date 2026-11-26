@@ -43,6 +43,7 @@
 
                     <input type="hidden" name="id" value="{{$item->id}}" />
                     <input type="hidden" name="name" value="{{$item->name}}" />
+                    <input type="hidden" name="buynow" value="1" />
                 </div>
 
                 <div class="modal-footer">

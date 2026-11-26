@@ -65,7 +65,7 @@
     ]
   },
   "resources/js/storefront.js": {
-    "file": "assets/storefront-InqPCjko.js",
+    "file": "assets/storefront-D8nRq-HJ.js",
     "name": "storefront",
     "src": "resources/js/storefront.js",
     "isEntry": true,
@@ -73,7 +73,7 @@
       "_bootstrap.esm-okd1uo41.js"
     ],
     "css": [
-      "assets/storefront-OacMgBCE.css"
+      "assets/storefront-BfMPo350.css"
     ]
   }
 }
