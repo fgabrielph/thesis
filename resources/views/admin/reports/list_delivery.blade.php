@@ -1,9 +1,8 @@
-@extends('admin.master')
+@extends ('admin.master')
 
-@section('title') List of Deliveries  @endsection
+@section ('title') List of Deliveries @endsection
 
-@section('content')
-
+@section ('content')
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -11,14 +10,16 @@
                 <div class="col-sm-6">
                     <h1 class="m-0 text-dark">Deliveries</h1>
                     <p>list of deliveries</p>
-                </div><!-- /.col -->
+                </div>
+                <!-- /.col -->
                 <div class="col-sm-6">
-                    <a href="{{route('export', 'deliveries')}}" class="btn btn-primary float-end">
-                        Export
-                    </a>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+                    <a href="{{route('export', 'deliveries')}}" class="btn btn-primary float-end"> Export </a>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
 
@@ -35,50 +36,51 @@
                         <div class="card-body p-0" style="margin: 1%">
                             <table id="orderTable" class="table table-hover">
                                 <thead class="table-dark">
-                                <tr>
-                                    <th>Delivery ID</th>
-                                    <th>Receiver's Name</th>
-                                    <th>Address</th>
-                                    <th>Status</th>
-                                    <th>Dispatched at</th>
-                                    <th>Estimated Day of Arrival</th>
-                                    <th>Re-scheduled or Postponed at</th>
-                                </tr>
+                                    <tr>
+                                        <th>Delivery ID</th>
+                                        <th>Receiver's Name</th>
+                                        <th>Address</th>
+                                        <th>Status</th>
+                                        <th>Dispatched at</th>
+                                        <th>Estimated Day of Arrival</th>
+                                        <th>Re-scheduled or Postponed at</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($deliveries as $delivery)
-                                    <tr>
-                                        <td>{{$delivery->id}}</td>
-                                        @if(!empty($delivery->order->deliver_to))
-                                            <td>{{$delivery->order->deliver_to}}</td>
-                                        @else
-                                            <td>{{$delivery->customer_name}}</td>
-                                        @endif
+                                    @foreach ($deliveries as $delivery)
+                                        <tr>
+                                            <td>{{$delivery->id}}</td>
+                                            @if (!empty($delivery->order->deliver_to))
+                                                <td>{{$delivery->order->deliver_to}}</td>
+                                            @else
+                                                <td>{{$delivery->customer_name}}</td>
+                                            @endif
 
-                                        @if(!empty($delivery->order->deliver_to_address))
-                                            <td>{{$delivery->order->deliver_to_address}}</td>
-                                        @else
-                                            <td>{{$delivery->order->address}}</td>
-                                        @endif
+                                            @if (!empty($delivery->order->deliver_to_address))
+                                                <td>{{$delivery->order->deliver_to_address}}</td>
+                                            @else
+                                                <td>{{$delivery->order->address}}</td>
+                                            @endif
 
-                                        <td>{{$delivery->status}}</td>
-                                        <td>{{$delivery->created_at->format('m/d/Y')}}</td>
-                                        @if(!empty($delivery->ETA))
-                                            <td>{{$delivery->ETA}}</td>
-                                        @else
-                                            <td>N/A</td>
-                                        @endif
+                                            <td>{{$delivery->status}}</td>
+                                            <td>{{$delivery->created_at->format('m/d/Y')}}</td>
+                                            @if (!empty($delivery->ETA))
+                                                <td>{{$delivery->ETA}}</td>
+                                            @else
+                                                <td>N/A</td>
+                                            @endif
 
-                                        @if($delivery->created_at == $delivery->updated_at)
-                                            <td>N/A</td>
-                                        @elseif($delivery->status != 'Completed')
-                                            <td>{{$delivery->updated_at->format('m/d/Y')}} at {{$delivery->updated_at->format('g:i A')}}</td>
-                                        @else
-                                            <td>Completed</td>
-                                        @endif
-
-                                    </tr>
-                                @endforeach
+                                            @if ($delivery->created_at == $delivery->updated_at)
+                                                <td>N/A</td>
+                                            @elseif ($delivery->status != 'Completed')
+                                                <td>
+                                                    {{$delivery->updated_at->format('m/d/Y')}} at {{$delivery->updated_at->format('g:i A')}}
+                                                </td>
+                                            @else
+                                                <td>Completed</td>
+                                            @endif
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -87,6 +89,5 @@
             </div>
         </div>
     </div>
-
 
 @endsection

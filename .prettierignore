@@ -1,0 +1,16 @@
+/vendor
+/node_modules
+/public
+/storage
+/bootstrap/cache
+composer.lock
+package-lock.json
+*.min.*
+/.agents
+/.junie
+/AGENTS.md
+/boost.json
+/opencode.json
+/design-plans
+/RESTORE.md
+/skills-lock.json

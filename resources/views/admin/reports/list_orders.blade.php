@@ -1,9 +1,8 @@
-@extends('admin.master')
+@extends ('admin.master')
 
-@section('title') List of Custom Orders @endsection
+@section ('title') List of Custom Orders @endsection
 
-@section('content')
-
+@section ('content')
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -11,14 +10,16 @@
                 <div class="col-sm-6">
                     <h1 class="m-0 text-dark">Orders</h1>
                     <p>list of custom orders</p>
-                </div><!-- /.col -->
+                </div>
+                <!-- /.col -->
                 <div class="col-sm-6">
-                    <a href="{{route('export', 'orders')}}" class="btn btn-primary float-end">
-                        Export
-                    </a>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+                    <a href="{{route('export', 'orders')}}" class="btn btn-primary float-end"> Export </a>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
 
@@ -35,26 +36,26 @@
                         <div class="card-body p-0" style="margin: 1%">
                             <table id="orderTable" class="table table-hover">
                                 <thead class="table-dark">
-                                <tr>
-                                    <th>Order ID</th>
-                                    <th>Customer</th>
-                                    <th>Number of Products Ordered</th>
-                                    <th>Total Price Ordered</th>
-                                    <th>Mobile Number</th>
-                                    <th>Date Ordered</th>
-                                </tr>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Customer</th>
+                                        <th>Number of Products Ordered</th>
+                                        <th>Total Price Ordered</th>
+                                        <th>Mobile Number</th>
+                                        <th>Date Ordered</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($orders as $order)
-                                    <tr>
-                                        <td>{{$order->id}}</td>
-                                        <td>{{$order->user->first_name . ' ' . $order->user->last_name}}</td>
-                                        <td>{{$order->item_count}}</td>
-                                        <td>{{$order->grand_total}}</td>
-                                        <td>{{$order->phone_number}}</td>
-                                        <td>{{$order->created_at->toFormattedDateString()}}</td>
-                                    </tr>
-                                @endforeach
+                                    @foreach ($orders as $order)
+                                        <tr>
+                                            <td>{{$order->id}}</td>
+                                            <td>{{$order->user->first_name . ' ' . $order->user->last_name}}</td>
+                                            <td>{{$order->item_count}}</td>
+                                            <td>{{$order->grand_total}}</td>
+                                            <td>{{$order->phone_number}}</td>
+                                            <td>{{$order->created_at->toFormattedDateString()}}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

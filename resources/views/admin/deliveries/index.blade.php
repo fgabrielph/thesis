@@ -1,9 +1,8 @@
-@extends('admin.master')
+@extends ('admin.master')
 
-@section('title') Delivery @endsection
+@section ('title') Delivery @endsection
 
-@section('content')
-
+@section ('content')
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -11,9 +10,12 @@
                 <div class="col-sm-6">
                     <h1 class="m-0 text-dark">Delivery</h1>
                     <p>list of deliveries</p>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
 
@@ -22,194 +24,318 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    @include('admin.includes.messages')
+                    @include ('admin.includes.messages')
                     <div class="card">
                         <div class="card-body">
                             <nav>
                                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                    <a class="nav-item nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">On Delivery</a>
-                                    <a class="nav-item nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Returns</a>
-                                    <a class="nav-item nav-link" id="nav-contact-tab" data-bs-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Completed</a>
+                                    <a
+                                        class="nav-item nav-link active"
+                                        id="nav-home-tab"
+                                        data-bs-toggle="tab"
+                                        href="#nav-home"
+                                        role="tab"
+                                        aria-controls="nav-home"
+                                        aria-selected="true"
+                                        >On Delivery</a
+                                    >
+                                    <a
+                                        class="nav-item nav-link"
+                                        id="nav-profile-tab"
+                                        data-bs-toggle="tab"
+                                        href="#nav-profile"
+                                        role="tab"
+                                        aria-controls="nav-profile"
+                                        aria-selected="false"
+                                        >Returns</a
+                                    >
+                                    <a
+                                        class="nav-item nav-link"
+                                        id="nav-contact-tab"
+                                        data-bs-toggle="tab"
+                                        href="#nav-contact"
+                                        role="tab"
+                                        aria-controls="nav-contact"
+                                        aria-selected="false"
+                                        >Completed</a
+                                    >
                                 </div>
                             </nav>
 
                             <div class="tab-content" id="nav-tabContent">
-                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" style="margin: 1%">
+                                <div
+                                    class="tab-pane fade show active"
+                                    id="nav-home"
+                                    role="tabpanel"
+                                    aria-labelledby="nav-home-tab"
+                                    style="margin: 1%"
+                                >
                                     <table id="orderTable" class="table table-hover">
                                         <thead class="table-dark">
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Order Number</th>
-                                            <th>Ship to</th>
-                                            <th>City</th>
-                                            <th>Address</th>
-                                            <th>Status</th>
-                                            <th>Date Created</th>
-                                            <th>Estimated Day of Arrival</th>
-                                            <th>Actions</th>
-                                        </tr>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Order Number</th>
+                                                <th>Ship to</th>
+                                                <th>City</th>
+                                                <th>Address</th>
+                                                <th>Status</th>
+                                                <th>Date Created</th>
+                                                <th>Estimated Day of Arrival</th>
+                                                <th>Actions</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($deliveries as $delivery)
-                                            @if($delivery->status == 'On Delivery' && $delivery->order->status != 'Canceled')
-                                            <tr>
-                                                <td>{{$delivery->id}}</td>
-                                                <td>{{$delivery->order->order_number}}</td>
-                                                @if(!empty($delivery->order->deliver_to))
-                                                    <td>{{$delivery->order->deliver_to}}</td>
-                                                @else
-                                                    <td>{{$delivery->customer_name}}</td>
+                                            @foreach ($deliveries as $delivery)
+                                                @if ($delivery->status == 'On Delivery' && $delivery->order->status != 'Canceled')
+                                                    <tr>
+                                                        <td>{{$delivery->id}}</td>
+                                                        <td>{{$delivery->order->order_number}}</td>
+                                                        @if (!empty($delivery->order->deliver_to))
+                                                            <td>{{$delivery->order->deliver_to}}</td>
+                                                        @else
+                                                            <td>{{$delivery->customer_name}}</td>
+                                                        @endif
+                                                        <td>{{$delivery->order->city}}</td>
+                                                        @if (!empty($delivery->order->deliver_to_address))
+                                                            <td>{{$delivery->order->deliver_to_address}}</td>
+                                                        @else
+                                                            <td>{{$delivery->order->address}}</td>
+                                                        @endif
+                                                        <td>
+                                                            <h4>
+                                                                <span
+                                                                    class="badge bg-secondary"
+                                                                    >{{$delivery->status}}</span
+                                                                >
+                                                            </h4>
+                                                        </td>
+                                                        <td>{{$delivery->created_at->toFormattedDateString()}}</td>
+                                                        <td>{{date('M d, Y', strtotime($delivery->ETA))}}</td>
+                                                        <td>
+                                                            <a
+                                                                href="{{route('deliveries.status', ['status' => 'Completed', 'id' => $delivery->id])}}"
+                                                                class="btn btn-lg btn-success"
+                                                                >Complete</a
+                                                            >
+                                                        </td>
+                                                    </tr>
                                                 @endif
-                                                <td>{{$delivery->order->city}}</td>
-                                                @if(!empty($delivery->order->deliver_to_address))
-                                                    <td>{{$delivery->order->deliver_to_address}}</td>
-                                                @else
-                                                    <td>{{$delivery->order->address}}</td>
-                                                @endif
-                                                <td><h4><span class="badge bg-secondary">{{$delivery->status}}</span></h4></td>
-                                                <td>{{$delivery->created_at->toFormattedDateString()}}</td>
-                                                <td>{{date('M d, Y', strtotime($delivery->ETA))}}</td>
-                                                <td>
-                                                    <a href="{{route('deliveries.status', ['status' => 'Completed', 'id' => $delivery->id])}}" class="btn btn-lg btn-success">Complete</a>
-                                                </td>
-
-                                            </tr>
-                                            @endif
-                                        @endforeach
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" style="margin: 1%">
+                                <div
+                                    class="tab-pane fade"
+                                    id="nav-profile"
+                                    role="tabpanel"
+                                    aria-labelledby="nav-profile-tab"
+                                    style="margin: 1%"
+                                >
                                     <table id="atkTable" class="table table-hover">
                                         <thead class="table-dark">
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Order Number</th>
-                                            <th>Ship to</th>
-                                            <th>City</th>
-                                            <th>Address</th>
-                                            <th>Status</th>
-                                            <th>Date Created</th>
-                                            <th>Estimated Day of Arrival</th>
-                                            <th>Actions</th>
-                                        </tr>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Order Number</th>
+                                                <th>Ship to</th>
+                                                <th>City</th>
+                                                <th>Address</th>
+                                                <th>Status</th>
+                                                <th>Date Created</th>
+                                                <th>Estimated Day of Arrival</th>
+                                                <th>Actions</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($deliveries as $delivery)
-                                            @if($delivery->status == 'Return' && $delivery->order->status != 'Canceled')
-                                                <tr>
-                                                    <td>{{$delivery->id}}</td>
-                                                    <td>{{$delivery->order->order_number}}</td>
-                                                    @if(!empty($delivery->order->deliver_to))
-                                                        <td>{{$delivery->order->deliver_to}}</td>
-                                                    @else
-                                                        <td>{{$delivery->customer_name}}</td>
-                                                    @endif
-                                                    <td>{{$delivery->order->city}}</td>
-                                                    @if(!empty($delivery->order->deliver_to_address))
-                                                        <td>{{$delivery->order->deliver_to_address}}</td>
-                                                    @else
-                                                        <td>{{$delivery->order->address}}</td>
-                                                    @endif
-                                                    <td><h4><span class="badge bg-secondary">{{$delivery->status}}</span></h4></td>
-                                                    <td>{{$delivery->created_at->toFormattedDateString()}}</td>
-                                                    <td>{{date('M d, Y', strtotime($delivery->ETA))}}</td>
-                                                    <td>
-{{--                                                        <a href="{{route('deliveries.status', ['status' => 'On Delivery', 'id' => $delivery->id])}}" class="btn btn-lg btn-primary"><span class="fas fa-truck"></span> Deliver</a>--}}
-                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#deliver{{$delivery->id}}" class="btn btn-sm btn-success"><span class="fas fa-truck"></span> Deliver</a>
-                                                    </td>
+                                            @foreach ($deliveries as $delivery)
+                                                @if ($delivery->status == 'Return' && $delivery->order->status != 'Canceled')
+                                                    <tr>
+                                                        <td>{{$delivery->id}}</td>
+                                                        <td>{{$delivery->order->order_number}}</td>
+                                                        @if (!empty($delivery->order->deliver_to))
+                                                            <td>{{$delivery->order->deliver_to}}</td>
+                                                        @else
+                                                            <td>{{$delivery->customer_name}}</td>
+                                                        @endif
+                                                        <td>{{$delivery->order->city}}</td>
+                                                        @if (!empty($delivery->order->deliver_to_address))
+                                                            <td>{{$delivery->order->deliver_to_address}}</td>
+                                                        @else
+                                                            <td>{{$delivery->order->address}}</td>
+                                                        @endif
+                                                        <td>
+                                                            <h4>
+                                                                <span
+                                                                    class="badge bg-secondary"
+                                                                    >{{$delivery->status}}</span
+                                                                >
+                                                            </h4>
+                                                        </td>
+                                                        <td>{{$delivery->created_at->toFormattedDateString()}}</td>
+                                                        <td>{{date('M d, Y', strtotime($delivery->ETA))}}</td>
+                                                        <td>
+                                                            {{--                                                        <a href="{{route('deliveries.status', ['status' => 'On Delivery', 'id' => $delivery->id])}}" class="btn btn-lg btn-primary"><span class="fas fa-truck"></span> Deliver</a>--}}
+                                                            <a
+                                                                href="#"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#deliver{{$delivery->id}}"
+                                                                class="btn btn-sm btn-success"
+                                                                ><span class="fas fa-truck"></span> Deliver</a
+                                                            >
+                                                        </td>
+                                                    </tr>
+                                                @endif
 
-                                                </tr>
-                                            @endif
-
-                                            @if($delivery->status == 'Return' && $delivery->order->status != 'Canceled')
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="deliver{{$delivery->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
-                                                        <div class="modal-content">
-                                                            <form action="{{route('deliveries.edit_eda', $delivery->id)}}" class="form-horizontal" method="POST">
-                                                                @csrf
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalCenterTitle">Estimated Day of Arrival</h5>
-                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <div class="row">
-                                                                        <div class="col">
-                                                                            <div class="mb-3">
-                                                                                <label class="col-md-5 control-label">Date: <b><i style="color: red">*Max is 7 days.</i></b></label>
-                                                                                <div class="col-md-11">
-                                                                                    <input name="date" id="datepicker{{$delivery->id}}" type="text" class="form-control input-md" value="{{date('M d, Y', strtotime($delivery->ETA))}}">
+                                                @if ($delivery->status == 'Return' && $delivery->order->status != 'Canceled')
+                                                    <!-- Modal -->
+                                                    <div
+                                                        class="modal fade"
+                                                        id="deliver{{$delivery->id}}"
+                                                        tabindex="-1"
+                                                        role="dialog"
+                                                        aria-labelledby="exampleModalCenterTitle"
+                                                        aria-hidden="true"
+                                                    >
+                                                        <div
+                                                            class="modal-dialog modal-dialog-scrollable modal-dialog-centered"
+                                                            role="document"
+                                                        >
+                                                            <div class="modal-content">
+                                                                <form
+                                                                    action="{{route('deliveries.edit_eda', $delivery->id)}}"
+                                                                    class="form-horizontal"
+                                                                    method="POST"
+                                                                >
+                                                                    @csrf
+                                                                    <div class="modal-header">
+                                                                        <h5
+                                                                            class="modal-title"
+                                                                            id="exampleModalCenterTitle"
+                                                                        >
+                                                                            Estimated Day of Arrival
+                                                                        </h5>
+                                                                        <button
+                                                                            type="button"
+                                                                            class="btn-close"
+                                                                            data-bs-dismiss="modal"
+                                                                            aria-label="Close"
+                                                                        ></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <div class="mb-3">
+                                                                                    <label
+                                                                                        class="col-md-5 control-label"
+                                                                                        >Date:
+                                                                                        <b
+                                                                                            ><i style="color: red"
+                                                                                                >*Max is 7 days.</i
+                                                                                            ></b
+                                                                                        ></label
+                                                                                    >
+                                                                                    <div class="col-md-11">
+                                                                                        <input
+                                                                                            name="date"
+                                                                                            id="datepicker{{$delivery->id}}"
+                                                                                            type="text"
+                                                                                            class="form-control input-md"
+                                                                                            value="{{date('M d, Y', strtotime($delivery->ETA))}}"
+                                                                                        />
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                                                    <input class="btn btn-primary" type="submit" value="Save Changes">
-                                                                </div>
-                                                            </form>
+                                                                    <div class="modal-footer">
+                                                                        <button
+                                                                            type="button"
+                                                                            class="btn btn-danger"
+                                                                            data-bs-dismiss="modal"
+                                                                        >
+                                                                            Close
+                                                                        </button>
+                                                                        <input
+                                                                            class="btn btn-primary"
+                                                                            type="submit"
+                                                                            value="Save Changes"
+                                                                        />
+                                                                    </div>
+                                                                </form>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            @endif
-                                        @endforeach
+                                                @endif
+                                            @endforeach
                                         </tbody>
                                     </table>
-
                                 </div>
-                                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" style="margin: 1%">
+                                <div
+                                    class="tab-pane fade"
+                                    id="nav-contact"
+                                    role="tabpanel"
+                                    aria-labelledby="nav-contact-tab"
+                                    style="margin: 1%"
+                                >
                                     <table id="defTable" class="table table-hover">
                                         <thead class="table-dark">
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Order Number</th>
-                                            <th>Ship to</th>
-                                            <th>City</th>
-                                            <th>Address</th>
-                                            <th>Status</th>
-                                            <th>Date Created</th>
-                                            <th>Date Completed</th>
-                                            <th>Actions</th>
-                                        </tr>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Order Number</th>
+                                                <th>Ship to</th>
+                                                <th>City</th>
+                                                <th>Address</th>
+                                                <th>Status</th>
+                                                <th>Date Created</th>
+                                                <th>Date Completed</th>
+                                                <th>Actions</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($deliveries as $delivery)
-                                            @if($delivery->status == 'Completed' && $delivery->order->status != 'Canceled')
-                                                <tr>
-                                                    <td>{{$delivery->id}}</td>
-                                                    <td>{{$delivery->order->order_number}}</td>
-                                                    @if(!empty($delivery->order->deliver_to))
-                                                        <td>{{$delivery->order->deliver_to}}</td>
-                                                    @else
-                                                        <td>{{$delivery->customer_name}}</td>
-                                                    @endif
-                                                    <td>{{$delivery->order->city}}</td>
-                                                    @if(!empty($delivery->order->deliver_to_address))
-                                                        <td>{{$delivery->order->deliver_to_address}}</td>
-                                                    @else
-                                                        <td>{{$delivery->order->address}}</td>
-                                                    @endif
-                                                    <td><h4><span class="badge bg-success">{{$delivery->status}}</span></h4></td>
-                                                    <td>{{$delivery->created_at->toFormattedDateString()}}</td>
-                                                    @if(empty($delivery->updated_at))
-                                                        <td>TEST</td>
-                                                    @else
-                                                        <td>{{$delivery->updated_at->format('M d Y -- h:iA')}}</td>
-                                                    @endif
-                                                    <td><a href="{{route('deliveries.status', ['status' => 'Return', 'id' => $delivery->id])}}" class="btn btn-lg btn-primary">Return?</a></td>
-
-                                                </tr>
-                                            @endif
-                                        @endforeach
+                                            @foreach ($deliveries as $delivery)
+                                                @if ($delivery->status == 'Completed' && $delivery->order->status != 'Canceled')
+                                                    <tr>
+                                                        <td>{{$delivery->id}}</td>
+                                                        <td>{{$delivery->order->order_number}}</td>
+                                                        @if (!empty($delivery->order->deliver_to))
+                                                            <td>{{$delivery->order->deliver_to}}</td>
+                                                        @else
+                                                            <td>{{$delivery->customer_name}}</td>
+                                                        @endif
+                                                        <td>{{$delivery->order->city}}</td>
+                                                        @if (!empty($delivery->order->deliver_to_address))
+                                                            <td>{{$delivery->order->deliver_to_address}}</td>
+                                                        @else
+                                                            <td>{{$delivery->order->address}}</td>
+                                                        @endif
+                                                        <td>
+                                                            <h4>
+                                                                <span
+                                                                    class="badge bg-success"
+                                                                    >{{$delivery->status}}</span
+                                                                >
+                                                            </h4>
+                                                        </td>
+                                                        <td>{{$delivery->created_at->toFormattedDateString()}}</td>
+                                                        @if (empty($delivery->updated_at))
+                                                            <td>TEST</td>
+                                                        @else
+                                                            <td>{{$delivery->updated_at->format('M d Y -- h:iA')}}</td>
+                                                        @endif
+                                                        <td>
+                                                            <a
+                                                                href="{{route('deliveries.status', ['status' => 'Return', 'id' => $delivery->id])}}"
+                                                                class="btn btn-lg btn-primary"
+                                                                >Return?</a
+                                                            >
+                                                        </td>
+                                                    </tr>
+                                                @endif
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
@@ -218,14 +344,13 @@
 
 @endsection
 
-@section('scripts')
-
+@section ('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            @foreach($deliveries as $delivery)
-            flatpickr("#datepicker{{$delivery->id}}", {
-                dateFormat: "M d, Y",
-                allowInput: true
+            @foreach ($deliveries as $delivery)
+            flatpickr('#datepicker{{$delivery->id}}', {
+                dateFormat: 'M d, Y',
+                allowInput: true,
             });
             @endforeach
         });

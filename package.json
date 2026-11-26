@@ -3,7 +3,9 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "format": "prettier --write .",
+        "format:check": "prettier --check ."
     },
     "devDependencies": {
         "@fortawesome/fontawesome-free": "^6.7.2",
@@ -18,6 +20,8 @@
         "laravel-vite-plugin": "^2.0.1",
         "lodash": "^4.17.21",
         "overlayscrollbars": "^2.17.0",
+        "prettier": "^3.10.1",
+        "prettier-plugin-blade": "^3.3.3",
         "sass": "^1.93.3",
         "vite": "^7.2.2"
     }

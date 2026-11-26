@@ -1,8 +1,7 @@
-@extends('admin.master')
+@extends ('admin.master')
 
-@section('title')Low Stocks @endsection
+@section ('title') Low Stocks @endsection
 
-@section('content')
+@section ('content')
 
 @endsection
-

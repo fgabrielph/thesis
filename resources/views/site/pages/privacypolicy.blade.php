@@ -1,12 +1,11 @@
-@extends('site.master')
+@extends ('site.master')
 
-@section('title') Privacy Policy @endsection
+@section ('title') Privacy Policy @endsection
 
-@section('content')
-
+@section ('content')
     <div class="content">
         <div class="container">
-            <br><br><br>
+            <br /><br /><br />
             <div class="card">
                 <div class="card-header text-center">
                     <h1><strong>Privacy Policy</strong></h1>
@@ -46,7 +45,11 @@
                         <li>billing address;&nbsp;</li>
                         <li>bank account and payment information;&nbsp;</li>
                         <li>telephone number;&nbsp;</li>
-                        <li>any other information about the User when the User signs up to use our Services or website, and when the User uses the Services or website, as well as information related to how the User uses our Services or website; and&nbsp;</li>
+                        <li>
+                            any other information about the User when the User signs up to use our Services or website,
+                            and when the User uses the Services or website, as well as information related to how the
+                            User uses our Services or website; and&nbsp;
+                        </li>
                         <li>aggregate data on content the User engages with.&nbsp;</li>
                     </ul>
                     <p>3.2 If you do not want us to collect the aforementioned information/personal data, you may opt out at any time by notifying our Data Protection Officer in writing about it. Further information on opting out can be found in the section below entitled "How can you opt-out, remove, request access to or modify information you have provided to us?" . Note, however, that opting out of us collecting your personal data or withdrawing your consent for us to collect, use or process your personal data may affect your use of the Services. For example, opting out of the collection of location information will cause its location-based features to be disabled.&nbsp;</p>
@@ -105,13 +108,23 @@
                     <p>Our Services enable Users to share personal information with each other, in almost all occasions without New MJC Trading and Manufacturing&rsquo;s involvement, to complete transactions. In a typical transaction, Users may have access to each other&rsquo;s name, user ID, email address and other contact and postage information. Our Terms of Service require that Users in possession of another User&rsquo;s personal data (the &ldquo;Receiving Party&rdquo;) must (i) comply with all applicable Privacy Laws; (ii) allow the other User (the &ldquo;Disclosing Party&rdquo;) to remove him/herself from the Receiving Party&rsquo;s database; and (iii) allow the Disclosing Party to review what information have been collected about them by the Receiving Party.&nbsp;</p>
                     <p>&nbsp;</p>
                     <ol start="11">
-                        <li><strong> HOW DOES NEW MJC TRADING AND MANUFACTURING PROTECT AND RETAIN CUSTOMER INFORMATION?</strong></li>
+                        <li>
+                            <strong>
+                                HOW DOES NEW MJC TRADING AND MANUFACTURING PROTECT AND RETAIN CUSTOMER
+                                INFORMATION?</strong
+                            >
+                        </li>
                     </ol>
                     <p>12.1 We implement a variety of security measures and strive to ensure the security of your personal data on our systems. User personal data is contained behind secured networks and is only accessible by a limited number of employees who have special access rights to such systems. However, there can be no guarantee of absolute security.</p>
                     <p>12.2 We will retain personal data in accordance with the Privacy Laws and/or other applicable laws. That is, we will destroy or anonymize your personal data when we have reasonably determined that (i) the purpose for which that personal data was collected is no longer being served by the retention of such personal data; (ii) retention is no longer necessary for any legal or business purposes; and (iii) no other legitimate interests warrant further retention of such personal data. If you cease using the Platform, or your permission to use the Platform and/or the Services is terminated or withdrawn, we may continue storing, using and/or disclosing your personal data in accordance with this Privacy Policy and our obligations under the Privacy Laws. Subject to applicable law, we may securely dispose of your personal data without prior notice to you.</p>
                     <p>&nbsp;</p>
                     <ol start="12">
-                        <li><strong> DOES NEW MJC TRADING AND MANUFACTURING DISCLOSE THE INFORMATION IT COLLECTS FROM ITS VISITORS TO OUTSIDE PARTIES?</strong></li>
+                        <li>
+                            <strong>
+                                DOES NEW MJC TRADING AND MANUFACTURING DISCLOSE THE INFORMATION IT COLLECTS FROM ITS
+                                VISITORS TO OUTSIDE PARTIES?</strong
+                            >
+                        </li>
                     </ol>
                     <p>13.1 In conducting our business, we will/may need to disclose your personal data to our third party service providers, agents and/or our affiliates or related corporations, and/or other third parties, sited in Philippines, for one or more of the above-stated Purposes. Such third-party service providers, agents and/or affiliates or related corporations and/or other third parties would be processing your personal data either on our behalf or otherwise, for one or more of the above-stated Purposes. Such third parties include, without limitation:&nbsp;</p>
                     <p>&nbsp;</p>
@@ -142,7 +155,12 @@
                     <p>&nbsp;</p>
                     <p>&nbsp;</p>
                     <ol start="16">
-                        <li><strong> HOW CAN YOU OPT-OUT, REMOVE, REQUEST ACCESS TO OR MODIFY INFORMATION YOU HAVE PROVIDED TO US?&nbsp;</strong></li>
+                        <li>
+                            <strong>
+                                HOW CAN YOU OPT-OUT, REMOVE, REQUEST ACCESS TO OR MODIFY INFORMATION YOU HAVE PROVIDED
+                                TO US?&nbsp;</strong
+                            >
+                        </li>
                     </ol>
                     <p>16.1&nbsp;<em>Opting Out and Withdrawing Consent&nbsp;</em></p>
                     <p>16.1.1 To modify your email subscriptions, please let us know by sending an email to our Personal Data Protection Officer at the address listed below. Please note that due to email production schedules, you may still receive emails that are already in production.&nbsp;</p>
@@ -176,8 +194,7 @@
     </div>
 @endsection
 
-@section('footer')
-
-    @include('site.includes.footer')
+@section ('footer')
+    @include ('site.includes.footer')
 
 @endsection
