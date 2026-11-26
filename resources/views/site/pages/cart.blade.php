@@ -101,13 +101,10 @@
 
                     <figure class="itemside">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <aside class="aside"><img src="/assets/images/COD.png"></aside>
                             </div>
-                            <div class="col-md-4">
-                                <aside class="aside"><img src="/assets/images/paypal.png"></aside>
-                            </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <aside class="aside"><img src="/assets/images/pay-bank.png"></aside>
                             </div>
                         </div>

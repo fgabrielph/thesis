@@ -49,14 +49,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     # Checkout Controller Routes
     Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');
-
-    # PayPal checkout
-    Route::post('/checkout/paypal', 'CheckoutController@payWithpaypal')->name('paypal.checkout');
-
-    //Route::post('/checkout/checkpayment', 'CheckoutController@payment_method')->name('check.checkout');
-
-    # PayPal status callback
-    Route::get('status', 'CheckoutController@getPaymentStatus');
+    Route::post('/checkout', 'CheckoutController@store')->name('checkout.store');
 
     # Order Resource
     Route::resource('orders', 'OrderController');

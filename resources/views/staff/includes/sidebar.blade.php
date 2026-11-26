@@ -1,7 +1,7 @@
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: darkred;">
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link" style="color: white">
+    <a href="{{route('staff.dashboard')}}" class="brand-link">
         <img src="../../assets/images/LogoMJC.png" alt="NEW MJC Logo" class="brand-image img-circle elevation-3"
              style="opacity: .8">
         <span class="brand-text font-weight-light">NEW MJC</span>
@@ -12,10 +12,14 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="../../assets/images/agent-1.jpg" class="img-circle elevation-2" alt="User Image">
+                @if (Auth::user()->image)
+                    <img src="{{ asset('assets/images/' . Auth::user()->image) }}" class="img-circle elevation-2" alt="{{ Auth::user()->name }}">
+                @else
+                    <span class="avatar-fallback">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</span>
+                @endif
             </div>
             <div class="info">
-                <a href="#" class="d-block" style="color: white">{{ Auth::user()->name }}</a>
+                <a href="#" class="d-block">{{ Auth::user()->name }}</a>
             </div>
         </div>
 
@@ -23,57 +27,57 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a href="{{route('staff.dashboard')}}" class="nav-link" style="color: white">
+                    <a href="{{route('staff.dashboard')}}" class="nav-link {{ request()->routeIs('staff.dashboard') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('staff_orders.index')}}" class="nav-link" style="color: white">
+                    <a href="{{route('staff_orders.index')}}" class="nav-link {{ request()->routeIs('staff_orders.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tasks"></i>
                         <p>Orders</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('staff_deliveries.index')}}" class="nav-link" style="color: white">
+                    <a href="{{route('staff_deliveries.index')}}" class="nav-link {{ request()->routeIs('staff_deliveries.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-truck"></i>
                         <p>Delivery Management</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('staff_customer.index')}}" class="nav-link" style="color: white">
+                    <a href="{{route('staff_customer.index')}}" class="nav-link {{ request()->routeIs('staff_customer.*') ? 'active' : '' }}">
                         <i class="fas fa-user nav-icon"></i>
                         <p>Customer Management</p>
                     </a>
                 </li>
-                <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link" style="color: white">
+                <li class="nav-item has-treeview {{ request()->routeIs('staff_brands.*', 'staff_categories.*', 'staff_items.*', 'staff.lowitems') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-box"></i>
                         <p>Inventory<i class="right fas fa-angle-left"></i></p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route('staff_brands.index')}}" class="nav-link" style="color: white">
+                            <a href="{{route('staff_brands.index')}}" class="nav-link {{ request()->routeIs('staff_brands.*') ? 'active' : '' }}">
                                 <i class="fas fa-bolt nav-icon"></i>
                                 <p>Brands</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('staff_categories.index')}}" class="nav-link" style="color: white">
+                            <a href="{{route('staff_categories.index')}}" class="nav-link {{ request()->routeIs('staff_categories.*') ? 'active' : '' }}">
                                 <i class="fas fa-square nav-icon"></i>
                                 <p>Categories</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('staff_items.index')}}" class="nav-link" style="color: white">
+                            <a href="{{route('staff_items.index')}}" class="nav-link {{ request()->routeIs('staff_items.*') ? 'active' : '' }}">
                                 <i class="fas fa-box-open nav-icon"></i>
-                                <p>Products</p>
+                                <p>Items</p>
                             </a>
                         </li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('walkin.index')}}" class="nav-link" style="color: white">
+                    <a href="{{route('walkin.index')}}" class="nav-link {{ request()->routeIs('walkin.*', 'staff.categories', 'staff_cart.*', 'staff_checkout.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-luggage-cart"></i>
                         <p>Walk-in</p>
                     </a>

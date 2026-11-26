@@ -20,7 +20,7 @@
                 <div class="card">
 
                     <!--Card content-->
-                    <form action="{{route('paypal.checkout')}}" class="card-body"  method="POST" role="form" enctype="multipart/form-data">
+                    <form action="{{route('checkout.store')}}" class="card-body"  method="POST" role="form" enctype="multipart/form-data">
                     @csrf
 
                         <!--Grid row-->
@@ -124,10 +124,6 @@
                                 <div class="custom-control custom-radio">
                                     <input id="bank" name="paymentMethod" type="radio" class="custom-control-input" value="bank" required>
                                     <label class="custom-control-label" for="bank">Bank Transfer</label>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" value="paypal" required>
-                                    <label class="custom-control-label" for="paypal">Paypal</label>
                                 </div>
                             </fieldset>
 
