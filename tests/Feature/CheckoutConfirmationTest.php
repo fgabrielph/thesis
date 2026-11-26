@@ -43,6 +43,8 @@ class CheckoutConfirmationTest extends TestCase
         $this->actingAs($user)
             ->get(route('checkout.confirmation', $order))
             ->assertOk()
+            ->assertSee('data-storefront', false)
+            ->assertSee('sf-confirmation', false)
             ->assertSee($order->order_number);
     }
 
