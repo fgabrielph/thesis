@@ -7,6 +7,7 @@ use App\CustomOrder;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class CustomDeliveryController extends Controller
 {
@@ -24,74 +25,99 @@ class CustomDeliveryController extends Controller
 
     public function EDA(Request $request, $id)
     {
-        // dd($request->date);
-        // Validation
-        $this->validate($request, ['date' => 'required|after:'.date('m/d/yy').'|before_or_equal:'.date('m/d/yy', strtotime('+1 week')).'']);
-        // 0 is Pending, 1 is Accepted, 2 is Declined, 3 is Completed, 4 is On Delivery, 5 is Delivered, 6 is Return
-        $custom_order = CustomOrder::find($id);
-        $custom_order->status = 4;
-        $custom_order->save();
-        $delivery = new CustomDelivery;
-        $delivery->custom_order_id = $custom_order->id;
-        $delivery->status = 'On Delivery';
-        $delivery->customer_name = $custom_order->name;
-        $delivery->ETA = $request->date;
-        $delivery->save();
+        $this->validate($request, [
+            'date' => 'required|after:'.date('m/d/Y').'|before_or_equal:'.date('m/d/Y', strtotime('+1 week')).'',
+        ]);
+
+        $customOrder = CustomOrder::findOrFail($id);
+
+        if (! in_array($customOrder->status, [1, 4], true)) {
+            return back()->with('error', 'Custom order is not ready for delivery');
+        }
+
+        $delivery = CustomDelivery::firstOrNew(['custom_order_id' => $customOrder->id]);
+
+        if ($delivery->exists && in_array($delivery->status, ['Completed', 'Return'], true)) {
+            return back()->with('error', 'Delivery is already closed');
+        }
+
+        DB::transaction(function () use ($request, $customOrder, $delivery) {
+            $delivery->status = 'On Delivery';
+            $delivery->customer_name = $customOrder->name;
+            $delivery->ETA = $request->date;
+            $delivery->save();
+
+            $customOrder->status = 4;
+            $customOrder->save();
+        });
 
         return back()->with('success', 'Custom Order has been placed to Delivery Table');
     }
 
     public function edit_EDA(Request $request, $id)
     {
-        // strtotime($request->date)
-        // Validation
-        $this->validate($request, ['date' => 'required|after:'.date('m/d/yy').'|before_or_equal:'.date('m/d/yy', strtotime('+1 week')).'']);
-        $delivery = CustomDelivery::find($id);
-        $delivery->status = 'On Delivery';
-        $delivery->ETA = $request->date;
-        $delivery->save();
-        $custom_order = CustomOrder::find($delivery->custom_order_id);
-        $custom_order->status = 4;
-        $custom_order->save();
+        $this->validate($request, [
+            'date' => 'required|after:'.date('m/d/Y').'|before_or_equal:'.date('m/d/Y', strtotime('+1 week')).'',
+        ]);
+
+        $delivery = CustomDelivery::findOrFail($id);
+
+        if (in_array($delivery->status, ['Completed', 'Return'], true)) {
+            return back()->with('error', 'Delivery is already closed');
+        }
+
+        $customOrder = CustomOrder::findOrFail($delivery->custom_order_id);
+
+        DB::transaction(function () use ($request, $delivery, $customOrder) {
+            $delivery->status = 'On Delivery';
+            $delivery->ETA = $request->date;
+            $delivery->save();
+
+            $customOrder->status = 4;
+            $customOrder->save();
+        });
 
         return back()->with('success', 'Delivery Status has changed');
     }
 
     public function change_status($change, $id)
     {
-        $delivery = CustomDelivery::find($id);
+        $delivery = CustomDelivery::findOrFail($id);
+        $customOrder = CustomOrder::findOrFail($delivery->custom_order_id);
+
+        $allowedFrom = [
+            'Completed' => ['On Delivery'],
+            'Return' => ['On Delivery', 'Completed'],
+            'On Delivery' => ['On Delivery'],
+        ];
+
+        if (! in_array($delivery->status, $allowedFrom[$change] ?? [], true)) {
+            return back()->with('error', 'Invalid delivery status transition');
+        }
+
         switch ($change) {
             case 'Completed':
-                $delivery->status = 'Completed';
-                $delivery->save();
-                $custom_order = CustomOrder::find($delivery->custom_order_id);
-                $custom_order->status = 5;
-                $custom_order->save();
+                DB::transaction(function () use ($delivery, $customOrder) {
+                    $delivery->status = 'Completed';
+                    $delivery->save();
+                    $customOrder->status = 5;
+                    $customOrder->save();
+                });
 
                 return back()->with('success', 'Delivery Status has changed');
-                break;
             case 'Return':
-                $delivery->status = 'Return';
-                $delivery->save();
-                $custom_order = CustomOrder::find($delivery->custom_order_id);
-                // dd($custom_order);
-                $custom_order->status = 6;
-                $custom_order->save();
+                DB::transaction(function () use ($delivery, $customOrder) {
+                    $delivery->status = 'Return';
+                    $delivery->save();
+                    $customOrder->status = 6;
+                    $customOrder->save();
+                });
 
                 return back()->with('success', 'Delivery Status has changed');
-                break;
             case 'On Delivery':
-                $delivery->status = 'On Delivery';
-                $delivery->save();
-                $custom_order = CustomOrder::find($delivery->custom_order_id);
-                $custom_order->status = 4;
-                $custom_order->save();
-
-                return back()->with('success', 'Delivery Status has changed');
-                break;
+                return back()->with('success', 'Order has been placed to Delivery Table');
             default:
                 return back()->with('error', 'Error Input Mismatched');
-                break;
         }
     }
 }

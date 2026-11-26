@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\Support\OrderStatus;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -53,7 +54,12 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         $order = auth()->user()->orders()->findOrFail($id);
-        $order->status = 'Canceled';
+
+        if (! OrderStatus::canTransition($order->status, OrderStatus::CANCELED)) {
+            return back()->with('error', 'This order can no longer be canceled');
+        }
+
+        $order->status = OrderStatus::CANCELED;
         $order->save();
 
         return back()->with('success', 'Your Order was Canceled');

@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Delivery;
 use App\Http\Controllers\Controller;
-use App\Item as Product;
 use App\Order;
-use App\Suborder;
+use App\Services\OrderStockService;
+use App\Support\OrderStatus;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class DeliveryController extends Controller
 {
@@ -26,81 +27,110 @@ class DeliveryController extends Controller
 
     public function change_status($change, $id)
     {
-        $delivery = Delivery::find($id);
+        $delivery = Delivery::findOrFail($id);
+        $order = Order::findOrFail($delivery->order_id);
+
         switch ($change) {
             case 'Completed':
-                $delivery->status = 'Completed';
-                $delivery->save();
-                $order = Order::find($delivery->order_id);
-                $order->status = 'Completed';
-                if ($order->payment_method == 'cod') {
-                    $order->payment_status = 1;
-                    // We Decrease the stocks based on sub orders
-                    $suborders = Suborder::where('order_id', $order->id)->get();
-                    foreach ($suborders as $suborder) {
-                        $i = $suborder->item_id;
-                        $qty = $suborder->quantity;
-                        Product::where('id', $i)->decrement('stocks', $qty);
-                    }
+                if (! OrderStatus::canTransition($delivery->status, OrderStatus::COMPLETED)
+                    || ! OrderStatus::canTransition($order->status, OrderStatus::COMPLETED)) {
+                    return back()->with('error', 'Invalid delivery status transition');
                 }
-                $order->save();
+
+                DB::transaction(function () use ($delivery, $order) {
+                    $delivery->status = OrderStatus::COMPLETED;
+                    $delivery->save();
+
+                    $order->status = OrderStatus::COMPLETED;
+                    if ($order->payment_method == 'cod') {
+                        $order->payment_status = 1;
+                        app(OrderStockService::class)->deductOnce($order);
+                    }
+                    $order->save();
+                });
 
                 return back()->with('success', 'Delivery Status has changed');
-                break;
             case 'Return':
-                $delivery->status = 'Return';
-                $delivery->save();
-                $order = Order::find($delivery->order_id);
-                $order->status = 'Return';
-                $order->save();
+                if (! OrderStatus::canTransition($delivery->status, OrderStatus::RETURNED)
+                    || ! OrderStatus::canTransition($order->status, OrderStatus::RETURNED)) {
+                    return back()->with('error', 'Invalid delivery status transition');
+                }
+
+                DB::transaction(function () use ($delivery, $order) {
+                    $delivery->status = OrderStatus::RETURNED;
+                    $delivery->save();
+                    $order->status = OrderStatus::RETURNED;
+                    $order->save();
+                });
 
                 return back()->with('success', 'Delivery Status has changed');
-                break;
             case 'On Delivery':
-                $delivery->status = 'On Delivery';
-                $delivery->save();
-                $order = Order::find($delivery->order_id);
-                $order->status = 'On Delivery';
+                if ($delivery->status !== OrderStatus::ON_DELIVERY) {
+                    return back()->with('error', 'Invalid delivery status transition');
+                }
+
+                $order->status = OrderStatus::ON_DELIVERY;
                 $order->save();
 
                 return back()->with('success', 'Order has been placed to Delivery Table');
-                break;
             default:
                 return back()->with('error', 'Error Input Mismatched');
-                break;
         }
     }
 
     public function EDA(Request $request, $id)
     {
-        // dd($request->date);
-        // Validation
-        $this->validate($request, ['date' => 'required|after:'.date('m/d/yy').'|before_or_equal:'.date('m/d/yy', strtotime('+1 week')).'']);
-        $order = Order::find($id);
-        $order->status = 'On Delivery';
-        $order->save();
-        $delivery = new Delivery;
-        $delivery->order_id = $order->id;
-        $delivery->status = 'On Delivery';
-        $delivery->customer_name = $order->first_name.' '.$order->last_name;
-        $delivery->ETA = $request->date;
-        $delivery->save();
+        $this->validate($request, [
+            'date' => 'required|after:'.date('m/d/Y').'|before_or_equal:'.date('m/d/Y', strtotime('+1 week')).'',
+        ]);
+
+        $order = Order::findOrFail($id);
+
+        if (! in_array($order->status, [OrderStatus::CONFIRMED, OrderStatus::ON_DELIVERY], true)) {
+            return back()->with('error', 'Order is not ready for delivery');
+        }
+
+        $delivery = Delivery::firstOrNew(['order_id' => $order->id]);
+
+        if ($delivery->exists && in_array($delivery->status, [OrderStatus::COMPLETED, OrderStatus::RETURNED], true)) {
+            return back()->with('error', 'Delivery is already closed');
+        }
+
+        DB::transaction(function () use ($request, $order, $delivery) {
+            $delivery->status = OrderStatus::ON_DELIVERY;
+            $delivery->customer_name = $order->first_name.' '.$order->last_name;
+            $delivery->ETA = $request->date;
+            $delivery->save();
+
+            $order->status = OrderStatus::ON_DELIVERY;
+            $order->save();
+        });
 
         return back()->with('success', 'Order has been placed to Delivery Table');
     }
 
     public function edit_EDA(Request $request, $id)
     {
-        // strtotime($request->date)
-        // Validation
-        $this->validate($request, ['date' => 'required|after:'.date('m/d/yy').'|before_or_equal:'.date('m/d/yy', strtotime('+1 week')).'']);
-        $delivery = Delivery::find($id);
-        $delivery->status = 'On Delivery';
-        $delivery->ETA = $request->date;
-        $delivery->save();
-        $order = Order::find($delivery->order_id);
-        $order->status = 'On Delivery';
-        $order->save();
+        $this->validate($request, [
+            'date' => 'required|after:'.date('m/d/Y').'|before_or_equal:'.date('m/d/Y', strtotime('+1 week')).'',
+        ]);
+
+        $delivery = Delivery::findOrFail($id);
+
+        if (in_array($delivery->status, [OrderStatus::COMPLETED, OrderStatus::RETURNED], true)) {
+            return back()->with('error', 'Delivery is already closed');
+        }
+
+        $order = Order::findOrFail($delivery->order_id);
+
+        DB::transaction(function () use ($request, $delivery, $order) {
+            $delivery->status = OrderStatus::ON_DELIVERY;
+            $delivery->ETA = $request->date;
+            $delivery->save();
+
+            $order->status = OrderStatus::ON_DELIVERY;
+            $order->save();
+        });
 
         return back()->with('success', 'Delivery Status has changed');
     }
