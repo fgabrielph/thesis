@@ -4,6 +4,10 @@
 /storage/*.key
 /vendor
 /.agents/
+/AGENTS.md
+/boost.json
+/opencode.json
+/.junie/
 .env
 .env.backup
 .phpunit.result.cache

@@ -29,7 +29,7 @@
                         <!-- /.card-header -->
                         <div class="card-body p-0" style="margin: 1%">
                             <table id="defTable" class="table table-hover">
-                                <thead class="thead-dark">
+                                <thead class="table-dark">
                                 <tr>
                                     <th>ID</th>
                                     <th>User Name</th>

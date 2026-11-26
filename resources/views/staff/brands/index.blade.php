@@ -13,7 +13,7 @@
                     <p>list of brands</p>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
-                    <a href="#" data-toggle="modal" data-target="#add" class="btn btn-primary float-right"><span class="fas fa-plus" aria-hidden="true"></span>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-primary float-end"><span class="fas fa-plus" aria-hidden="true"></span>
                         Add Brand
                     </a>
                 </div><!-- /.col -->
@@ -35,7 +35,7 @@
                         <!-- /.card-header -->
                         <div class="card-body p-0" style="margin: 1%">
                             <table id="orderTable" class="table table-hover">
-                                <thead class="thead-dark">
+                                <thead class="table-dark">
                                 <tr>
                                     <th class="text-center">ID</th>
                                     <th class="text-center">Name</th>
@@ -49,10 +49,10 @@
                                         <td class="text-center">{{$brand->id}}</td>
                                         <td class="text-center">{{$brand->name}}</td>
                                         <td class="text-center"><img src="/assets/images/large_thumbnail/{{$brand->image}}" style="width: 40px; height: 40px" alt="this is image"></td>
-                                        <td class="text-center"><button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Actions</button>
+                                        <td class="text-center"><button type="button" data-bs-toggle="dropdown" class="btn btn-primary dropdown-toggle">Actions</button>
                                             <div class="dropdown-menu">
-                                                <a href="#" data-toggle="modal" data-target="#view{{$brand->id}}" class="dropdown-item"><span class="fas fa-search"></span> View</a>
-                                                <a href="#" data-toggle="modal" data-target="#edit{{$brand->id}}" class="dropdown-item"><span class="fas fa-pen"></span> Edit</a>
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#view{{$brand->id}}" class="dropdown-item"><span class="fas fa-search"></span> View</a>
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#edit{{$brand->id}}" class="dropdown-item"><span class="fas fa-pen"></span> Edit</a>
                                             </div>
                                         </td>
                                     </tr>
@@ -86,9 +86,7 @@
                                                     <!-- Form Name -->
                                                     <legend class="header">Update Brand</legend>
 
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
 
                                                 <div class="modal-body">
@@ -98,14 +96,14 @@
                                                         <form action="{{ action('Staff\BrandController@update', $brand->id) }}" method="POST" class="form-horizontal" enctype="multipart/form-data">@csrf
 
                                                         <!-- Text input-->
-                                                            <div class="form-group">
+                                                            <div class="mb-3">
                                                                 <label class="col-md-4 control-label">Name</label>
                                                                 <div class="col-md-12">
                                                                     <input class="form-control input-md" placeholder="Name" type="text" name="name" value="{{ old('name', $brand->name) }}">
                                                                 </div>
                                                             </div>
 
-                                                            <div class="form-group">
+                                                            <div class="mb-3">
                                                                 <label class="col-md-4 control-label">Image</label>
                                                                 <div class="col-md-12">
                                                                     <input type="file" name="image">
@@ -116,7 +114,7 @@
                                                 </div>
 
                                                 <div class="modal-footer">
-                                                    <button type="button" class="col-md-2 btn btn-danger btn-rounded" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="col-md-2 btn btn-danger btn-rounded" data-bs-dismiss="modal">Close</button>
                                                     @method('PUT')
                                                     <button class="col-md-2 btn btn-info" style="color: white;" type="submit">Save Changes</button>
                                                 </div>
@@ -149,22 +147,20 @@
                     <!-- Form Name -->
                     <legend class="header">Add Brand</legend>
 
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body">
                     <form action="{{ action('Staff\BrandController@store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">@csrf
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label class="col-md-4 control-label">Name</label>
                         <div class="col-md-12">
                             <input class="form-control input-md" placeholder="Name" type="text" name="name" value="{{ old('name') }}">
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label class="col-md-4 control-label">Image</label>
                         <div class="col-md-12">
                             <input type="file" name="image">
@@ -173,7 +169,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="col-md-2 btn btn-danger" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="col-md-2 btn btn-danger" data-bs-dismiss="modal">Cancel</button>
                     <button class="col-md-2 btn btn-success" type="submit">Submit</button>
                 </div>
 

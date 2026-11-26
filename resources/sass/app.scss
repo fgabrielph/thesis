@@ -1,12 +1,99 @@
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+// Application overrides for AdminLTE 4 / Bootstrap 5.
+// Package CSS is imported from resources/js/app.js.
 
-// Variables
-@import 'variables';
+:root {
+    --app-accent: #0d6efd;
+}
 
-@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
-@import "~@fortawesome/fontawesome-free/scss/solid.scss";
-@import "~@fortawesome/fontawesome-free/scss/brands.scss";
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
-@import '~admin-lte/dist/css/adminlte.css';
+body {
+    font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.app-main {
+    background: var(--bs-body-bg);
+}
+
+.app-content > .container-fluid {
+    padding-top: 1rem;
+}
+
+.table > :not(caption) > * > * {
+    vertical-align: middle;
+}
+
+.card {
+    margin-bottom: 1rem;
+}
+
+.btn {
+    white-space: nowrap;
+}
+
+.sidebar-user-panel {
+    min-height: 3.5rem;
+}
+
+.avatar-fallback {
+    width: 2.1rem;
+    height: 2.1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #6c757d;
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    flex: 0 0 auto;
+}
+
+@media (max-width: 1199.98px) {
+    .app-content .card-body {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+    }
+
+    .app-content .card-body::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .app-content .card-body::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.25);
+        border-radius: 4px;
+    }
+}
+
+.app-content table.table thead th {
+    white-space: nowrap;
+}
+
+
+.input-group-prepend,
+.input-group-append {
+    display: contents;
+}
+
+.small-box-footer {
+    text-decoration: none;
+}
+
+.small-box > .icon {
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    font-size: 3rem;
+    line-height: 1;
+    opacity: 0.25;
+    z-index: 0;
+}
+
+.small-box > .inner {
+    position: relative;
+    z-index: 1;
+}
+
+.app-content h1 {
+    font-size: 1.75rem;
+}

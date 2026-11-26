@@ -10,7 +10,7 @@
             @include('admin.includes.messages')
             @if($lowitem != 0)
             <div class="alert alert-danger alert-dismissible">
-                <a href="{{route('admin.lowitems')}}" class="btn btn-primary float-right" style="text-decoration: none">View Now</a>
+                <a href="{{route('admin.lowitems')}}" class="btn btn-primary float-end" style="text-decoration: none">View Now</a>
                 <h4>There are {{$lowitem}} item(s) low in stock</h4>
             </div>
             @endif
@@ -29,7 +29,7 @@
                             <p>New Orders</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-bag"></i>
+                            <i class="fas fa-shopping-bag"></i>
                         </div>
                         <a href="{{route('admin_orders.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
@@ -44,7 +44,7 @@
                             <p>User Registrations</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-person-add"></i>
+                            <i class="fas fa-user-plus"></i>
                         </div>
                         <a href="{{route('customers.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
@@ -106,7 +106,7 @@
                         </div>
                         <div class="card-body">
                             <table class="table table-striped table-hover">
-                                <thead class="thead-dark">
+                                <thead class="table-dark">
                                 <tr>
                                     <th>Item Name</th>
                                     <th>Stocks</th>
@@ -135,9 +135,9 @@
                             <h3 class="card-title">Number of Items as per Category</h3>
 
                             <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse"><i class="fas fa-minus"></i>
                                 </button>
-                                {{-- <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button> --}}
+                                {{-- <button type="button" class="btn btn-tool" data-lte-toggle="card-remove"><i class="fas fa-times"></i></button> --}}
                             </div>
                         </div>
                         <div class="card-body">
@@ -158,7 +158,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Sales of Order</h3>
                             <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse"><i class="fas fa-minus"></i>
                                 </button>
                             </div>
                         </div>
@@ -175,7 +175,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Sales of Custom Order</h3>
                             <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse"><i class="fas fa-minus"></i>
                                 </button>
                             </div>
                         </div>
@@ -193,12 +193,12 @@
 
     </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
 
         var ctx = document.getElementById('barChart').getContext('2d');
         var myChart = new Chart(ctx, {
-            type: 'horizontalBar',
+            type: 'bar',
             data: {
                 labels: [
                     @foreach($categories as $cat)
@@ -218,14 +218,11 @@
                 }]
             },
             options: {
+                indexAxis: 'y',
                 responsive              : true,
                 maintainAspectRatio     : false,
                 scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
+                    x: { beginAtZero: true }
                 }
             }
         });
@@ -269,11 +266,7 @@
                 responsive              : true,
                 maintainAspectRatio     : false,
                 scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
+                    y: { beginAtZero: true }
                 }
             }
         });
@@ -317,13 +310,11 @@
                 responsive              : true,
                 maintainAspectRatio     : false,
                 scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
+                    y: { beginAtZero: true }
                 }
             }
+        });
+
         });
     </script>
 

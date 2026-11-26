@@ -30,7 +30,7 @@
                         <!-- /.card-header -->
                         <div class="card-body p-0" style="margin: 1%">
                             <table id="defTable" class="table table-hover">
-                                <thead class="thead-dark">
+                                <thead class="table-dark">
                                     <tr>
                                         <th class="text-center">Order ID</th>
                                         <th class="text-center">Order Number</th>
@@ -85,17 +85,17 @@
                                             </h4>
                                         </td>
                                         <td>
-                                            <button type="button" data-toggle="modal" data-target="#view{{$order->id}}" class="btn btn-md btn-primary"><span class="fas fa-search"></span> View</button>
-                                            <a href="{{route('admin_orders.show', $order->id)}}" class="btn btn-md btn-secondary"><span class="fas fa-tasks"></span> View Contents</a>
+                                            <button type="button" data-bs-toggle="modal" data-bs-target="#view{{$order->id}}" class="btn btn-sm btn-primary"><span class="fas fa-search"></span> View</button>
+                                            <a href="{{route('admin_orders.show', $order->id)}}" class="btn btn-sm btn-secondary"><span class="fas fa-tasks"></span> View Contents</a>
                                             @if($order->payment_method == 'cod' && $order->status != 'Confirmed' && $order->status != 'Completed' && $order->status != 'Return' && $order->status != 'Canceled')
-                                            <a href="{{route('admin_orders.status', ['status' => 'Confirmed', 'id' => $order->id])}}" class="btn btn-md btn-success"><span class="fas fa-check-circle"></span> Confirm</a>
+                                            <a href="{{route('admin_orders.status', ['status' => 'Confirmed', 'id' => $order->id])}}" class="btn btn-sm btn-success"><span class="fas fa-check-circle"></span> Confirm</a>
                                             @endif
                                             @if(!(empty($order->image)))
-                                                <a href="#" data-toggle="modal" data-target="#receipt{{$order->id}}" class="btn text-white" style="background-color: grey;"><span class="fas fa-receipt"></span> View Receipt</a>
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#receipt{{$order->id}}" class="btn text-white" style="background-color: grey;"><span class="fas fa-receipt"></span> View Receipt</a>
                                             @endif
                                             @if($order->status == 'Confirmed')
-{{--                                                <a href="{{route('admin_orders.status', ['status' => 'On Delivery', 'id' => $order->id])}}" class="btn btn-md btn-success"><span class="fas fa-truck"></span> Deliver</a>--}}
-                                                <a href="#" data-toggle="modal" data-target="#deliver{{$order->id}}" class="btn btn-md btn-success"><span class="fas fa-truck"></span> Deliver</a>
+{{--                                                <a href="{{route('admin_orders.status', ['status' => 'On Delivery', 'id' => $order->id])}}" class="btn btn-sm btn-success"><span class="fas fa-truck"></span> Deliver</a>--}}
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#deliver{{$order->id}}" class="btn btn-sm btn-success"><span class="fas fa-truck"></span> Deliver</a>
                                             @endif
                                         </td>
                                     </tr>
@@ -105,17 +105,15 @@
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title h4" id="myLargeModalLabel">Order</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="col-6">
-                                                            <h2 class="page-header"><i class="fa fa-globe"></i> {{ $order->order_number }}</h2>
+                                                            <h2 class="border-bottom pb-2 mb-3"><i class="fa fa-globe"></i> {{ $order->order_number }}</h2>
                                                         </div>
                                                         <div class="col-6">
-                                                            <h5 class="text-right">Date: {{ $order->created_at->toFormattedDateString() }}</h5>
+                                                            <h5 class="text-end">Date: {{ $order->created_at->toFormattedDateString() }}</h5>
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -166,7 +164,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-lg btn-secondary" data-bs-dismiss="modal">Close</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -178,9 +176,7 @@
                                             <div class="modal-content" style="overflow-y: auto">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="exampleModalCenterTitle">Uploaded Receipt</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="row">
@@ -209,14 +205,12 @@
                                                     @csrf
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="exampleModalCenterTitle">Estimated Day of Arrival</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="row">
                                                             <div class="col">
-                                                                <div class="form-group">
+                                                                <div class="mb-3">
                                                                     <label class="col-md-5 control-label">Date: <b><i style="color: red">*Max is 7 days.</i></b></label>
                                                                     <div class="col-md-11">
                                                                         <input name="date" id="datepicker{{$order->id}}" type="text" class="form-control input-md" value="">
@@ -226,7 +220,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                                                         <input class="btn btn-primary" type="submit" value="Save Changes">
                                                     </div>
                                                 </form>
@@ -250,13 +244,15 @@
 
 @section('scripts')
 
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-        $( function() {
+        document.addEventListener('DOMContentLoaded', function () {
             @foreach($orders as $order)
-            $( "#datepicker{{$order->id}}" ).datepicker();
+            flatpickr("#datepicker{{$order->id}}", {
+                dateFormat: "M d, Y",
+                allowInput: true
+            });
             @endforeach
-        } );
+        });
     </script>
 
 @endsection

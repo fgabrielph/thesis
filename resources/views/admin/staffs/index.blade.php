@@ -13,7 +13,7 @@
                     <p>list of staffs</p>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
-                    <a href="#" data-toggle="modal" data-target="#add" class="btn btn-primary float-right"><span class="fas fa-plus" aria-hidden="true"></span>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-primary float-end"><span class="fas fa-plus" aria-hidden="true"></span>
                         Add Staff
                     </a>
                 </div><!-- /.col -->
@@ -35,7 +35,7 @@
                         <!-- /.card-header -->
                         <div class="card-body p-0" style="margin: 1%">
                             <table id="orderTable" class="table table-hover">
-                                <thead class="thead-dark">
+                                <thead class="table-dark">
                                 <tr>
                                     <th class="text-center">ID</th>
                                     <th class="text-center">Name</th>
@@ -52,11 +52,11 @@
                                         <td class="text-center">{{$staff->email}}</td>
                                         <td class="text-center">{!! $staff->status ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-danger">Deactivated</span>' !!}</td>
                                         <td class="text-center">
-                                            <button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Actions</button>
+                                            <button type="button" data-bs-toggle="dropdown" class="btn btn-primary dropdown-toggle">Actions</button>
                                             <div class="dropdown-menu">
-                                                <a href="#" data-toggle="modal" data-target="#view{{$staff->id}}" class="dropdown-item"><span class="fas fa-search"></span> View</a>
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#view{{$staff->id}}" class="dropdown-item"><span class="fas fa-search"></span> View</a>
                                                 <a href="{{route('staffs.edit', $staff->id)}}" class="dropdown-item">{!! $staff->status ? '<span class="fas fa-times"></span>' : '<span class="fas fa-check"></span>' !!}  {{$staff->status ? 'Deactivate' : 'Activate'}}</a>
-                                                <a href="#" data-toggle="modal" data-target="#delete{{$staff->id}}" class="dropdown-item"><span class="fas fa-trash"></span> Delete</a>
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#delete{{$staff->id}}" class="dropdown-item"><span class="fas fa-trash"></span> Delete</a>
                                             </div>
                                         </td>
                                     </tr>
@@ -94,9 +94,7 @@
                                                 <div class="modal-header">
                                                     <legend class="header">Delete Account?</legend>
 
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
 
                                                 <div class="modal-body">
@@ -115,7 +113,7 @@
                                                 </div>
 
                                                 <div class="modal-footer">
-                                                    <button type="button" class="col-md-2 btn btn-primary btn-rounded" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="col-md-2 btn btn-primary btn-rounded" data-bs-dismiss="modal">Close</button>
                                                     <form action="{{ action('Admin\StaffController@destroy', $staff->id) }}" method="POST">@csrf
                                                     @method('DELETE')
                                                     <button class="col-md-2 btn btn-danger btn-rounded" type="submit">Delete</button>
@@ -149,43 +147,41 @@
                     <!-- Form Name -->
                     <legend class="header">Add Staff</legend>
 
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body">
                     <form action="{{ action('Admin\StaffController@store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">@csrf
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label class="col-md-4 control-label">Name</label>
                         <div class="col-md-12">
                             <input class="form-control input-md" placeholder="Name" type="text" name="name" value="{{ old('name') }}">
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label class="col-md-4 control-label">Email</label>
                         <div class="col-md-12">
                             <input class="form-control input-md" placeholder="Email" type="text" name="email" value="{{ old('email') }}">
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label class="col-md-4 control-label">Password</label>
                         <div class="col-md-12">
                             <input class="form-control input-md" placeholder="Password" type="password" name="password">
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label class="col-md-4 control-label">Confirm Password</label>
                         <div class="col-md-12">
                             <input class="form-control input-md" placeholder="Confirm Password" type="password" name="confirm_pass">
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label class="col-md-4 control-label">Image</label>
                         <div class="col-md-12">
                             <input type="file" name="image">
@@ -194,7 +190,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="col-md-2 btn btn-danger" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="col-md-2 btn btn-danger" data-bs-dismiss="modal">Cancel</button>
                     <button class="col-md-2 btn btn-success" type="submit">Submit</button>
                 </div>
 
