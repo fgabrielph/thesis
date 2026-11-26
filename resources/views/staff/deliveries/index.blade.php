@@ -27,16 +27,16 @@
                         <div class="card-body">
                             <nav>
                                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">On Delivery</a>
-                                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Returns</a>
-                                    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Completed</a>
+                                    <a class="nav-item nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">On Delivery</a>
+                                    <a class="nav-item nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Returns</a>
+                                    <a class="nav-item nav-link" id="nav-contact-tab" data-bs-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Completed</a>
                                 </div>
                             </nav>
 
                             <div class="tab-content" id="nav-tabContent">
                                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" style="margin: 1%">
                                     <table id="orderTable" class="table table-hover">
-                                        <thead class="thead-dark">
+                                        <thead class="table-dark">
                                         <tr>
                                             <th>ID</th>
                                             <th>Order Number</th>
@@ -74,7 +74,7 @@
                                 </div>
                                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" style="margin: 1%">
                                     <table id="atkTable" class="table table-hover">
-                                        <thead class="thead-dark">
+                                        <thead class="table-dark">
                                         <tr>
                                             <th>ID</th>
                                             <th>Order Number</th>
@@ -101,7 +101,7 @@
                                                     <td>{{date('M d, Y', strtotime($delivery->ETA))}}</td>
                                                     <td>
                                                         {{--                                                        <a href="{{route('deliveries.status', ['status' => 'On Delivery', 'id' => $delivery->id])}}" class="btn btn-lg btn-primary"><span class="fas fa-truck"></span> Deliver</a>--}}
-                                                        <a href="#" data-toggle="modal" data-target="#deliver{{$delivery->id}}" class="btn btn-md btn-success"><span class="fas fa-truck"></span> Deliver</a>
+                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#deliver{{$delivery->id}}" class="btn btn-sm btn-success"><span class="fas fa-truck"></span> Deliver</a>
                                                     </td>
 
                                                 </tr>
@@ -116,14 +116,12 @@
                                                                 @csrf
                                                                 <div class="modal-header">
                                                                     <h5 class="modal-title" id="exampleModalCenterTitle">Estimated Day of Arrival</h5>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <div class="row">
                                                                         <div class="col">
-                                                                            <div class="form-group">
+                                                                            <div class="mb-3">
                                                                                 <label class="col-md-4 control-label">Date: </label>
                                                                                 <div class="col-md-12">
                                                                                     <input name="date" id="datepicker{{$delivery->id}}" type="text" class="form-control input-md" value="{{date('M d, Y', strtotime($delivery->ETA))}}">
@@ -133,7 +131,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                                                                     <input class="btn btn-primary" type="submit" value="Save Changes">
                                                                 </div>
                                                             </form>
@@ -148,7 +146,7 @@
                                 </div>
                                 <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" style="margin: 1%">
                                     <table id="defTable" class="table table-hover">
-                                        <thead class="thead-dark">
+                                        <thead class="table-dark">
                                         <tr>
                                             <th>ID</th>
                                             <th>Order Number</th>
@@ -197,13 +195,15 @@
 
 @section('scripts')
 
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-        $( function() {
+        document.addEventListener('DOMContentLoaded', function () {
             @foreach($deliveries as $delivery)
-            $( "#datepicker{{$delivery->id}}" ).datepicker();
+            flatpickr("#datepicker{{$delivery->id}}", {
+                dateFormat: "M d, Y",
+                allowInput: true
+            });
             @endforeach
-        } );
+        });
     </script>
 
 @endsection

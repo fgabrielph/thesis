@@ -83,7 +83,7 @@
 
                             <hr class="mb-4">
 
-                            <button class="btn btn-primary btn-lg btn-block" type="submit">Proceed</button>
+                            <button class="btn btn-primary btn-lg w-100" type="submit">Proceed</button>
 
                         </form>
 
@@ -99,7 +99,7 @@
                     <!-- Heading -->
                     <h4 class="d-flex justify-content-between align-items-center mb-3">
                         <span class="text-muted">Your cart</span>
-                        <span class="badge badge-danger badge-pill">{{count(Cart::content())}}</span>
+                        <span class="badge text-bg-danger rounded-pill">{{count(Cart::content())}}</span>
                     </h4>
 
                     <!-- Cart -->

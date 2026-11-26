@@ -7,9 +7,11 @@ Branch: `restore/laravel10-sqlite`
 - Laravel 12.74
 - PHP 8.2+ (tested with 8.3)
 - SQLite
+- Vite + AdminLTE 4 + Bootstrap 5 for admin/staff
+- MDBootstrap for the customer storefront
 - PayPal removed; checkout supports Cash on Delivery and Bank Transfer
 - `trader_sma()` is a pure-PHP polyfill in `app/Support/trader_sma.php`; no PECL extension required
-- `composer audit` reports no advisories
+- `composer audit` and `npm audit` report no advisories
 
 ## First-time setup
 
@@ -21,6 +23,17 @@ touch database/database.sqlite
 php artisan migrate:fresh --seed
 php artisan serve --host=127.0.0.1 --port=8000
 ```
+
+Committed Vite output lives in `public/build`, so a fresh clone runs without Node.
+
+Rebuild admin/staff assets only when changing them:
+
+```bash
+npm ci
+npm run build
+```
+
+Node 20.19+ or 22.12+ is required for the build. `node_modules` is ignored; `public/build` is committed intentionally for thesis portability.
 
 The `DB_DATABASE` value in `.env` must be an absolute path to `database/database.sqlite`. Laravel falls back to `database/database.sqlite` when the variable is empty.
 

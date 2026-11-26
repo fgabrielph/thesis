@@ -13,7 +13,7 @@
                     <p>list of items</p>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
-                    <a href="{{route('export', 'items')}}" class="btn btn-primary float-right">
+                    <a href="{{route('export', 'items')}}" class="btn btn-primary float-end">
                         Export
                     </a>
                 </div><!-- /.col -->
@@ -35,7 +35,7 @@
                         <!-- /.card-header -->
                         <div class="card-body p-0" style="margin: 1%">
                             <table id="orderTable" class="table table-hover">
-                                <thead class="thead-dark">
+                                <thead class="table-dark">
                                 <tr>
                                     <th class="text-center">Product ID</th>
                                     <th class="text-center">Brand</th>

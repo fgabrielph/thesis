@@ -29,7 +29,7 @@
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="inputGroupSelect01">Forecast</label>
                             </div>
-                            <select class="custom-select" id="inputGroupSelect01" name='forecast'>
+                            <select class="form-select" id="inputGroupSelect01" name='forecast'>
                                 <option selected value="0">Next Month</option>
                                 <option selected value="1">2 Month</option>
                                 <option value="3">Quarterly</option>
@@ -45,7 +45,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Sales of Order</h3>
                             <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse"><i class="fas fa-minus"></i>
                                 </button>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                             </div>
                             <div class="card-body">
                                 <table class="table table-hover table-bordered">
-                                    <thead class="thead-dark">
+                                    <thead class="table-dark">
                                         <tr class="text-center">
                                             <th>Month</th>
                                             <th>Actual Sales</th>
@@ -92,8 +92,8 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
 
         var ctx1 = document.getElementById('lineChart').getContext('2d');
         var myChart1 = new Chart(ctx1, {
@@ -134,13 +134,11 @@
                 responsive              : true,
                 maintainAspectRatio     : false,
                 scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
+                    y: { beginAtZero: true }
                 }
             }
+        });
+
         });
     </script>
 

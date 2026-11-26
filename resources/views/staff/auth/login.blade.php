@@ -1,26 +1,20 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-bs-theme="light">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{{config('app.name')}} | Log in</title>
-    <!-- Tell the browser to be responsive to screen width -->
+    <title>{{ config('app.name') }} | Log in</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="stylesheet" href="{{asset('css/fontawesome.css')}}">
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    @vite('resources/js/app.js')
 </head>
-<body class="hold-transition login-page" style="background-image: url('/assets/images/staffbg.png');">
 
-
+<body class="login-page" style="background-image: url('{{ asset('assets/images/staffbg.png') }}'); background-size: cover; background-position: center;">
 <div class="login-box">
     @include('staff.includes.messages')
     <div class="login-logo">
-        <img src="/assets/images/Dz5gMSnB2dt7wZHjluX6nGrgj.png" width="90%">
+        <img src="{{ asset('assets/images/Dz5gMSnB2dt7wZHjluX6nGrgj.png') }}" width="90%" alt="NEW MJC">
     </div>
-    <!-- /.login-logo -->
+
     <div class="card">
         <div class="card-body login-card-body">
             <p class="login-box-msg">Staff Login</p>
@@ -28,41 +22,22 @@
             <form action="{{ route('staff.login.post') }}" method="post">
                 @csrf
                 <div class="input-group mb-3">
-                    <input type="email" class="form-control" name="email" placeholder="Email">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            {{--                            <span class="fa-envelope"></span>--}}
-                        </div>
-                    </div>
+                    <input type="email" class="form-control" name="email" placeholder="Email" required autofocus>
+                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" class="form-control" name="password" placeholder="Password">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            {{--                            <span class="fa-lock"></span>--}}
-                        </div>
-                    </div>
+                    <input type="password" class="form-control" name="password" placeholder="Password" required>
+                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
                 </div>
-                <div class="row">
-                    <div class="col-8">
-                        <div class="icheck-primary">
-                            <input type="checkbox" id="remember">
-                            <label for="remember">
-                                Remember Me
-                            </label>
-                        </div>
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-4">
-                        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-                    </div>
-                    <!-- /.col -->
+                <div class="form-check mb-3">
+                    <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                    <label class="form-check-label" for="remember">Remember Me</label>
                 </div>
+                <button type="submit" class="btn btn-primary w-100">Sign In</button>
             </form>
         </div>
     </div>
 </div>
-<script src="{{asset('js/app.js')}}"></script>
 
 </body>
 </html>

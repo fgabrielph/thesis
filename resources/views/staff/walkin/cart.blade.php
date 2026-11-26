@@ -39,7 +39,7 @@
                                 <!--Table-->
                                 <table class="table table-hover table-fixed table-responsive">
 
-                                    <thead class="thead-dark">
+                                    <thead class="table-dark">
                                     <tr>
                                         <th>#</th>
                                         <th>Image</th>
@@ -100,7 +100,7 @@
 
                         <!-- Heading -->
                         <h4 class="d-flex justify-content-between align-items-center mb-3">
-                            <a href="{{ route('staff_cart.clear') }}" class="btn btn-danger btn-block mb-4">Clear Cart</a>
+                            <a href="{{ route('staff_cart.clear') }}" class="btn btn-danger w-100 mb-4">Clear Cart</a>
                         </h4>
 
                         <h3 class="d-flex justify-content-between">
@@ -109,7 +109,7 @@
                         </h3>
 
                         <hr>
-                        <a href="{{route('staff_checkout.index')}}" class="btn btn-success btn-lg btn-block">Proceed To Checkout</a>
+                        <a href="{{route('staff_checkout.index')}}" class="btn btn-success btn-lg w-100">Proceed To Checkout</a>
 
                     </div>
                     <!--Grid column-->

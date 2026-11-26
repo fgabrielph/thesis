@@ -51,7 +51,7 @@
                     <p>Walk-in customer products</p>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
-                    <a href="{{route('staff_cart.index')}}" class="btn btn-primary float-right"><span class="fas fa-shopping-cart" aria-hidden="true"></span>
+                    <a href="{{route('staff_cart.index')}}" class="btn btn-primary float-end"><span class="fas fa-shopping-cart" aria-hidden="true"></span>
                         Cart
                         @if(Cart::content()->count() > 0)
                             <span class="badge bg-danger"> {{Cart::content()->count()}} </span>
@@ -99,8 +99,8 @@
                                             </div>
                                             <div class="card-footer">
                                                 <div class="">Qty: {{$item->stocks}}</div>Price: {{$item->price_stocks}}
-                                                <div class="float-right">
-                                                    <button data-toggle="modal" data-target="#addtocart{{$item->id}}" type="button" href="#" class="btn btn-md btn-success">Buy</button>
+                                                <div class="float-end">
+                                                    <button data-bs-toggle="modal" data-bs-target="#addtocart{{$item->id}}" type="button" href="#" class="btn btn-sm btn-success">Buy</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -118,9 +118,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLongTitle">PRODUCT</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             <div class="row">

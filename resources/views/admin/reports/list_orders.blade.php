@@ -13,7 +13,7 @@
                     <p>list of custom orders</p>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
-                    <a href="{{route('export', 'orders')}}" class="btn btn-primary float-right">
+                    <a href="{{route('export', 'orders')}}" class="btn btn-primary float-end">
                         Export
                     </a>
                 </div><!-- /.col -->
@@ -34,7 +34,7 @@
                         <!-- /.card-header -->
                         <div class="card-body p-0" style="margin: 1%">
                             <table id="orderTable" class="table table-hover">
-                                <thead class="thead-dark">
+                                <thead class="table-dark">
                                 <tr>
                                     <th>Order ID</th>
                                     <th>Customer</th>

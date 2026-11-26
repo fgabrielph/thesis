@@ -69,28 +69,28 @@
                                                     <h5><b>Placed By: </b>{{$customorder->user->first_name . ' ' . $customorder->user->last_name}}</h5><br>
                                                     <h5><b>Payment Status: </b>
                                                         @if($customorder->payment_status == 0 && $customorder->status == 2)
-                                                            <span class='badge badge-danger'>Declined Order</span>
+                                                            <span class='badge text-bg-danger'>Declined Order</span>
                                                         @elseif($customorder->payment_status == 0)
-                                                            <span class='badge badge-danger'>Not yet Paid</span>
+                                                            <span class='badge text-bg-danger'>Not yet Paid</span>
                                                         @elseif($customorder->payment_status == 2)
-                                                            <h5><span class='badge badge-warning'>Waiting for Approval</span></h5>
+                                                            <h5><span class='badge text-bg-warning'>Waiting for Approval</span></h5>
                                                         @elseif($customorder->payment_status == 1)
-                                                            <span class="badge badge-success">Paid</span>
+                                                            <span class="badge text-bg-success">Paid</span>
                                                         @elseif($customorer->payment_status == 3)
-                                                            <span class="badge-info">Partially Paid</span>
+                                                            <span class="text-bg-info">Partially Paid</span>
                                                         @endif
                                                     </h5><br>
                                                     <h5><b>Status: </b>
                                                         @if($customorder->status == 0)
-                                                            <span class='badge badge-warning'>Pending</span>
+                                                            <span class='badge text-bg-warning'>Pending</span>
                                                         @elseif($customorder->status == 1)
-                                                            <span class='badge badge-success'>Accepted</span>
+                                                            <span class='badge text-bg-success'>Accepted</span>
                                                         @elseif($customorder->status == 2)
-                                                            <span class="badge badge-danger">Declined</span>
+                                                            <span class="badge text-bg-danger">Declined</span>
                                                         @elseif($customorder->status == 3)
-                                                            <span class="badge badge-success">Completed</span>
+                                                            <span class="badge text-bg-success">Completed</span>
                                                         @elseif($customorder->status == 5)
-                                                            <span class="badge badge-success">Delivered</span>
+                                                            <span class="badge text-bg-success">Delivered</span>
                                                         @endif
                                                     </h5><br>
                                                     <h5><b>Contact Number: {{$customorder->user->mobile_number}}</b></h5><br>
@@ -111,7 +111,7 @@
                                             <div class="col-md-4">
                                                 <br>
                                                 <div class="justify-content-center">
-                                                    <a href="#" data-toggle="modal" data-target="#imageModal"><img src="/assets/images/{{$customorder->image}}" width="100%"></a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#imageModal"><img src="/assets/images/{{$customorder->image}}" width="100%"></a>
                                                 </div>
                                                 <br><br>
                                                 <h3><b>Created at: </b>{{$customorder->created_at->toFormattedDateString()}}</h3>
@@ -135,7 +135,7 @@
                             </div>
                         </div>
                     </div>
-                    <a href="{{route('customorders.index')}}" class="btn btn-lg btn-block btn-primary">Go Back</a>
+                    <a href="{{route('customorders.index')}}" class="btn btn-lg w-100 btn-primary">Go Back</a>
                 </div>
             </div>
         </div>

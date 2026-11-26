@@ -13,7 +13,7 @@
                     <p>list of items</p>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
-                    <a href="#" data-toggle="modal" data-target="#add" class="btn btn-primary float-right"><span class="fas fa-plus" aria-hidden="true"></span>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-primary float-end"><span class="fas fa-plus" aria-hidden="true"></span>
                         Add Item
                     </a>
                 </div><!-- /.col -->
@@ -35,7 +35,7 @@
                         <!-- /.card-header -->
                         <div class="card-body p-0" style="margin: 1%">
                             <table id="defTable" class="table table-hover">
-                                <thead class="thead-dark">
+                                <thead class="table-dark">
                                 <tr>
                                     <th class="text-center">Product ID</th>
                                     <th class="text-center">Image</th>
@@ -60,10 +60,10 @@
                                         <td class="text-center">{{$item->categories->name}}</td>
                                         <td class="text-center"><p style="width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{$item->description}}</p></td>
                                         <td class="text-center">
-                                            <button type="button" data-toggle="dropdown" class="btn btn-rounded btn-secondary dropdown-toggle">Actions</button>
+                                            <button type="button" data-bs-toggle="dropdown" class="btn btn-rounded btn-secondary dropdown-toggle">Actions</button>
                                             <div class="dropdown-menu">
-                                                <a href="#" data-toggle="modal" data-target="#view{{$item->id}}" class="dropdown-item"><span class="fas fa-search"></span> View</a>
-                                                <a href="#" data-toggle="modal" data-target="#edit{{$item->id}}" class="dropdown-item"><span class="fas fa-pencil-alt"></span> Edit</a>
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#view{{$item->id}}" class="dropdown-item"><span class="fas fa-search"></span> View</a>
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#edit{{$item->id}}" class="dropdown-item"><span class="fas fa-pencil-alt"></span> Edit</a>
                                             </div>
                                         </td>
                                     </tr>
@@ -101,9 +101,7 @@
                                                     <!-- Form Name -->
                                                     <legend class="header">Update Item</legend>
 
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
 
                                                 <div class="modal-body">
@@ -115,14 +113,14 @@
                                                         <div class="col">
                                                         <form action="{{ action('Admin\ItemController@update', $item->id) }}" method="POST" class="form-horizontal" enctype="multipart/form-data">@csrf
                                                          <!-- Text input-->
-                                                            <div class="form-group">
+                                                            <div class="mb-3">
                                                                 <label class="col-md-4 control-label">Name</label>
                                                                 <div class="col-md-12">
                                                                     <input class="form-control input-md" placeholder="Name" type="text" name="name" value="{{ old('name', $item->name) }}">
                                                                 </div>
                                                             </div>
                                                              <!-- Text input-->
-                                                            <div class="form-group">
+                                                            <div class="mb-3">
                                                                 <label class="col-md-4 control-label" for="input-select">Brand</label>
                                                                 <div class="col-md-12">
                                                                     <select class="form-control" name="brand">
@@ -136,7 +134,7 @@
                                                             </div>
 
                                                             <!-- Prepended text-->
-                                                            <div class="form-group">
+                                                            <div class="mb-3">
                                                                 <label class="col-md-12 control-label">Stock Price</label>
                                                                 <div class="col-md-12">
                                                                     <div class="input-group-prepend">
@@ -146,7 +144,7 @@
                                                             </div>
 
                                                             <!-- Text input-->
-                                                            <div class="form-group">
+                                                            <div class="mb-3">
                                                                 <label class="col-md control-label">Stocks (Increase or Decrease)</label>
                                                                 <div class="col-md-12">
                                                                     <input class="form-control input-md" placeholder="0" type="number" name="stocks" value="{{ old('stocks', $item->stocks) }}">
@@ -154,7 +152,7 @@
                                                             </div>
 
                                                             <!-- Text input-->
-                                                            <div class="form-group">
+                                                            <div class="mb-3">
                                                                 <label class="col-md-4 control-label" for="input-select">Category</label>
                                                                 <div class="col-md-12">
                                                                     <select class="form-control" name="category">
@@ -168,14 +166,14 @@
                                                             </div>
 
                                                             <!-- Textarea -->
-                                                            <div class="form-group">
+                                                            <div class="mb-3">
                                                                 <label class="col-md-4 control-label">Description</label>
                                                                 <div class="col-md-12">
                                                                     <textarea style="resize: none;" class="form-control" placeholder="Description" name="description">{{ old('description', $item->description) }}</textarea>
                                                                 </div>
                                                             </div>
 
-                                                            <div class="form-group">
+                                                            <div class="mb-3">
                                                                 <label class="col-md-4 control-label">Image</label>
                                                                     <div class="col-md-12">
                                                                         <input type="file" name="image">
@@ -187,7 +185,7 @@
                                                 </div>
 
                                                 <div class="modal-footer">
-                                                    <button type="button" class="col-md-2 btn btn-danger btn-rounded" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="col-md-2 btn btn-danger btn-rounded" data-bs-dismiss="modal">Close</button>
                                                     @method('PUT')
                                                     <button class="col-md-2 btn btn-success" type="submit">Save Changes</button>
                                                 </div>
@@ -203,7 +201,7 @@
                             </table>
                         </div>
                         <!-- <div class="card-footer clearfix">
-                            <ul class="pagination pagination-sm m-0 float-right">
+                            <ul class="pagination pagination-sm m-0 float-end">
                             </ul>
                         </div> -->
                     </div>
@@ -218,15 +216,13 @@
                                 <!-- Form Name -->
                                 <legend class="header">Add Item</legend>
 
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
 
                             <div class="modal-body">
                                 <form action="{{ action('Admin\ItemController@store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">@csrf
 
-                                <div class="form-group">
+                                <div class="mb-3">
                                     <label class="col-md-4 control-label">Name</label>
                                     <div class="col-md-12">
                                         <input class="form-control input-md" placeholder="Name" type="text" name="name" value="{{ old('name') }}">
@@ -234,7 +230,7 @@
                                 </div>
 
                                 <!-- Text input-->
-                                <div class="form-group">
+                                <div class="mb-3">
                                     <label class="col-md-4 control-label" for="input-select">Brand</label>
                                     <div class="col-md-12">
                                         <select class="form-control" name="brand">
@@ -247,7 +243,7 @@
                                 </div>
 
                                 <!-- Prepended text-->
-                                <div class="form-group">
+                                <div class="mb-3">
                                     <label class="col-md-12 control-label">Stock Price</label>
                                     <div class="col-md-12">
                                         <div class="input-group-prepend"><span class="input-group-text">PhP</span> <input class="form-control" placeholder="0.00" step="0.1" type="number" name="price_stocks" value="{{ old('price_stocks') }}"> </div>
@@ -255,7 +251,7 @@
                                 </div>
 
                                 <!-- Text input-->
-                                <div class="form-group">
+                                <div class="mb-3">
                                     <label class="col-md-4 control-label">Stocks</label>
                                     <div class="col-md-12">
                                         <input class="form-control input-md" placeholder="0" type="number" name="stocks" value="{{ old('stocks') }}">
@@ -263,7 +259,7 @@
                                 </div>
 
                                 <!-- Text input-->
-                                <div class="form-group">
+                                <div class="mb-3">
                                     <label class="col-md-4 control-label" for="input-select">Category</label>
                                     <div class="col-md-12">
                                         <select class="form-control" name="category">
@@ -276,14 +272,14 @@
                                 </div>
 
                                 <!-- Textarea -->
-                                <div class="form-group">
+                                <div class="mb-3">
                                     <label class="col-md-4 control-label">Description</label>
                                     <div class="col-md-12">
                                         <textarea style="resize: none;" class="form-control" placeholder="Description" name="description">{{ old('description') }}</textarea>
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="mb-3">
                                     <label class="col-md-4 control-label">Image</label>
                                     <div class="col-md-12">
                                         <input type="file" name="image">
@@ -292,7 +288,7 @@
                             </div>
 
                             <div class="modal-footer">
-                                <button type="button" class="col-md-2 btn btn-danger btn-rounded" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="col-md-2 btn btn-danger btn-rounded" data-bs-dismiss="modal">Cancel</button>
                                 <button class="col-md-2 btn btn-success btn-rounded" type="submit">Submit</button>
                             </div>
 

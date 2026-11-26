@@ -23,7 +23,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <a href="{{route('analysis.demand')}}" class="btn btn-primary btn-block">Go Back</a>
+                    <a href="{{route('analysis.demand')}}" class="btn btn-primary w-100">Go Back</a>
                 </div>
             </div>
             <br>
@@ -37,7 +37,7 @@
 {{--                            <div class="input-group-prepend">--}}
 {{--                                <label class="input-group-text" for="inputGroupSelect01">Forecast</label>--}}
 {{--                            </div>--}}
-{{--                            <select class="custom-select" id="inputGroupSelect01" name='forecast'>--}}
+{{--                            <select class="form-select" id="inputGroupSelect01" name='forecast'>--}}
 {{--                                <option selected value="0">Next Month</option>--}}
 {{--                                <option selected value="1">2 Month</option>--}}
 {{--                                <option value="3">Quarterly</option>--}}
@@ -51,7 +51,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Forecasted Demand of Custom Order</h3>
                             <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse"><i class="fas fa-minus"></i>
                                 </button>
                             </div>
                         </div>
@@ -67,8 +67,8 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
         var ctx1 = document.getElementById('barChart').getContext('2d');
         var myChart1 = new Chart(ctx1, {
             type: 'bar',
@@ -106,20 +106,21 @@
                 responsive              : true,
                 maintainAspectRatio     : false,
                 scales: {
-                    yAxes: [{
+                    y: {
+                        beginAtZero: true,
                         ticks: {
-                            beginAtZero: true,
-                            userCallback: function(label, index, labels) {
-                                // when the floored value is the same as the value we have a whole number
-                                if (Math.ceil(label) === label) {
-                                    return label;
+                            // Remove decimal points when the value is a whole number.
+                            callback: function (value) {
+                                if (Math.ceil(value) === value) {
+                                    return value;
                                 }
-
                             }
                         }
-                    }]
+                    }
                 }
             }
+        });
+
         });
     </script>
 
