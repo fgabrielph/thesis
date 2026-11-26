@@ -3,9 +3,13 @@
 /public/storage
 /storage/*.key
 /vendor
+/.agents/
 .env
 .env.backup
 .phpunit.result.cache
+.phpunit.cache
+/database/*.sqlite
+/database/*.sqlite-journal
 Homestead.json
 Homestead.yaml
 npm-debug.log

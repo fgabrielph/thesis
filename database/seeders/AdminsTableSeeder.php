@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Admin;
 use Illuminate\Database\Seeder;
 
@@ -17,6 +19,5 @@ class AdminsTableSeeder extends Seeder
             'email'     =>  'admin@admin.com',
             'password'  =>  bcrypt('password'),
         ]);
-
     }
 }

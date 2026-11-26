@@ -1,0 +1,43 @@
+/* Shared admin/staff corrections. Loaded after the compiled AdminLTE theme. */
+
+@media (max-width: 1199.98px) {
+    /* Let wide data tables scroll inside their card instead of overflowing the page. */
+    .content-wrapper .card-body {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+    }
+
+    .content-wrapper .card-body::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .content-wrapper .card-body::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .content-wrapper .card-body::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.25);
+        border-radius: 4px;
+    }
+}
+
+/* Neutral avatar when the account has no image. */
+.user-panel .image .avatar-fallback {
+    width: 2.1rem;
+    height: 2.1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #6c757d;
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* Keep DataTables sort icons on the same line as their column labels. */
+.content-wrapper table.table thead th {
+    white-space: nowrap;
+}

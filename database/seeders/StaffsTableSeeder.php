@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Staff;
 use Illuminate\Database\Seeder;
 
@@ -16,6 +18,7 @@ class StaffsTableSeeder extends Seeder
             'name'      =>  'Joseph Gutierrez',
             'email'     =>  'staff@staff.com',
             'password'  =>  bcrypt('password'),
+            'status'    =>  'active',
         ]);
     }
 }
