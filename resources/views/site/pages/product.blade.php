@@ -1,80 +1,51 @@
-@extends ('site.master')
+@extends ('site.layouts.storefront')
 
 @section ('title') {{$item->name}} @endsection
 
 @section ('content')
-    <!--Main layout-->
-    <main class="mt-5 pt-4">
-        <div class="container dark-grey-text mt-5">
-            @include ('site.includes.messages')
-
-            <!--Grid row-->
-            <div class="row wow fadeIn">
-                <!--Grid column-->
-                <div class="col-md-6 mb-4 d-flex justify-content-center">
-                    <img src="/assets/images/large_thumbnail/{{$item->image}}" class="img-fluid" alt="" />
-                </div>
-                <!--Grid column-->
-
-                <!--Grid column-->
-                <div class="col-md-6 mb-4">
-                    <!--Content-->
-                    <div class="p-4">
-                        <p class="lead font-weight-bold">{{$item->name}}</p>
-
-                        <p class="lead">
-                            <span>₱ {{number_format($item->price_stocks, 2)}}</span>
-                        </p>
-
-                        <p class="lead font-weight-bold">Description</p>
-
-                        <p>{{$item->description}}</p>
-
-                        <p class="font-weight-normal">Stocks: {{$item->stocks}}</p>
-
-                        <form action="{{ action('CartController@store') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="id" value="{{ $item->id }}" />
-                            <input type="hidden" name="name" value="{{ $item->name }}" />
-                            Quantity:
-                            <input
-                                class="form-control"
-                                placeholder="0"
-                                style="width: 100px"
-                                type="number"
-                                name="quantity"
-                                value="{{ old('quantity') }}"
-                            />
-                            <button class="btn btn-primary btn-md my-0 p" type="submit">
-                                Add to cart
-                                <i class="fas fa-shopping-cart ml-1"></i>
-                            </button>
-                        </form>
-                    </div>
-                    <!--Content-->
-                </div>
-                <!--Grid column-->
+    <div class="row g-5 align-items-start">
+        <div class="col-md-6">
+            <div class="sf-product-detail-image">
+                <img src="/assets/images/large_thumbnail/{{$item->image}}" alt="{{$item->name}}" />
             </div>
-            <!--Grid row-->
-
-            <hr />
-
-            <a href="{{route('site.shop')}}" class="btn btn-lg" style="background-color: orange; color: white"
-                >Go Back</a
-            >
-
-            <!--Grid row-->
-            <div class="row wow fadeIn"></div>
-            <!--Grid row-->
-            <hr />
         </div>
-    </main>
-    <!--Main layout-->
 
-    <br />
+        <div class="col-md-6">
+            <h1 class="h3 mb-2">{{$item->name}}</h1>
+            <x-storefront.money :amount="$item->price_stocks" />
 
-@endsection
+            <p class="mt-4">{{$item->description}}</p>
+            <p class="text-muted">Stocks: {{$item->stocks}}</p>
 
-@section ('footer')
-    @include ('site.includes.footer')
+            <form action="{{action('CartController@store')}}" method="POST" class="row g-3 align-items-end mt-2">
+                @csrf
+                <input type="hidden" name="id" value="{{$item->id}}" />
+                <input type="hidden" name="name" value="{{$item->name}}" />
+
+                <div class="col-auto">
+                    <label for="quantity" class="form-label">Quantity</label>
+                    <input
+                        type="number"
+                        class="form-control"
+                        id="quantity"
+                        name="quantity"
+                        min="1"
+                        value="{{old('quantity', 1)}}"
+                        style="width: 110px"
+                    />
+                </div>
+
+                <div class="col-auto">
+                    <button class="btn btn-primary" type="submit">
+                        Add to cart
+                        <i class="fas fa-shopping-cart ms-1"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <hr class="my-5" />
+
+    <a href="{{route('site.shop')}}" class="btn btn-outline-secondary">Go Back</a>
 @endsection

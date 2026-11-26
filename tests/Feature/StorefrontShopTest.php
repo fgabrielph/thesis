@@ -22,6 +22,17 @@ class StorefrontShopTest extends TestCase
             ->assertSee('₱ '.number_format($item->price_stocks, 2));
     }
 
+    public function test_product_page_shows_price(): void
+    {
+        $this->seed();
+        $item = Item::where('stocks', '>', 0)->firstOrFail();
+
+        $this->get(route('site.product', $item))
+            ->assertOk()
+            ->assertSee('data-storefront', false)
+            ->assertSee('₱ '.number_format($item->price_stocks, 2));
+    }
+
     public function test_category_lists_items_with_prices(): void
     {
         $this->seed();
