@@ -32,9 +32,11 @@
         ['orderTable', 'defTable', 'atkTable'].forEach(function (id) {
             const table = document.getElementById(id);
             if (table && window.jQuery && !window.jQuery.fn.dataTable.isDataTable('#' + id)) {
-                window.jQuery('#' + id).DataTable({
-                    stateSave: true
-                });
+                const options = { stateSave: true };
+                if (id !== 'orderTable') {
+                    options.order = [[0, 'desc']];
+                }
+                window.jQuery('#' + id).DataTable(options);
             }
         });
     });

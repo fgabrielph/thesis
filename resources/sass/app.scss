@@ -1,20 +1,14 @@
 // Application overrides for AdminLTE 4 / Bootstrap 5.
-// Package CSS is imported from resources/js/app.js.
-
-:root {
-    --app-accent: #0d6efd;
-}
-
-body {
-    font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-}
+// Vendor CSS is imported from resources/js/app.js before this file.
 
 .app-main {
     background: var(--bs-body-bg);
 }
 
-.app-content > .container-fluid {
-    padding-top: 1rem;
+.app-content h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
 }
 
 .table > :not(caption) > * > * {
@@ -31,6 +25,10 @@ body {
 
 .sidebar-user-panel {
     min-height: 3.5rem;
+}
+
+.sidebar-menu .nav-link {
+    font-size: 0.9375rem;
 }
 
 .avatar-fallback {
@@ -69,12 +67,6 @@ body {
     white-space: nowrap;
 }
 
-
-.input-group-prepend,
-.input-group-append {
-    display: contents;
-}
-
 .small-box-footer {
     text-decoration: none;
 }
@@ -94,10 +86,6 @@ body {
     z-index: 1;
 }
 
-.app-content h1 {
-    font-size: 1.75rem;
-}
-
 .app-content .table {
     font-size: 0.875rem;
 }
@@ -115,19 +103,6 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 0.25rem;
-}
-
-.app-content h1 {
-    font-size: 1.5rem;
-}
-
-.sidebar-menu .nav-link {
-    font-size: 0.9375rem;
-}
-
-.app-content h1 {
-    font-weight: 600;
-    letter-spacing: -0.01em;
 }
 
 .app-content .card {
@@ -181,4 +156,9 @@ body {
 .table .badge.text-bg-dark {
     background-color: var(--bs-secondary-bg-subtle) !important;
     color: var(--bs-secondary-text-emphasis) !important;
+}
+
+.input-group-prepend,
+.input-group-append {
+    display: contents;
 }

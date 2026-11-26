@@ -86,7 +86,7 @@
                                             <h5>Add Price</h5>
                                             <form action="{{route('customorders.addprice', $customorder->id)}}" class="form-horizontal" method="POST">
                                                 @csrf
-                                                <div class="input-group-prepend">
+                                                <div class="input-group">
                                                     <span class="input-group-text">PhP</span><input type="number" name="price" class="form-control" placeholder="0.00" step="0.1">
                                                 </div>
                                                 <br>

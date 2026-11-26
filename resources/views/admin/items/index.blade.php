@@ -111,7 +111,8 @@
                                                         </div>
 
                                                         <div class="col">
-                                                        <form action="{{ action('Admin\ItemController@update', $item->id) }}" method="POST" class="form-horizontal" enctype="multipart/form-data">@csrf
+                                                        <form id="edit-form-{{ $item->id }}" action="{{ action('Admin\ItemController@update', $item->id) }}" method="POST" class="form-horizontal" enctype="multipart/form-data">@csrf
+@method('PUT')
                                                          <!-- Text input-->
                                                             <div class="mb-3">
                                                                 <label class="col-md-4 control-label">Name</label>
@@ -137,7 +138,7 @@
                                                             <div class="mb-3">
                                                                 <label class="col-md-12 control-label">Stock Price</label>
                                                                 <div class="col-md-12">
-                                                                    <div class="input-group-prepend">
+                                                                    <div class="input-group">
                                                                         <span class="input-group-text">PhP</span> <input class="form-control" placeholder="0.00" step="0.1" type="number" name="price_stocks" value="{{ old('price_stocks', $item->price_stocks) }}">
                                                                     </div>
                                                                 </div>
@@ -186,8 +187,7 @@
 
                                                 <div class="modal-footer">
                                                     <button type="button" class="col-md-2 btn btn-danger btn-rounded" data-bs-dismiss="modal">Close</button>
-                                                    @method('PUT')
-                                                    <button class="col-md-2 btn btn-success" type="submit">Save Changes</button>
+                                                                                                        <button class="col-md-2 btn btn-success" form="edit-form-{{ $item->id }}" type="submit">Save Changes</button>
                                                 </div>
 
                                                 </form>
@@ -220,7 +220,7 @@
                             </div>
 
                             <div class="modal-body">
-                                <form action="{{ action('Admin\ItemController@store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">@csrf
+                                <form id="add-form" action="{{ action('Admin\ItemController@store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">@csrf
 
                                 <div class="mb-3">
                                     <label class="col-md-4 control-label">Name</label>
@@ -246,7 +246,7 @@
                                 <div class="mb-3">
                                     <label class="col-md-12 control-label">Stock Price</label>
                                     <div class="col-md-12">
-                                        <div class="input-group-prepend"><span class="input-group-text">PhP</span> <input class="form-control" placeholder="0.00" step="0.1" type="number" name="price_stocks" value="{{ old('price_stocks') }}"> </div>
+                                        <div class="input-group"><span class="input-group-text">PhP</span> <input class="form-control" placeholder="0.00" step="0.1" type="number" name="price_stocks" value="{{ old('price_stocks') }}"> </div>
                                     </div>
                                 </div>
 
@@ -289,7 +289,7 @@
 
                             <div class="modal-footer">
                                 <button type="button" class="col-md-2 btn btn-danger btn-rounded" data-bs-dismiss="modal">Cancel</button>
-                                <button class="col-md-2 btn btn-success btn-rounded" type="submit">Submit</button>
+                                <button class="col-md-2 btn btn-success btn-rounded" form="add-form" type="submit">Submit</button>
                             </div>
 
                             </form>
