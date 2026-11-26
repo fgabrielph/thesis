@@ -70,13 +70,13 @@
                                                     <div class="row">
 
                                                         <div class="col">
-                                                        {!! Form::open(['class' => 'form-horizontal', 'action' => ['Admin\CategoryController@update', $category->id], 'method' => 'POST']) !!}
+                                                        <form action="{{ action('Admin\CategoryController@update', $category->id) }}" method="POST" class="form-horizontal">@csrf
 
                                                         <!-- Text input-->
                                                             <div class="form-group">
-                                                                {{Form::label('', 'Name', ['class' => 'col-md-4 control-label'])}}
+                                                                <label class="col-md-4 control-label">Name</label>
                                                                 <div class="col-md-12">
-                                                                    {{Form::text('name', $category->name, ['class' => 'form-control input-md',  'placeholder' => 'Name'])}}
+                                                                    <input class="form-control input-md" placeholder="Name" type="text" name="name" value="{{ old('name', $category->name) }}">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -85,11 +85,11 @@
 
                                                 <div class="modal-footer">
                                                     <button type="button" class="col-md-2 btn btn-danger btn-rounded" data-dismiss="modal">Close</button>
-                                                    {{Form::hidden('_method', 'PUT')}}
-                                                    {{Form::submit('Save Changes', ['class' => 'col-md-2 btn btn-info', 'style' => 'color: white;'])}}
+                                                    @method('PUT')
+                                                    <button class="col-md-2 btn btn-info" style="color: white;" type="submit">Save Changes</button>
                                                 </div>
 
-                                                {!! Form::close() !!}
+                                                </form>
                                             </div>
                                         </div>
                                     </div> <!-- End of Modal Edit -->
@@ -123,22 +123,22 @@
                 </div>
 
                 <div class="modal-body">
-                    {!! Form::open(['class' => 'form-horizontal', 'action' => 'Admin\CategoryController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                    <form action="{{ action('Admin\CategoryController@store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">@csrf
 
                     <div class="form-group">
-                        {{Form::label('', 'Name', ['class' => 'col-md-4 control-label'])}}
+                        <label class="col-md-4 control-label">Name</label>
                         <div class="col-md-12">
-                            {{Form::text('name', '', ['class' => 'form-control input-md',  'placeholder' => 'Name'])}}
+                            <input class="form-control input-md" placeholder="Name" type="text" name="name" value="{{ old('name') }}">
                         </div>
                     </div>
                 </div>
 
                 <div class="modal-footer">
                     <button type="button" class="col-md-2 btn btn-danger" data-dismiss="modal">Cancel</button>
-                    {{Form::submit('Submit', ['class' => 'col-md-2 btn btn-success'])}}
+                    <button class="col-md-2 btn btn-success" type="submit">Submit</button>
                 </div>
 
-                {!! Form::close() !!}
+                </form>
             </div>
         </div>
     </div> <!-- End Add Item Modal -->

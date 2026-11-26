@@ -107,17 +107,17 @@
                                                         </div>
 
                                                         <div class="col">
-                                                        {!! Form::open(['class' => 'form-horizontal', 'action' => ['Admin\ItemController@update', $item->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                                                        <form action="{{ action('Admin\ItemController@update', $item->id) }}" method="POST" class="form-horizontal" enctype="multipart/form-data">@csrf
                                                         <!-- Text input-->
                                                             <div class="form-group">
-                                                                {{Form::label('', 'Name', ['class' => 'col-md-4 control-label'])}}
+                                                                <label class="col-md-4 control-label">Name</label>
                                                                 <div class="col-md-12">
-                                                                    {{Form::text('name', $item->name, ['class' => 'form-control input-md',  'placeholder' => 'Name'])}}
+                                                                    <input class="form-control input-md" placeholder="Name" type="text" name="name" value="{{ old('name', $item->name) }}">
                                                                 </div>
                                                             </div>
                                                             <!-- Text input-->
                                                             <div class="form-group">
-                                                                {{Form::label('', 'Brand', ['class' => 'col-md-4 control-label', 'for' => 'input-select'])}}
+                                                                <label class="col-md-4 control-label" for="input-select">Brand</label>
                                                                 <div class="col-md-12">
                                                                     <select class="form-control" name="brand">
                                                                         <option value="{{ $item->brand_id }}">{{ $item->brands->name }}</option>
@@ -131,25 +131,25 @@
 
                                                             <!-- Prepended text-->
                                                             <div class="form-group">
-                                                                {{Form::label('', 'Stock Price', ['class' => 'col-md-12 control-label'])}}
+                                                                <label class="col-md-12 control-label">Stock Price</label>
                                                                 <div class="col-md-12">
                                                                     <div class="input-group-prepend">
-                                                                        <span class="input-group-text">PhP</span> {{Form::number('price_stocks', $item->price_stocks, ['class' => 'form-control', 'placeholder' => '0.00', 'step' => '0.1'])}}
+                                                                        <span class="input-group-text">PhP</span> <input class="form-control" placeholder="0.00" step="0.1" type="number" name="price_stocks" value="{{ old('price_stocks', $item->price_stocks) }}">
                                                                     </div>
                                                                 </div>
                                                             </div>
 
                                                             <!-- Text input-->
                                                             <div class="form-group">
-                                                                {{Form::label('', 'Stocks (Increase or Decrease)', ['class' => 'col-md control-label'])}}
+                                                                <label class="col-md control-label">Stocks (Increase or Decrease)</label>
                                                                 <div class="col-md-12">
-                                                                    {{Form::number('stocks', $item->stocks, ['class' => 'form-control input-md', 'placeholder' => '0'])}}
+                                                                    <input class="form-control input-md" placeholder="0" type="number" name="stocks" value="{{ old('stocks', $item->stocks) }}">
                                                                 </div>
                                                             </div>
 
                                                             <!-- Text input-->
                                                             <div class="form-group">
-                                                                {{Form::label('', 'Category', ['class' => 'col-md-4 control-label', 'for' => 'input-select'])}}
+                                                                <label class="col-md-4 control-label" for="input-select">Category</label>
                                                                 <div class="col-md-12">
                                                                     <select class="form-control" name="category">
                                                                         <option value="{{ $item->category_id }}">{{ $item->categories->name }}</option>
@@ -163,16 +163,16 @@
 
                                                             <!-- Textarea -->
                                                             <div class="form-group">
-                                                                {{Form::label('', 'Description', ['class' => 'col-md-4 control-label'])}}
+                                                                <label class="col-md-4 control-label">Description</label>
                                                                 <div class="col-md-12">
-                                                                    {{Form::textarea('description', $item->description, ['style' => 'resize: none;' ,'class' => 'form-control',  'placeholder' => 'Description'])}}
+                                                                    <textarea style="resize: none;" class="form-control" placeholder="Description" name="description">{{ old('description', $item->description) }}</textarea>
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group">
-                                                                {{Form::label('', 'Image', ['class' => 'col-md-4 control-label'])}}
+                                                                <label class="col-md-4 control-label">Image</label>
                                                                 <div class="col-md-12">
-                                                                    {{Form::file('image')}}
+                                                                    <input type="file" name="image">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -182,11 +182,11 @@
 
                                                 <div class="modal-footer">
                                                     <button type="button" class="col-md-2 btn btn-danger btn-rounded" data-dismiss="modal">Close</button>
-                                                    {{Form::hidden('_method', 'PUT')}}
-                                                    {{Form::submit('Save Changes', ['class' => 'col-md-2 btn btn-success'])}}
+                                                    @method('PUT')
+                                                    <button class="col-md-2 btn btn-success" type="submit">Save Changes</button>
                                                 </div>
 
-                                                {!! Form::close() !!}
+                                                </form>
                                             </div>
                                         </div>
                                     </div> <!-- End of Modal Edit -->

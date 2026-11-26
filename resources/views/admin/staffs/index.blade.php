@@ -116,10 +116,10 @@
 
                                                 <div class="modal-footer">
                                                     <button type="button" class="col-md-2 btn btn-primary btn-rounded" data-dismiss="modal">Close</button>
-                                                    {!!Form::open(['action' => ['Admin\StaffController@destroy', $staff->id], 'method' => 'POST'])!!}
-                                                    {{Form::hidden('_method', 'DELETE')}}
-                                                    {{Form::submit('Delete', ['class' => 'col-md-2 btn btn-danger btn-rounded'])}}
-                                                    {!!Form::close()!!}
+                                                    <form action="{{ action('Admin\StaffController@destroy', $staff->id) }}" method="POST">@csrf
+                                                    @method('DELETE')
+                                                    <button class="col-md-2 btn btn-danger btn-rounded" type="submit">Delete</button>
+                                                    </form>
                                                 </div>
 
                                             </div>
@@ -155,50 +155,50 @@
                 </div>
 
                 <div class="modal-body">
-                    {!! Form::open(['class' => 'form-horizontal', 'action' => 'Admin\StaffController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                    <form action="{{ action('Admin\StaffController@store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">@csrf
 
                     <div class="form-group">
-                        {{Form::label('', 'Name', ['class' => 'col-md-4 control-label'])}}
+                        <label class="col-md-4 control-label">Name</label>
                         <div class="col-md-12">
-                            {{Form::text('name', '', ['class' => 'form-control input-md',  'placeholder' => 'Name'])}}
+                            <input class="form-control input-md" placeholder="Name" type="text" name="name" value="{{ old('name') }}">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        {{Form::label('', 'Email', ['class' => 'col-md-4 control-label'])}}
+                        <label class="col-md-4 control-label">Email</label>
                         <div class="col-md-12">
-                            {{Form::text('email', '', ['class' => 'form-control input-md',  'placeholder' => 'Email'])}}
+                            <input class="form-control input-md" placeholder="Email" type="text" name="email" value="{{ old('email') }}">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        {{Form::label('', 'Password', ['class' => 'col-md-4 control-label'])}}
+                        <label class="col-md-4 control-label">Password</label>
                         <div class="col-md-12">
-                            {{Form::password('password', ['class' => 'form-control input-md',  'placeholder' => 'Password'])}}
+                            <input class="form-control input-md" placeholder="Password" type="password" name="password">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        {{Form::label('', 'Confirm Password', ['class' => 'col-md-4 control-label'])}}
+                        <label class="col-md-4 control-label">Confirm Password</label>
                         <div class="col-md-12">
-                            {{Form::password('confirm_pass', ['class' => 'form-control input-md',  'placeholder' => 'Confirm Password'])}}
+                            <input class="form-control input-md" placeholder="Confirm Password" type="password" name="confirm_pass">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        {{Form::label('', 'Image', ['class' => 'col-md-4 control-label'])}}
+                        <label class="col-md-4 control-label">Image</label>
                         <div class="col-md-12">
-                            {{Form::file('image')}}
+                            <input type="file" name="image">
                         </div>
                     </div>
                 </div>
 
                 <div class="modal-footer">
                     <button type="button" class="col-md-2 btn btn-danger" data-dismiss="modal">Cancel</button>
-                    {{Form::submit('Submit', ['class' => 'col-md-2 btn btn-success'])}}
+                    <button class="col-md-2 btn btn-success" type="submit">Submit</button>
                 </div>
 
-                {!! Form::close() !!}
+                </form>
             </div>
         </div>
     </div> <!-- End Add Item Modal -->
