@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\NormalizeCartTax;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,11 +27,13 @@ Route::get('/shop/{id}', 'PagesController@categories')->name('site.categories');
 Route::get('/product/{id}', 'PagesController@show')->name('site.product');
 
 // Cart Controller Routes
-Route::get('/cart', 'CartController@index')->name('cart.index');
-Route::post('/cart', 'CartController@store')->name('cart.store');
-Route::put('/cart/update/{id}', 'CartController@update')->name('cart.update');
-Route::delete('/cart/{item}', 'CartController@destroy')->name('cart.remove');
-Route::get('/cart/empty', 'CartController@clear')->name('cart.clear');
+Route::middleware(NormalizeCartTax::class)->group(function () {
+    Route::get('/cart', 'CartController@index')->name('cart.index');
+    Route::post('/cart', 'CartController@store')->name('cart.store');
+    Route::put('/cart/update/{id}', 'CartController@update')->name('cart.update');
+    Route::delete('/cart/{item}', 'CartController@destroy')->name('cart.remove');
+    Route::get('/cart/empty', 'CartController@clear')->name('cart.clear');
+});
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
 
@@ -48,8 +52,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::put('/custom_order/{id}/payment', 'InquiryController@addpaymentmethod')->name('custom_order.payment');
 
     // Checkout Controller Routes
-    Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');
-    Route::post('/checkout', 'CheckoutController@store')->name('checkout.store');
+    Route::middleware(NormalizeCartTax::class)->group(function () {
+        Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');
+        Route::post('/checkout', 'CheckoutController@store')->name('checkout.store');
+    });
 
     // Order Resource
     Route::resource('orders', 'OrderController')->only(['index', 'show', 'update']);

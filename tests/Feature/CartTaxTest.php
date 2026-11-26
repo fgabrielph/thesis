@@ -67,6 +67,45 @@ class CartTaxTest extends TestCase
         $this->assertEquals($item->price_stocks * $quantity, $order->grand_total);
     }
 
+    public function test_legacy_session_cart_tax_is_normalized(): void
+    {
+        $this->seed();
+
+        $item = Item::where('stocks', '>', 0)->firstOrFail();
+
+        Cart::add($item->id, $item->name, 2, $item->price_stocks, [], 21)->associate('App\Item');
+        $this->assertSame('6,050.00', Cart::total());
+
+        $this->get(route('cart.index'))->assertOk();
+        $this->assertSame('5,000.00', Cart::total());
+
+        $user = User::create([
+            'first_name' => 'Legacy',
+            'last_name' => 'Customer',
+            'email' => 'legacy-cart-tax@example.com',
+            'password' => bcrypt('password'),
+        ]);
+        $user->forceFill(['email_verified_at' => now()])->save();
+
+        $this->actingAs($user)->get(route('checkout.index'))->assertOk();
+
+        $this->actingAs($user)
+            ->post(route('checkout.store'), [
+                'firstName' => 'Legacy',
+                'lastName' => 'Customer',
+                'city' => 'Manila',
+                'address' => '1 Test Street',
+                'zip' => '1000',
+                'mobile_num' => '09171234567',
+                'paymentMethod' => 'cod',
+            ])
+            ->assertRedirect();
+
+        $order = Order::where('user_id', $user->id)->latest('id')->firstOrFail();
+
+        $this->assertEquals($item->price_stocks * 2, $order->grand_total);
+    }
+
     private function addToCart(Item $item, int $quantity): void
     {
         $this->post(route('cart.store'), [
