@@ -1,9 +1,8 @@
-@extends('admin.master')
+@extends ('admin.master')
 
-@section('title') Custom Order {{$customorder->id}} @endsection
+@section ('title') Custom Order{{$customorder->id}} @endsection
 
-@section('content')
-
+@section ('content')
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -11,9 +10,12 @@
                 <div class="col-sm-6">
                     <h1 class="m-0 text-dark">Custom Order Number {{$customorder->id}}</h1>
                     <p>Placed by {{$customorder->user->first_name . ' ' . $customorder->user->last_name}}</p>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
 
@@ -22,36 +24,44 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    @include('admin.includes.messages')
+                    @include ('admin.includes.messages')
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Order</h3>
                         </div>
 
-                        <br>
+                        <br />
 
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="card">
                                         <div class="card-body text-center">
-                                            <br>
-                                            @if($customorder->quantity == null && $customorder->status == 0 && $customorder->completed == null)
+                                            <br />
+                                            @if ($customorder->quantity == null && $customorder->status == 0 && $customorder->completed == null)
                                                 <h3>NO Quantity YET</h3>
-                                            @elseif($customorder->quantity == null && $customorder->status != 2)
+                                            @elseif ($customorder->quantity == null && $customorder->status != 2)
                                                 <h3>In Progress</h3>
-                                            @elseif($customorder->status == 2)
+                                            @elseif ($customorder->status == 2)
                                                 <h3><b>This Order is Canceled</b></h3>
-                                            @elseif(empty($customorder->completed))
+                                            @elseif (empty($customorder->completed))
                                                 <h3>0 / {{$customorder->quantity}}, In Progress</h3>
                                             @else
-                                                <input type="text" value="{{$customorder->completed}}" class="dial" data-thickness=.3><br>
-                                                <h3>{{$customorder->completed}} out of {{$customorder->quantity}} Completed</h3>
+                                                <input
+                                                    type="text"
+                                                    value="{{$customorder->completed}}"
+                                                    class="dial"
+                                                    data-thickness=".3"
+
+                                                /><br />
+                                                <h3>
+                                                    {{$customorder->completed}} out of {{$customorder->quantity}} Completed
+                                                </h3>
                                             @endif
                                         </div>
                                     </div>
 
-                                    @if($customorder->payment_status == 0 && $customorder->status != 2)
+                                    @if ($customorder->payment_status == 0 && $customorder->status != 2)
                                         <h3 class="text-center"><b>No Payment has been placed yet!</b></h3>
                                     @endif
                                 </div>
@@ -66,40 +76,56 @@
                                         <div class="row">
                                             <div class="col-md-7">
                                                 <div class="card-body">
-                                                    <h5><b>Placed By: </b>{{$customorder->user->first_name . ' ' . $customorder->user->last_name}}</h5><br>
-                                                    <h5><b>Payment Status: </b>
-                                                        @if($customorder->payment_status == 0 && $customorder->status == 2)
-                                                            <span class='badge text-bg-danger'>Declined Order</span>
-                                                        @elseif($customorder->payment_status == 0)
-                                                            <span class='badge text-bg-danger'>Not yet Paid</span>
-                                                        @elseif($customorder->payment_status == 2)
-                                                            <h5><span class='badge text-bg-warning'>Waiting for Approval</span></h5>
-                                                        @elseif($customorder->payment_status == 1)
+                                                    <h5>
+                                                        <b>Placed By: </b
+                                                        >{{$customorder->user->first_name . ' ' . $customorder->user->last_name}}
+                                                    </h5>
+                                                    <br />
+                                                    <h5>
+                                                        <b>Payment Status: </b>
+                                                        @if ($customorder->payment_status == 0 && $customorder->status == 2)
+                                                            <span class="badge text-bg-danger">Declined Order</span>
+                                                        @elseif ($customorder->payment_status == 0)
+                                                            <span class="badge text-bg-danger">Not yet Paid</span>
+                                                        @elseif ($customorder->payment_status == 2)
+                                                            <h5>
+                                                                <span class="badge text-bg-warning"
+                                                                    >Waiting for Approval</span
+                                                                >
+                                                            </h5>
+                                                        @elseif ($customorder->payment_status == 1)
                                                             <span class="badge text-bg-success">Paid</span>
-                                                        @elseif($customorer->payment_status == 3)
+                                                        @elseif ($customorer->payment_status == 3)
                                                             <span class="text-bg-info">Partially Paid</span>
                                                         @endif
-                                                    </h5><br>
-                                                    <h5><b>Status: </b>
-                                                        @if($customorder->status == 0)
-                                                            <span class='badge text-bg-warning'>Pending</span>
-                                                        @elseif($customorder->status == 1)
-                                                            <span class='badge text-bg-success'>Accepted</span>
-                                                        @elseif($customorder->status == 2)
+                                                    </h5>
+                                                    <br />
+                                                    <h5>
+                                                        <b>Status: </b>
+                                                        @if ($customorder->status == 0)
+                                                            <span class="badge text-bg-warning">Pending</span>
+                                                        @elseif ($customorder->status == 1)
+                                                            <span class="badge text-bg-success">Accepted</span>
+                                                        @elseif ($customorder->status == 2)
                                                             <span class="badge text-bg-danger">Declined</span>
-                                                        @elseif($customorder->status == 3)
+                                                        @elseif ($customorder->status == 3)
                                                             <span class="badge text-bg-success">Completed</span>
-                                                        @elseif($customorder->status == 5)
+                                                        @elseif ($customorder->status == 5)
                                                             <span class="badge text-bg-success">Delivered</span>
                                                         @endif
-                                                    </h5><br>
-                                                    <h5><b>Contact Number: {{$customorder->user->mobile_number}}</b></h5><br>
+                                                    </h5>
+                                                    <br />
+                                                    <h5>
+                                                        <b>Contact Number: {{$customorder->user->mobile_number}}</b>
+                                                    </h5>
+                                                    <br />
                                                     <h5><b>Description: </b></h5>
                                                     <p style="font-size: 23px">{{$customorder->description}}</p>
-                                                    <br>
+                                                    <br />
                                                     <h5 class="card-footer">
-                                                        <b>Total Price:
-                                                            @if(empty($customorder->price))
+                                                        <b
+                                                            >Total Price:
+                                                            @if (empty($customorder->price))
                                                                 N/A
                                                             @else
                                                                 {{$customorder->price}}
@@ -109,26 +135,38 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <br>
+                                                <br />
                                                 <div class="justify-content-center">
-                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#imageModal"><img src="/assets/images/{{$customorder->image}}" width="100%"></a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#imageModal"
+                                                        ><img src="/assets/images/{{$customorder->image}}" width="100%"
+                                                    /></a>
                                                 </div>
-                                                <br><br>
-                                                <h3><b>Created at: </b>{{$customorder->created_at->toFormattedDateString()}}</h3>
+                                                <br /><br />
+                                                <h3>
+                                                    <b>Created at: </b
+                                                    >{{$customorder->created_at->toFormattedDateString()}}
+                                                </h3>
                                             </div>
                                         </div>
                                         <!-- End Row -->
-                                        <br>
+                                        <br />
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Modal -->
-                            <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div
+                                class="modal fade"
+                                id="imageModal"
+                                tabindex="-1"
+                                role="dialog"
+                                aria-labelledby="exampleModalCenterTitle"
+                                aria-hidden="true"
+                            >
                                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-body">
-                                            <img src="/assets/images/{{$customorder->image}}" width="100%">
+                                            <img src="/assets/images/{{$customorder->image}}" width="100%" />
                                         </div>
                                     </div>
                                 </div>
@@ -141,21 +179,20 @@
         </div>
     </div>
 
-
 @endsection
 
-@section('scripts')
-
+@section ('scripts')
     <script src="http://anthonyterrien.com/demo/knob/jquery.knob.min.js"></script>
     <script>
         $('.dial').knob({
-
             max: '{{$customorder->quantity}}',
             readOnly: true,
-            fgColor : 'orange',
+            fgColor: 'orange',
             inputColor: 'black',
             draw: function () {
-                $(this.i).val(this.cv + ' / {{$customorder->quantity}}').css('font-size', '20pt'); //Puts a percent after values
+                $(this.i)
+                    .val(this.cv + ' / {{$customorder->quantity}}')
+                    .css('font-size', '20pt'); //Puts a percent after values
             },
         });
     </script>

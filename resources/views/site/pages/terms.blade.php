@@ -1,28 +1,50 @@
-@extends('site.master')
+@extends ('site.master')
 
-@section('title') Privacy Policy @endsection
+@section ('title') Privacy Policy @endsection
 
-@section('content')
-
+@section ('content')
     <div class="content">
         <div class="container">
-            <br><br><br>
+            <br /><br /><br />
             <div class="card">
                 <div class="card-header text-center">
                     <h1><strong>Terms and Conditions</strong></h1>
                 </div>
                 <div class="card-body">
-
                     <p>The following Terms of Use shall govern your use and access of the Platform and of the services therein. The term &ldquo;Platform&rdquo; pertains to the website operated and/or owned by New MJC Trading and Manufacturing. ("New MJC" or "We" or "Us").</p>
                     <p>&nbsp;</p>
                     <p>By accessing the Platform and/or using any of the services therein, you represent that you are at least 18 years old and agree, without limitation or qualification, to be bound by these Terms of Use.</p>
                     <p>&nbsp;</p>
                     <ul>
-                        <li>Additional Terms and Conditions. New MJC&rsquo;s Privacy Policy, which can be found here, applies to your use of the Platform and of the services therein. Additional policies, guidelines, and terms and conditions may apply to certain content, features, products, and services available on the Platform. The terms of New MJC&rsquo;s Privacy Policy and such other policies, guidelines, and terms and conditions are made integral part of these Terms of Use.</li>
-                        <li>Products, Pricing, Content and Specifications. The products and services featured on the Platform (collectively, the "Products") and its contents, specifications, and prices are subject to change at any time, without need of prior notice. The prices of the Products may be different from that sold in New MJC physical stores.</li>
-                        <li>Payment &ndash; You may pay using any of the payment methods prescribed on the Platform. When you place an order, actual payment will only be charged upon the acceptance of your order. All payments shall be made to New MJC, either accepting payments in its own right or through a third-party service provider engaged by New MJC.</li>
-                        <li>Invoicing &ndash; The New MJC Trading and Manufacturing Online Store may invoice you upon the completion of any payment under a Customer Contract. The Platform will provide you the Sales Invoice upon delivery of your item/s or upon pick-up at the designated pick-up branch.</li>
-                        <li>Shipping, Delivery and Walkin Limitations. When an order is placed on the Platform, you have the following options:</li>
+                        <li>
+                            Additional Terms and Conditions. New MJC&rsquo;s Privacy Policy, which can be found here,
+                            applies to your use of the Platform and of the services therein. Additional policies,
+                            guidelines, and terms and conditions may apply to certain content, features, products, and
+                            services available on the Platform. The terms of New MJC&rsquo;s Privacy Policy and such
+                            other policies, guidelines, and terms and conditions are made integral part of these Terms
+                            of Use.
+                        </li>
+                        <li>
+                            Products, Pricing, Content and Specifications. The products and services featured on the
+                            Platform (collectively, the "Products") and its contents, specifications, and prices are
+                            subject to change at any time, without need of prior notice. The prices of the Products may
+                            be different from that sold in New MJC physical stores.
+                        </li>
+                        <li>
+                            Payment &ndash; You may pay using any of the payment methods prescribed on the Platform.
+                            When you place an order, actual payment will only be charged upon the acceptance of your
+                            order. All payments shall be made to New MJC, either accepting payments in its own right or
+                            through a third-party service provider engaged by New MJC.
+                        </li>
+                        <li>
+                            Invoicing &ndash; The New MJC Trading and Manufacturing Online Store may invoice you upon
+                            the completion of any payment under a Customer Contract. The Platform will provide you the
+                            Sales Invoice upon delivery of your item/s or upon pick-up at the designated pick-up branch.
+                        </li>
+                        <li>
+                            Shipping, Delivery and Walkin Limitations. When an order is placed on the Platform, you have
+                            the following options:
+                        </li>
                     </ul>
                     <p>&nbsp;</p>
                     <p><strong>DELIVERY</strong></p>
@@ -36,15 +58,31 @@
                     <p>&nbsp;</p>
                     <p>&nbsp;</p>
                     <ul>
-                        <li><strong>Failure to Pay</strong> - If a Customer fails to make any payment pursuant to the payment method selected or payment is cancelled for any reason whatsoever, New MJC shall cancel the order and suspend delivery of the Products until payment is made in full.</li>
+                        <li>
+                            <strong>Failure to Pay</strong> - If a Customer fails to make any payment pursuant to the
+                            payment method selected or payment is cancelled for any reason whatsoever, New MJC shall
+                            cancel the order and suspend delivery of the Products until payment is made in full.
+                        </li>
                     </ul>
                     <p>&nbsp;</p>
                     <ul>
-                        <li><strong>Return Policy</strong>- for all returns/exchanges must contact New MJC in accordance with New MJC&rsquo;s Return and Exchange Policy.</li>
+                        <li>
+                            <strong>Return Policy</strong>- for all returns/exchanges must contact New MJC in accordance
+                            with New MJC&rsquo;s Return and Exchange Policy.
+                        </li>
                     </ul>
                     <p>&nbsp;</p>
                     <ul>
-                        <li>Accuracy of Information. New MJC Trading and Manufacturing endeavors to provide an accurate description of the Products, but we do not warrant that such description, color, information or other content available on the Site are accurate, complete, reliable, current or free from error. The weight, measurements and other descriptions provided on the Platform are approximate figures and are provided for convenience purposes only. We make all reasonable efforts to accurately display the attributes of the Products, including the applicable colors. However, the color you see on the Platform may differ from the actual color, depending on your mobile device, computer system, monitor, and/or other display features.</li>
+                        <li>
+                            Accuracy of Information. New MJC Trading and Manufacturing endeavors to provide an accurate
+                            description of the Products, but we do not warrant that such description, color, information
+                            or other content available on the Site are accurate, complete, reliable, current or free
+                            from error. The weight, measurements and other descriptions provided on the Platform are
+                            approximate figures and are provided for convenience purposes only. We make all reasonable
+                            efforts to accurately display the attributes of the Products, including the applicable
+                            colors. However, the color you see on the Platform may differ from the actual color,
+                            depending on your mobile device, computer system, monitor, and/or other display features.
+                        </li>
                     </ul>
                     <p>&nbsp;</p>
                     <p>The Platform may contain typographical errors or inaccuracies and may not be complete or current. New MJC Trading and Manufacturing therefore reserves the right to correct any errors, inaccuracies or omissions (including after an order has been submitted) and to change or update information at any time without prior notice. Please note that such errors, inaccuracies or omissions may relate to pricing and availability, and we reserve the right to cancel or refuse to accept any order placed based on incorrect pricing or availability information.</p>
@@ -59,8 +97,18 @@
                     <p>In using the Platform and the services therein, you agree to:</p>
                     <ol>
                         <li>do so only for lawful purposes;</li>
-                        <li>ensure that all information or data you provide on the Platform are accurate and agree to take sole responsibility for such information and data;</li>
-                        <li>be responsible for maintaining the confidentiality of your account information and password and for restricting access to such information and to your computer. You agree to accept responsibility for all activities that occur under your account, whether such activity is authorized or not. You should notify us immediately if you have knowledge that or have reason for suspecting that the confidentiality of your account has been compromised or if there has been any unauthorized use thereof Intellectual Property</li>
+                        <li>
+                            ensure that all information or data you provide on the Platform are accurate and agree to
+                            take sole responsibility for such information and data;
+                        </li>
+                        <li>
+                            be responsible for maintaining the confidentiality of your account information and password
+                            and for restricting access to such information and to your computer. You agree to accept
+                            responsibility for all activities that occur under your account, whether such activity is
+                            authorized or not. You should notify us immediately if you have knowledge that or have
+                            reason for suspecting that the confidentiality of your account has been compromised or if
+                            there has been any unauthorized use thereof Intellectual Property
+                        </li>
                     </ol>
                     <p>&nbsp;</p>
                     <p>All information and content available on the Platform, including but not limited to trademarks, logos, service marks, features, functions, text, graphics, logos, button icons, images, audio clips, data compilations and software, and the compilation and organization thereof (collectively, the "Content") are our property or the property of our parents, subsidiaries, affiliates, partners or licensors, and are protected by international laws, including laws governing copyrights and trademarks.</p>
@@ -75,7 +123,11 @@
                     <p>&nbsp;</p>
                     <p>YOU AGREE THAT YOUR SOLE REMEDY, IF ANY, IS FROM THE MANUFACTURER OR SUPPLIER OF THE PRODUCTS, IN ACCORDANCE WITH SUCH MANUFACTURER'S OR SUPPLIER'S WARRANTY, OR TO SEEK A RETURN FOR SUCH PRODUCTS IN ACCORDANCE WITH OUR RETURN AND EXCHANGE POLICY</p>
                     <ul>
-                        <li>Revisions to these Terms and Conditions. We may revise these Terms of Use at any time and from time to time by updating this posting. You should visit this page from time to time to review the then current Terms of Use because they are binding on you.</li>
+                        <li>
+                            Revisions to these Terms and Conditions. We may revise these Terms of Use at any time and
+                            from time to time by updating this posting. You should visit this page from time to time to
+                            review the then current Terms of Use because they are binding on you.
+                        </li>
                     </ul>
                     <p>Termination. You or we may suspend or terminate your account or your use of the Platform at any time, for any reason or for no reason. You are personally liable for any orders to charges that you incur prior to termination. We reserve the right to change, suspend, or discontinue all or any aspect of the Platform at any time without notice.</p>
                     <p>Additional Assistance. If you have any questions or comments, we invite you to email us at <a href="mailto:mjctrdgmfg@gmail.com">mjctrdgmfg@gmail.com</a></p>
@@ -85,9 +137,7 @@
     </div>
 @endsection
 
-@section('footer')
-
-    @include('site.includes.footer')
-
+@section ('footer')
+    @include ('site.includes.footer')
 
 @endsection
