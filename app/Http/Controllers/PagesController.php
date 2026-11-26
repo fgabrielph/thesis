@@ -2,20 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Brand;
 use App\Category;
 use App\Item;
-use App\Brand;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Support\Renderable;
 
 class PagesController extends Controller
 {
-
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
     public function shop()
     {
@@ -26,26 +23,27 @@ class PagesController extends Controller
         return view('site.pages.shop', $data);
     }
 
-    public function inquire() {
+    public function inquire()
+    {
         return view('site.pages.inquire');
     }
 
-    public function categories($id) {
+    public function categories($id)
+    {
 
         $data['items'] = Item::where('category_id', $id)->paginate(8);
-        $data['categories'] = Category::orderby('name','asc')->get();
+        $data['categories'] = Category::orderby('name', 'asc')->get();
         $data['category_name'] = Category::find($id);
+
         return view('site.pages.category', $data);
 
     }
 
-    public function show($id) {
+    public function show($id)
+    {
 
         $item = Item::find($id);
 
         return view('site.pages.product')->with('item', $item);
     }
-
-
-
 }

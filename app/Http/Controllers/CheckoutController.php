@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request as Requesting;
-use Illuminate\Support\Facades\Redirect;
 use App\Order;
 use App\Suborder;
 use Cart;
+use Illuminate\Http\Request as Requesting;
+use Illuminate\Support\Facades\Redirect;
 
 class CheckoutController extends Controller
 {
@@ -34,7 +34,7 @@ class CheckoutController extends Controller
             return Redirect::back()->with('error', 'Unsupported payment method.');
         }
 
-        # Removing Commas in thousands for Grand Total
+        // Removing Commas in thousands for Grand Total
         $string_grand_total = Cart::total();
         $formatted_grand_total = str_replace(',', '', $string_grand_total);
 
@@ -58,7 +58,7 @@ class CheckoutController extends Controller
         $order->save();
 
         foreach (Cart::content() as $item) {
-            $suborder = new Suborder();
+            $suborder = new Suborder;
             $suborder->order_id = $order->id;
             $suborder->item_id = $item->id;
             $suborder->price = $item->price;

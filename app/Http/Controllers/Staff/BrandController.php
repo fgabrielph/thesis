@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Staff;
 
-use App\Logs;
 use App\Brand;
 use App\Http\Controllers\Controller;
+use App\Logs;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Image;
@@ -15,18 +16,19 @@ class BrandController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
         $brands = Brand::all();
+
         return view('staff.brands.index')->with('brands', $brands);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -36,60 +38,57 @@ class BrandController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(Request $request)
     {
-        //Validation
+        // Validation
         $this->validate($request, [
             'name' => 'required|unique:brands|max:160',
         ]);
 
+        // Handle File Upload
 
+        if ($request->hasFile('image')) {
 
-        //Handle File Upload
-
-        if($request->hasFile('image')){
-
-            # Get filename with extension
+            // Get filename with extension
             $fileNameWithExt = $request->file('image')->getClientOriginalName();
 
-            # Get just filename
+            // Get just filename
             $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
 
-            # Get just extension
+            // Get just extension
             $extension = $request->file('image')->getClientOriginalExtension();
 
-            # Filename to store
+            // Filename to store
             $fileNameToStore = $fileName.'_'.time().'.'.$extension;
 
-            # Small thumbnail name
+            // Small thumbnail name
             $smallthumbnail = $fileName.'_small_'.time().'.'.$extension;
 
-            # Medium thumbnail name
+            // Medium thumbnail name
             $mediumthumbnail = $fileName.'_medium_'.time().'.'.$extension;
 
-            # Large thumbnail name
+            // Large thumbnail name
             $largethumbnail = $fileName.'_large_'.time().'.'.$extension;
 
-            # Upload Image
+            // Upload Image
 
-            $path = public_path('assets/images/' . $fileNameToStore);
-            $smallpath = public_path('assets/images/small_thumbnail/' . $smallthumbnail);
-            $mediumpath = public_path('assets/images/medium_thumbnail/' . $mediumthumbnail);
-            $largepath = public_path('assets/images/large_thumbnail/' . $largethumbnail);
+            $path = public_path('assets/images/'.$fileNameToStore);
+            $smallpath = public_path('assets/images/small_thumbnail/'.$smallthumbnail);
+            $mediumpath = public_path('assets/images/medium_thumbnail/'.$mediumthumbnail);
+            $largepath = public_path('assets/images/large_thumbnail/'.$largethumbnail);
 
-            # Create original image
+            // Create original image
             Image::make($request->file('image'))->save($path);
 
-            # Create small thumbnail
+            // Create small thumbnail
             Image::make($request->file('image'))->resize(150, 93)->save($smallpath);
 
-            # Create medium thumbnail
+            // Create medium thumbnail
             Image::make($request->file('image'))->resize(300, 185)->save($mediumpath);
 
-            # Create large thumbnail
+            // Create large thumbnail
             Image::make($request->file('image'))->resize(550, 340)->save($largepath);
 
         } else {
@@ -99,13 +98,13 @@ class BrandController extends Controller
             $largethumbnail = 'nobrandimage.jpg';
         }
 
-        # Create Brand
+        // Create Brand
         $brand = new Brand;
         $brand->image = $largethumbnail;
-        $brand->name = $request->input('name');  //$post->user_id = auth()->user()->id; //This Gets the Currently User Logged in
+        $brand->name = $request->input('name');  // $post->user_id = auth()->user()->id; //This Gets the Currently User Logged in
         $brand->save();
 
-        # Added Log
+        // Added Log
         $log = new Logs;
         $log->action = 'Added a Brand';
         $log->staff_id = Auth::user()->id;
@@ -117,7 +116,7 @@ class BrandController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -128,7 +127,7 @@ class BrandController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit($id)
     {
@@ -138,58 +137,57 @@ class BrandController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, $id)
     {
-        //Validation
+        // Validation
         $this->validate($request, [
             'name' => 'required|max:160',
-            'image' => 'nullable|max:1999|'
+            'image' => 'nullable|max:1999|',
         ]);
 
-        //Handle File Upload
-        if($request->hasFile('image')){
+        // Handle File Upload
+        if ($request->hasFile('image')) {
 
-            # Get filename with extension
+            // Get filename with extension
             $fileNameWithExt = $request->file('image')->getClientOriginalName();
 
-            # Get just filename
+            // Get just filename
             $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
 
-            # Get just extension
+            // Get just extension
             $extension = $request->file('image')->getClientOriginalExtension();
 
-            # Filename to store
+            // Filename to store
             $fileNameToStore = $fileName.'_'.time().'.'.$extension;
 
-            # Small thumbnail name
+            // Small thumbnail name
             $smallthumbnail = $fileName.'_small_'.time().'.'.$extension;
 
-            # Medium thumbnail name
+            // Medium thumbnail name
             $mediumthumbnail = $fileName.'_medium_'.time().'.'.$extension;
 
-            # Large thumbnail name
+            // Large thumbnail name
             $largethumbnail = $fileName.'_large_'.time().'.'.$extension;
 
-            # Upload Image
-            $path = public_path('assets/images/' . $fileNameToStore);
-            $smallpath = public_path('assets/images/small_thumbnail/' . $smallthumbnail);
-            $mediumpath = public_path('assets/images/medium_thumbnail/' . $mediumthumbnail);
-            $largepath = public_path('assets/images/large_thumbnail/' . $largethumbnail);
+            // Upload Image
+            $path = public_path('assets/images/'.$fileNameToStore);
+            $smallpath = public_path('assets/images/small_thumbnail/'.$smallthumbnail);
+            $mediumpath = public_path('assets/images/medium_thumbnail/'.$mediumthumbnail);
+            $largepath = public_path('assets/images/large_thumbnail/'.$largethumbnail);
 
-            # Create original image
+            // Create original image
             Image::make($request->file('image'))->save($path);
 
-            # Create small thumbnail
+            // Create small thumbnail
             Image::make($request->file('image'))->resize(150, 93)->save($smallpath);
 
-            # Create medium thumbnail
+            // Create medium thumbnail
             Image::make($request->file('image'))->resize(300, 185)->save($mediumpath);
 
-            # Create large thumbnail
+            // Create large thumbnail
             Image::make($request->file('image'))->resize(550, 340)->save($largepath);
 
         } else {
@@ -199,10 +197,10 @@ class BrandController extends Controller
             $largethumbnail = 'noimage.jpg';
         }
 
-        //Update Item
+        // Update Item
         $brand = Brand::find($id);
         $brand->name = $request->input('name');
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             if ($brand->image != 'nobrandimage.jpg') {
                 Storage::delete('public/assets/images/large_thumbnail'.$brand->image);
             }
@@ -210,7 +208,7 @@ class BrandController extends Controller
         }
         $brand->save();
 
-        # Updated Logs
+        // Updated Logs
         $log = new Logs;
         $log->action = 'Updated a Brand';
         $log->staff_id = Auth::user()->id;
@@ -223,7 +221,7 @@ class BrandController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {

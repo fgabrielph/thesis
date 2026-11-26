@@ -28,7 +28,7 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = '/account/profile';
-    //protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -40,7 +40,8 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    protected function credentials(Request $request) {
+    protected function credentials(Request $request)
+    {
         return ['email' => $request->email, 'password' => $request->password, 'status' => 1];
     }
 }

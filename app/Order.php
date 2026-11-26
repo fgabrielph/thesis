@@ -10,23 +10,26 @@ class Order extends Model
 
     protected $fillable = [
         'order_number', 'user_id', 'status', 'grand_total', 'item_count', 'payment_status', 'payment_method',
-        'first_name', 'last_name', 'address', 'city', 'country', 'zip_code', 'phone_number', 'notes'
+        'first_name', 'last_name', 'address', 'city', 'country', 'zip_code', 'phone_number', 'notes',
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo('App\User', 'user_id');
     }
 
-    public function suborder() {
+    public function suborder()
+    {
         return $this->hasMany(Suborder::class);
     }
 
-    public function invoice() {
+    public function invoice()
+    {
         return $this->hasOne('App\Invoice', 'invoice_id');
     }
 
-    public function delivery() {
+    public function delivery()
+    {
         return $this->hasMany(Delivery::class);
     }
-
 }

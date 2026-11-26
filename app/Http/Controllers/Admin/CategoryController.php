@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Category;
+use App\Http\Controllers\Controller;
 use App\Logs;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
@@ -13,18 +14,19 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
         $categories = Category::all();
+
         return view('admin.categories.index')->with('categories', $categories);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -34,22 +36,21 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(Request $request)
     {
-        //Validation
+        // Validation
         $this->validate($request, [
             'name' => 'required|unique:categories|max:160',
         ]);
 
-        //Create Category
+        // Create Category
         $category = new Category;
-        $category->name = $request->input('name');  //$post->user_id = auth()->user()->id; //This Gets the Currently User Logged in
+        $category->name = $request->input('name');  // $post->user_id = auth()->user()->id; //This Gets the Currently User Logged in
         $category->save();
 
-        # Added Log
+        // Added Log
         $log = new Logs;
         $log->action = 'Added a category';
         $log->admin_id = Auth::user()->id;
@@ -62,7 +63,7 @@ class CategoryController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -73,7 +74,7 @@ class CategoryController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit($id)
     {
@@ -83,23 +84,22 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, $id)
     {
-        //Validation
+        // Validation
         $this->validate($request, [
             'name' => 'required|max:160',
         ]);
 
-        //Update Category
+        // Update Category
         $category = Category::find($id);
-        $category->name = $request->input('name');  //$post->user_id = auth()->user()->id; //This Gets the Currently User Logged in
+        $category->name = $request->input('name');  // $post->user_id = auth()->user()->id; //This Gets the Currently User Logged in
         $category->save();
 
-        # Updated Log
+        // Updated Log
         $log = new Logs;
         $log->action = 'Updated an Category';
         $log->admin_id = Auth::user()->id;
@@ -112,7 +112,7 @@ class CategoryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {

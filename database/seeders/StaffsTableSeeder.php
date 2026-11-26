@@ -15,10 +15,10 @@ class StaffsTableSeeder extends Seeder
     public function run()
     {
         Staff::create([
-            'name'      =>  'Joseph Gutierrez',
-            'email'     =>  'staff@staff.com',
-            'password'  =>  bcrypt('password'),
-            'status'    =>  'active',
+            'name' => 'Joseph Gutierrez',
+            'email' => 'staff@staff.com',
+            'password' => bcrypt('password'),
+            'status' => 'active',
         ]);
     }
 }

@@ -2,30 +2,31 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Delivery;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Item as Product;
 use App\Order;
 use App\Suborder;
-use App\Delivery;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
         $orders = Order::all();
 
-//        $test = array();
-//        foreach($orders as $order){
-//            $try = $order->user->name;
-//            array_push($test, $try);
-//        }
-//        dd($test);
+        //        $test = array();
+        //        foreach($orders as $order){
+        //            $try = $order->user->name;
+        //            array_push($test, $try);
+        //        }
+        //        dd($test);
 
         return view('admin.orders.index')->with('orders', $orders);
     }
@@ -33,7 +34,7 @@ class OrderController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -43,8 +44,7 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -55,7 +55,7 @@ class OrderController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -68,7 +68,7 @@ class OrderController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit($id)
     {
@@ -78,16 +78,15 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, $id)
     {
         $order = Order::find($id);
 
         $order->status = $request->status;
-        if(!(empty($order->image)) && $request->status == 'Confirmed') {
+        if (! (empty($order->image)) && $request->status == 'Confirmed') {
             $order->payment_status = 1;
         }
         $order->save();
@@ -99,16 +98,16 @@ class OrderController extends Controller
     {
         $order = Order::find($id);
 
-        switch($choice) {
+        switch ($choice) {
 
             case 'Accept':
                 $order->status = 'Confirmed';
                 $order->payment_status = 1;
                 $order->save();
 
-                # We Decrease the stocks based on sub orders
+                // We Decrease the stocks based on sub orders
                 $suborders = Suborder::where('order_id', $id)->get();
-                foreach($suborders as $suborder){
+                foreach ($suborders as $suborder) {
                     $item = $suborder->item_id;
                     $quantity = $suborder->quantity;
                     Product::where('id', $item)->decrement('stocks', $quantity);
@@ -132,19 +131,19 @@ class OrderController extends Controller
 
                 $order->status = 'Confirmed';
 
-//                if($order->payment_method != 'cod') {
-//
-//                    $order->payment_status = 1;
-//                    $order->save();
-//
-//                    # We Decrease the stocks based on sub orders
-//                    $suborders = Suborder::where('order_id', $id)->get();
-//                    foreach($suborders as $suborder){
-//                        $i = $suborder->item_id;
-//                        $qty = $suborder->quantity;
-//                        Product::where('id', $i)->decrement('stocks', $qty);
-//                    }
-//                }
+                //                if($order->payment_method != 'cod') {
+                //
+                //                    $order->payment_status = 1;
+                //                    $order->save();
+                //
+                //                    # We Decrease the stocks based on sub orders
+                //                    $suborders = Suborder::where('order_id', $id)->get();
+                //                    foreach($suborders as $suborder){
+                //                        $i = $suborder->item_id;
+                //                        $qty = $suborder->quantity;
+                //                        Product::where('id', $i)->decrement('stocks', $qty);
+                //                    }
+                //                }
 
                 $order->save();
 
@@ -160,7 +159,7 @@ class OrderController extends Controller
                 $delivery = new Delivery;
                 $delivery->order_id = $order->id;
                 $delivery->status = 'On Delivery';
-                $delivery->customer_name = $order->first_name . ' ' . $order->last_name;
+                $delivery->customer_name = $order->first_name.' '.$order->last_name;
                 $delivery->save();
 
                 return back()->with('success', 'Order has been placed to Delivery Table');
@@ -174,14 +173,13 @@ class OrderController extends Controller
 
         }
 
-
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {

@@ -18,17 +18,17 @@ class DemoDataSeeder extends Seeder
         $now = now();
 
         $userId = DB::table('users')->insertGetId([
-            'first_name'        => 'Juan',
-            'last_name'         => 'Dela Cruz',
-            'email'             => 'customer@example.com',
+            'first_name' => 'Juan',
+            'last_name' => 'Dela Cruz',
+            'email' => 'customer@example.com',
             'email_verified_at' => $now,
-            'password'          => Hash::make('password'),
-            'status'            => '1',
-            'address'           => '123 Rizal Street, Quezon City',
-            'mobile_number'     => 9171234567,
-            'birthday'          => '1995-06-15',
-            'created_at'        => $now,
-            'updated_at'        => $now,
+            'password' => Hash::make('password'),
+            'status' => '1',
+            'address' => '123 Rizal Street, Quezon City',
+            'mobile_number' => 9171234567,
+            'birthday' => '1995-06-15',
+            'created_at' => $now,
+            'updated_at' => $now,
         ]);
 
         $categories = [
@@ -41,7 +41,7 @@ class DemoDataSeeder extends Seeder
         $categoryIds = [];
         foreach ($categories as $category) {
             $categoryIds[] = DB::table('categories')->insertGetId([
-                'name'       => $category,
+                'name' => $category,
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);
@@ -57,7 +57,7 @@ class DemoDataSeeder extends Seeder
         $brandIds = [];
         foreach ($brands as $brand) {
             $brandIds[] = DB::table('brands')->insertGetId([
-                'name'       => $brand,
+                'name' => $brand,
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);
@@ -89,21 +89,21 @@ class DemoDataSeeder extends Seeder
         foreach ($items as $index => $item) {
             $itemIds[] = DB::table('items')->insertGetId([
                 'category_id' => $categoryIds[$item['category']],
-                'brand_id'    => $brandIds[$item['brand']],
-                'image'       => $images[$index],
-                'name'        => $item['name'],
-                'stocks'      => $item['stocks'],
-                'price_stocks'=> $item['price'],
+                'brand_id' => $brandIds[$item['brand']],
+                'image' => $images[$index],
+                'name' => $item['name'],
+                'stocks' => $item['stocks'],
+                'price_stocks' => $item['price'],
                 'description' => $item['description'],
-                'created_at'  => $now,
-                'updated_at'  => $now,
+                'created_at' => $now,
+                'updated_at' => $now,
             ]);
         }
 
         $orders = [
             ['date' => '2020-01-12', 'status' => 'Pending',    'paid' => 0, 'method' => 'cod',  'total' => 2500.00, 'items' => [[0, 1]]],
             ['date' => '2020-02-14', 'status' => 'Confirmed',  'paid' => 1, 'method' => 'cod',  'total' => 4500.00, 'items' => [[1, 1]]],
-            ['date' => '2020-03-10', 'status' => 'On Delivery','paid' => 1, 'method' => 'bank', 'total' => 4650.00, 'items' => [[2, 1], [3, 1]]],
+            ['date' => '2020-03-10', 'status' => 'On Delivery', 'paid' => 1, 'method' => 'bank', 'total' => 4650.00, 'items' => [[2, 1], [3, 1]]],
             ['date' => '2020-04-18', 'status' => 'Completed',  'paid' => 1, 'method' => 'cod',  'total' => 2500.00, 'items' => [[5, 1]]],
             ['date' => '2020-05-09', 'status' => 'Completed',  'paid' => 1, 'method' => 'bank', 'total' => 1800.00, 'items' => [[6, 1]]],
             ['date' => '2020-06-21', 'status' => 'Return',     'paid' => 1, 'method' => 'cod',  'total' => 850.00,  'items' => [[3, 1]]],
@@ -112,49 +112,49 @@ class DemoDataSeeder extends Seeder
         ];
 
         foreach ($orders as $index => $order) {
-            $createdAt = $order['date'] . ' 10:00:00';
+            $createdAt = $order['date'].' 10:00:00';
 
             $invoiceId = DB::table('invoices')->insertGetId([
                 'customer_email' => 'customer@example.com',
-                'customer_id'    => (string) $userId,
-                'country_code'   => 'PH',
-                'payment_id'     => 'DEMO-' . strtoupper(uniqid()),
-                'currency'       => 'PHP',
+                'customer_id' => (string) $userId,
+                'country_code' => 'PH',
+                'payment_id' => 'DEMO-'.strtoupper(uniqid()),
+                'currency' => 'PHP',
                 'payment_status' => $order['paid'] ? 'COMPLETED' : 'PENDING',
-                'price'          => $order['total'],
-                'created_at'     => $createdAt,
-                'updated_at'     => $createdAt,
+                'price' => $order['total'],
+                'created_at' => $createdAt,
+                'updated_at' => $createdAt,
             ]);
 
             $orderId = DB::table('orders')->insertGetId([
-                'order_number'       => 'ORD-DEMO-' . str_pad($index + 1, 3, '0', STR_PAD_LEFT),
-                'status'             => $order['status'],
-                'user_id'            => $userId,
-                'invoice_id'         => $invoiceId,
-                'grand_total'        => $order['total'],
-                'item_count'         => count($order['items']),
-                'payment_status'     => $order['paid'],
-                'payment_method'     => $order['method'],
-                'image'              => null,
-                'first_name'         => 'Juan',
-                'last_name'          => 'Dela Cruz',
-                'deliver_to'         => 'Maria Dela Cruz',
+                'order_number' => 'ORD-DEMO-'.str_pad($index + 1, 3, '0', STR_PAD_LEFT),
+                'status' => $order['status'],
+                'user_id' => $userId,
+                'invoice_id' => $invoiceId,
+                'grand_total' => $order['total'],
+                'item_count' => count($order['items']),
+                'payment_status' => $order['paid'],
+                'payment_method' => $order['method'],
+                'image' => null,
+                'first_name' => 'Juan',
+                'last_name' => 'Dela Cruz',
+                'deliver_to' => 'Maria Dela Cruz',
                 'deliver_to_address' => '123 Rizal Street, Quezon City',
-                'address'            => '123 Rizal Street, Quezon City',
-                'city'               => 'Quezon City',
-                'zip_code'           => '1100',
-                'phone_number'       => '09171234567',
-                'notes'              => 'Demo order ' . ($index + 1),
-                'created_at'         => $createdAt,
-                'updated_at'         => $createdAt,
+                'address' => '123 Rizal Street, Quezon City',
+                'city' => 'Quezon City',
+                'zip_code' => '1100',
+                'phone_number' => '09171234567',
+                'notes' => 'Demo order '.($index + 1),
+                'created_at' => $createdAt,
+                'updated_at' => $createdAt,
             ]);
 
             foreach ($order['items'] as $line) {
                 DB::table('suborders')->insert([
-                    'item_id'    => $itemIds[$line[0]],
-                    'order_id'   => $orderId,
-                    'price'      => $items[$line[0]]['price'],
-                    'quantity'   => $line[1],
+                    'item_id' => $itemIds[$line[0]],
+                    'order_id' => $orderId,
+                    'price' => $items[$line[0]]['price'],
+                    'quantity' => $line[1],
                     'created_at' => $createdAt,
                     'updated_at' => $createdAt,
                 ]);
@@ -162,11 +162,11 @@ class DemoDataSeeder extends Seeder
 
             if ($order['status'] === 'On Delivery') {
                 DB::table('deliveries')->insert([
-                    'order_id'     => $orderId,
-                    'customer_name'=> 'Juan Dela Cruz',
-                    'ETA'          => '2020-03-12',
-                    'created_at'   => $createdAt,
-                    'updated_at'   => $createdAt,
+                    'order_id' => $orderId,
+                    'customer_name' => 'Juan Dela Cruz',
+                    'ETA' => '2020-03-12',
+                    'created_at' => $createdAt,
+                    'updated_at' => $createdAt,
                 ]);
             }
         }
@@ -181,35 +181,35 @@ class DemoDataSeeder extends Seeder
         ];
 
         foreach ($customOrders as $index => $customOrder) {
-            $createdAt = $customOrder['date'] . ' 14:00:00';
+            $createdAt = $customOrder['date'].' 14:00:00';
 
             $customOrderId = DB::table('custom_orders')->insertGetId([
-                'user_id'        => $userId,
-                'name'           => 'Custom Order ' . ($index + 1),
-                'image'          => null,
-                'status'         => $index % 3,
+                'user_id' => $userId,
+                'name' => 'Custom Order '.($index + 1),
+                'image' => null,
+                'status' => $index % 3,
                 'payment_status' => 1,
                 'payment_method' => 'cod',
-                'quantity'       => $customOrder['qty'],
-                'description'    => $customOrder['description'],
-                'price'          => $customOrder['price'],
-                'completed'      => $index < 4 ? 1 : 0,
-                'proof_image'    => null,
-                'address'        => '123 Rizal Street, Quezon City',
-                'city'           => 'Quezon City',
-                'zip_code'       => '1100',
-                'created_at'     => $createdAt,
-                'updated_at'     => $createdAt,
+                'quantity' => $customOrder['qty'],
+                'description' => $customOrder['description'],
+                'price' => $customOrder['price'],
+                'completed' => $index < 4 ? 1 : 0,
+                'proof_image' => null,
+                'address' => '123 Rizal Street, Quezon City',
+                'city' => 'Quezon City',
+                'zip_code' => '1100',
+                'created_at' => $createdAt,
+                'updated_at' => $createdAt,
             ]);
 
             if ($index < 3) {
                 DB::table('custom_deliveries')->insert([
                     'custom_order_id' => $customOrderId,
-                    'customer_name'   => 'Juan Dela Cruz',
-                    'status'          => 'Delivered',
-                    'ETA'             => $customOrder['date'],
-                    'created_at'      => $createdAt,
-                    'updated_at'      => $createdAt,
+                    'customer_name' => 'Juan Dela Cruz',
+                    'status' => 'Delivered',
+                    'ETA' => $customOrder['date'],
+                    'created_at' => $createdAt,
+                    'updated_at' => $createdAt,
                 ]);
             }
         }

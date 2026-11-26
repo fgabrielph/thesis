@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Item;
 use Cart;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class CartController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -21,7 +22,7 @@ class CartController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -31,13 +32,12 @@ class CartController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(Request $request)
     {
 
-        $duplicates = Cart::search(function($cartItem, $rowId) use ($request) {
+        $duplicates = Cart::search(function ($cartItem, $rowId) use ($request) {
             return $cartItem->id === $request->id;
         });
 
@@ -48,11 +48,11 @@ class CartController extends Controller
         $product = Item::findorFail($request->id);
         $stock = $product->stocks;
 
-        if($request->quantity <= 0) {
+        if ($request->quantity <= 0) {
 
             return back()->with('error', 'Please add a Quantity!');
 
-        } else if($request->quantity > $stock) {
+        } elseif ($request->quantity > $stock) {
 
             return back()->with('error', 'Item Requested is exceeds the stock!');
 
@@ -61,14 +61,11 @@ class CartController extends Controller
 
         }
 
-        if($request->buynow == 1) {
+        if ($request->buynow == 1) {
             return view('site.pages.cart');
         }
 
-
-
         return redirect()->back()->with('success', 'Item added to cart successfully.');
-
 
     }
 
@@ -76,7 +73,7 @@ class CartController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -87,7 +84,7 @@ class CartController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit($id)
     {
@@ -97,9 +94,8 @@ class CartController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, $id)
     {
@@ -108,12 +104,13 @@ class CartController extends Controller
         $product = Item::findOrFail($proID);
         $stock = $product->stocks;
 
-        if($qty < $stock) {
-            if($qty <= 0) {
+        if ($qty < $stock) {
+            if ($qty <= 0) {
                 return back()->with('error', 'Please check your quantity is less than product');
             }
 
             Cart::update($id, $request->qty);
+
             return back()->with('success', 'Cart is updated');
 
         } else {
@@ -126,11 +123,14 @@ class CartController extends Controller
     public function destroy($id)
     {
         Cart::remove($id);
+
         return back()->with('success', 'Item has been removed!');
     }
 
-    public function clear() {
+    public function clear()
+    {
         Cart::destroy();
+
         return redirect()->back()->with('success', 'Cart Cleared!');
     }
 }
