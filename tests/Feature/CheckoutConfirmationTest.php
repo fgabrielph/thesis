@@ -27,6 +27,13 @@ class CheckoutConfirmationTest extends TestCase
 
         $user = $this->verifiedUser('buyer');
 
+        $this->actingAs($user)
+            ->get(route('checkout.index'))
+            ->assertOk()
+            ->assertSee('data-storefront', false)
+            ->assertSee('sf-form-field', false)
+            ->assertSee('Free delivery within metro manila');
+
         $response = $this->actingAs($user)->post(route('checkout.store'), $this->checkoutPayload());
 
         $order = Order::where('user_id', $user->id)->latest('id')->firstOrFail();
