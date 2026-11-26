@@ -17,7 +17,7 @@ Route::group(['prefix' => 'staff'], function () {
         Route::resource('staff_items', 'Staff\ItemController')->only(['index', 'store', 'update']);
         Route::get('low_items', 'Staff\ItemController@lowitem')->name('staff.lowitems');
         Route::resource('staff_orders', 'Staff\OrderController')->only(['index']);
-        Route::get('staff_orders/status/{status}/{id}', 'Admin\OrderController@decide')->name('staff_orders.status');
+        Route::post('staff_orders/status/{status}/{id}', 'Admin\OrderController@decide')->name('staff_orders.status');
 
         Route::get('/item/{id}', 'Staff\WalkinController@categories')->name('staff.categories');
 
@@ -34,7 +34,7 @@ Route::group(['prefix' => 'staff'], function () {
 
         // Deliveries Controller
         Route::resource('staff_deliveries', 'Staff\DeliveryController')->only(['index']);
-        Route::get('staff_deliveries/{status}/{id}', 'Admin\DeliveryController@change_status')->name('staff_deliveries.status');
+        Route::post('staff_deliveries/{status}/{id}', 'Admin\DeliveryController@change_status')->name('staff_deliveries.status');
         Route::post('staff_deliveries/{id}', 'Admin\DeliveryController@EDA')->name('staff_deliveries.eda');
         Route::post('staff_deliveries/edit/{id}', 'Admin\DeliveryController@edit_EDA')->name('staff_deliveries.edit_eda');
 

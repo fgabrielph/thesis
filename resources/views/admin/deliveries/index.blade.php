@@ -112,10 +112,14 @@
                                                         <td>{{$delivery->created_at->toFormattedDateString()}}</td>
                                                         <td>{{date('M d, Y', strtotime($delivery->ETA))}}</td>
                                                         <td>
-                                                            <a
-                                                                href="{{route('deliveries.status', ['status' => 'Completed', 'id' => $delivery->id])}}"
-                                                                class="btn btn-lg btn-success"
-                                                                >Complete</a
+                                                            <form
+                                                                action="{{ route('deliveries.status', ['status' => 'Completed', 'id' => $delivery->id]) }}"
+                                                                method="POST"
+                                                                class="d-inline"
+                                                            >
+                                                                @csrf
+                                                                <button type="submit" class="btn btn-lg btn-success">
+                                                                    Complete</a
                                                             >
                                                         </td>
                                                     </tr>
@@ -173,14 +177,17 @@
                                                         <td>{{$delivery->created_at->toFormattedDateString()}}</td>
                                                         <td>{{date('M d, Y', strtotime($delivery->ETA))}}</td>
                                                         <td>
-                                                            {{--                                                        <a href="{{route('deliveries.status', ['status' => 'On Delivery', 'id' => $delivery->id])}}" class="btn btn-lg btn-primary"><span class="fas fa-truck"></span> Deliver</a>--}}
+                                                            {{--                                                        <form action="{{ route('deliveries.status', ['status' => 'On Delivery', 'id' => $delivery->id]) }}" method="POST" class="d-inline">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-lg btn-primary"><span class="fas fa-truck"></span> Deliver</button>
+                                                        </form>--}}
                                                             <a
                                                                 href="#"
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#deliver{{$delivery->id}}"
                                                                 class="btn btn-sm btn-success"
-                                                                ><span class="fas fa-truck"></span> Deliver</a
-                                                            >
+                                                                ><span class="fas fa-truck"></span> Deliver</button>
+                                                                </form>
                                                         </td>
                                                     </tr>
                                                 @endif
@@ -322,11 +329,16 @@
                                                             <td>{{$delivery->updated_at->format('M d Y -- h:iA')}}</td>
                                                         @endif
                                                         <td>
-                                                            <a
-                                                                href="{{route('deliveries.status', ['status' => 'Return', 'id' => $delivery->id])}}"
-                                                                class="btn btn-lg btn-primary"
-                                                                >Return?</a
+                                                            <form
+                                                                action="{{ route('deliveries.status', ['status' => 'Return', 'id' => $delivery->id]) }}"
+                                                                method="POST"
+                                                                class="d-inline"
                                                             >
+                                                                @csrf
+                                                                <button type="submit" class="btn btn-lg btn-primary">
+                                                                    Return?
+                                                                </button>
+                                                            </form>
                                                         </td>
                                                     </tr>
                                                 @endif

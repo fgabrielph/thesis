@@ -19,7 +19,7 @@ class InquiryController extends Controller
     public function show($id)
     {
 
-        $custom_order = CustomOrder::find($id);
+        $custom_order = auth()->user()->custom_orders()->findOrFail($id);
 
         return view('site.accounts.show_custom')->with('custom_order', $custom_order);
     }
@@ -82,7 +82,7 @@ class InquiryController extends Controller
 
             case 'cod':
 
-                $custom_order = CustomOrder::find($id);
+                $custom_order = auth()->user()->custom_orders()->findOrFail($id);
                 $custom_order->payment_method = 'cod';
                 $custom_order->payment_status = 2;
                 $custom_order->save();
@@ -94,10 +94,10 @@ class InquiryController extends Controller
             case 'bank':
 
                 $this->validate($request, [
-                    'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                    'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
                 ]);
 
-                $custom_order = CustomOrder::find($id);
+                $custom_order = auth()->user()->custom_orders()->findOrFail($id);
 
                 // Handle File Upload
                 if ($request->hasFile('image')) {
