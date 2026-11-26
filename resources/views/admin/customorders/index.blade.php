@@ -29,8 +29,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body p-0" style="margin: 1%">
-                            <div class="table-responsive">
-<table id="defTable" class="table table-hover">
+                            <table id="defTable" class="table table-hover">
                                 <thead class="table-dark">
                                 <tr>
                                     <th class="text-center">Order ID</th>
@@ -126,11 +125,11 @@
 
                                     @if($cust_order->payment_method == 'bank')
                                     <!-- Modal -->
-                                    <div class="modal fade" id="receipt{{$cust_order->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal fade" id="receipt{{$cust_order->id}}" tabindex="-1" role="dialog" aria-labelledby="modalTitle{{ $cust_order->id }}" aria-hidden="true">
                                         <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered" role="document">
                                             <div class="modal-content" style="overflow-y: auto">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalCenterTitle">Uploaded Receipt</h5>
+                                                    <h5 class="modal-title" id="modalTitle{{ $cust_order->id }}">Uploaded Receipt</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
@@ -157,11 +156,11 @@
 
                                     @if($cust_order->payment_method == 'cod')
                                     <!-- Modal -->
-                                    <div class="modal fade" id="accept{{$cust_order->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal fade" id="accept{{$cust_order->id}}" tabindex="-1" role="dialog" aria-labelledby="modalTitle{{ $cust_order->id }}" aria-hidden="true">
                                         <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered" role="document">
                                             <div class="modal-content" style="overflow-y: auto">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalCenterTitle">Mode of Payment: Cash on Delivery</h5>
+                                                    <h5 class="modal-title" id="modalTitle{{ $cust_order->id }}">Mode of Payment: Cash on Delivery</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
@@ -188,13 +187,13 @@
 
                                     @if($cust_order->status == 3)
                                         <!-- Modal -->
-                                        <div class="modal fade" id="deliver{{$cust_order->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal fade" id="deliver{{$cust_order->id}}" tabindex="-1" role="dialog" aria-labelledby="modalTitle{{ $cust_order->id }}" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <form action="{{route('custom_deliveries.eda', $cust_order->id)}}" class="form-horizontal" method="POST">
                                                         @csrf
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalCenterTitle">Estimated Day of Arrival</h5>
+                                                            <h5 class="modal-title" id="modalTitle{{ $cust_order->id }}">Estimated Day of Arrival</h5>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
@@ -223,7 +222,6 @@
                                 @endforeach
                                 </tbody>
                             </table>
-</div>
                         </div>
                     </div>
                 </div>

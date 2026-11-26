@@ -154,7 +154,7 @@
                 </div>
 
                 <div class="modal-body">
-                    <form action="{{ action('Staff\CustomerController@store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">@csrf
+                    <form id="add-form" action="{{ action('Staff\CustomerController@store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">@csrf
 
                     <div class="mb-3">
                         <label class="col-md-4 control-label">Name</label>
@@ -201,7 +201,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="col-md-2 btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                    <button class="col-md-2 btn btn-success" type="submit">Submit</button>
+                    <button class="col-md-2 btn btn-success" form="add-form" type="submit">Submit</button>
                 </div>
 
                 </form>
