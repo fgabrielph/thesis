@@ -10,13 +10,13 @@ Route::group(['prefix' => 'staff'], function () {
 
         Route::get('/', 'Staff\DashboardController@index')->name('staff.dashboard');
 
-        Route::resource('staff_customer', 'Staff\CustomerController');
-        Route::resource('walkin', 'Staff\WalkinController');
-        Route::resource('staff_categories', 'Staff\CategoryController');
-        Route::resource('staff_brands', 'Staff\BrandController');
-        Route::resource('staff_items', 'Staff\ItemController');
+        Route::resource('staff_customer', 'Staff\CustomerController')->only(['index', 'store', 'edit', 'destroy']);
+        Route::resource('walkin', 'Staff\WalkinController')->only(['index']);
+        Route::resource('staff_categories', 'Staff\CategoryController')->only(['index', 'store', 'update']);
+        Route::resource('staff_brands', 'Staff\BrandController')->only(['index', 'store', 'update']);
+        Route::resource('staff_items', 'Staff\ItemController')->only(['index', 'store', 'update']);
         Route::get('low_items', 'Staff\ItemController@lowitem')->name('staff.lowitems');
-        Route::resource('staff_orders', 'Staff\OrderController');
+        Route::resource('staff_orders', 'Staff\OrderController')->only(['index']);
         Route::get('staff_orders/status/{status}/{id}', 'Admin\OrderController@decide')->name('staff_orders.status');
 
         Route::get('/item/{id}', 'Staff\WalkinController@categories')->name('staff.categories');
@@ -33,7 +33,7 @@ Route::group(['prefix' => 'staff'], function () {
         Route::post('/checkout', 'Staff\CheckoutController@invoice')->name('staff_checkout.invoice');
 
         // Deliveries Controller
-        Route::resource('staff_deliveries', 'Staff\DeliveryController');
+        Route::resource('staff_deliveries', 'Staff\DeliveryController')->only(['index']);
         Route::get('staff_deliveries/{status}/{id}', 'Admin\DeliveryController@change_status')->name('staff_deliveries.status');
         Route::post('staff_deliveries/{id}', 'Admin\DeliveryController@EDA')->name('staff_deliveries.eda');
         Route::post('staff_deliveries/edit/{id}', 'Admin\DeliveryController@edit_EDA')->name('staff_deliveries.edit_eda');
