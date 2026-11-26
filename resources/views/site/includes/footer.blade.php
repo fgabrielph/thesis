@@ -63,9 +63,9 @@
             <div class="col-sm-6"></div>
             <div class="col-sm-6">
                 <p class="text-md-right text-white-50">
-                    &copy 2019 Copyright
+                    &copy 2020-{{ date('Y') }} Copyright
                     <br />
-                    <a href="#" target="_blank"> New MJC </a>
+                    <a href="{{route('home')}}"> New MJC </a>
                 </p>
             </div>
         </section>

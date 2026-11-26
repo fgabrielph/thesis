@@ -29,26 +29,44 @@
             <!-- Left -->
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link waves-effect" href="{{route('home')}}"
+                    <a
+                        class="nav-link waves-effect {{ request()->routeIs('home') ? 'active' : '' }}"
+                        href="{{route('home')}}"
                         >Home
                         {{--                        <span class="sr-only">(current)</span>--}}
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link waves-effect" href="{{route('site.shop')}}">Shop </a>
+                    <a
+                        class="nav-link waves-effect {{ request()->routeIs('site.shop', 'site.categories', 'site.product') ? 'active' : '' }}"
+                        href="{{route('site.shop')}}"
+                        >Shop
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link waves-effect" href="{{route('about')}}">About</a>
+                    <a
+                        class="nav-link waves-effect {{ request()->routeIs('about') ? 'active' : '' }}"
+                        href="{{route('about')}}"
+                        >About</a
+                    >
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link waves-effect" href="{{route('contact')}}">Contact Us</a>
+                    <a
+                        class="nav-link waves-effect {{ request()->routeIs('contact') ? 'active' : '' }}"
+                        href="{{route('contact')}}"
+                        >Contact Us</a
+                    >
                 </li>
             </ul>
 
             <!-- Right -->
             <ul class="navbar-nav nav-flex-icons">
                 <li class="nav-item">
-                    <a href="{{route('cart.index')}}" class="nav-link waves-effect" style="color: orange">
+                    <a
+                        href="{{route('cart.index')}}"
+                        class="nav-link waves-effect {{ request()->routeIs('cart.index') ? 'active' : '' }}"
+                        style="color: orange"
+                    >
                         @if (Cart::content()->count() > 0)
                             <span class="badge red z-depth-1 mr-1"> {{Cart::content()->count()}} </span>
                         @endif
@@ -66,7 +84,11 @@
 
                 @else
                     <li class="nav-item">
-                        <a href="{{route('orders.index')}}" class="nav-link waves-effect" style="color: lightgreen">
+                        <a
+                            href="{{route('orders.index')}}"
+                            class="nav-link waves-effect {{ request()->routeIs('orders.*') ? 'active' : '' }}"
+                            style="color: lightgreen"
+                        >
                             <i class="fas fa-cube"></i>
                             <span class="clearfix d-none d-sm-inline-block"> Orders </span>
                         </a>

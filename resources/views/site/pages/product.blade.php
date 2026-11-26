@@ -45,7 +45,6 @@
                                 name="quantity"
                                 value="{{ old('quantity') }}"
                             />
-                            <input type="hidden" name="price" value="{{ $item->price_stocks }}" /><br />
                             <button class="btn btn-primary btn-md my-0 p" type="submit">
                                 Add to cart
                                 <i class="fas fa-shopping-cart ml-1"></i>
