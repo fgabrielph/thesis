@@ -15,7 +15,7 @@
                         style="text-decoration: none"
                         >View Now</a
                     >
-                    <h4>There are {{$lowitem}} item(s) low in stock</h4>
+                    <h4>There {{ $lowitem == 1 ? 'is' : 'are' }} {{ $lowitem }} {{ Str::plural('item', $lowitem) }} low in stock</h4>
                 </div>
             @endif
             <div class="card mb-3">
@@ -37,7 +37,7 @@
                             <i class="fas fa-shopping-bag"></i>
                         </div>
                         <a href="{{route('admin_orders.index')}}" class="small-box-footer"
-                            >More info <i class="fas fa-arrow-circle-right"></i
+                            >View orders <i class="fas fa-arrow-circle-right"></i
                         ></a>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                             <i class="fas fa-user-plus"></i>
                         </div>
                         <a href="{{route('customers.index')}}" class="small-box-footer"
-                            >More info <i class="fas fa-arrow-circle-right"></i
+                            >View customers <i class="fas fa-arrow-circle-right"></i
                         ></a>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                             <i class="fas fa-truck"></i>
                         </div>
                         <a href="{{route('deliveries.index')}}" class="small-box-footer"
-                            >More info <i class="fas fa-arrow-circle-right"></i
+                            >View deliveries <i class="fas fa-arrow-circle-right"></i
                         ></a>
                     </div>
                 </div>
@@ -103,8 +103,8 @@
                         <div class="icon">
                             <i class="fas fa-truck-loading"></i>
                         </div>
-                        <a href="{{route('deliveries.index')}}" class="small-box-footer"
-                            >More info <i class="fas fa-arrow-circle-right"></i
+                        <a href="{{route('admin_orders.index')}}" class="small-box-footer"
+                            >View orders <i class="fas fa-arrow-circle-right"></i
                         ></a>
                     </div>
                 </div>

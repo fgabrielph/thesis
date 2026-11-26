@@ -48,7 +48,7 @@
                                         @elseif ($order->status == 'Canceled')
                                             <span class="badge bg-danger">Declined</span>
                                         @elseif ($order->status == 'Confirmed')
-                                            <span class="badge" style="background-color: greenyellow">Confirmed</span>
+                                            <span class="badge text-dark" style="background-color: greenyellow">Confirmed</span>
                                         @elseif ($order->status == 'Return')
                                             <span class="badge bg-secondary">Returned</span>
                                         @elseif ($order->status == 'On Delivery')
