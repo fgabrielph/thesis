@@ -167,14 +167,14 @@
                         <div class="row">
                             @foreach ($items as $item)
                                 <div class="col-md-3">
-                                    <div class="card" style="margin-bottom: 7px">
+                                    <div class="card h-100" style="margin-bottom: 7px">
                                         <div class="card-header" style="font-size: 17px">
                                             <a href="{{route('site.product', $item->id)}}">{{$item->name}}</a>
                                         </div>
                                         <div class="card-body">
                                             <img
                                                 src="/assets/images/large_thumbnail/{{$item->image}}"
-                                                class="card-img-top"
+                                                class="card-img-top product-thumb"
                                                 alt=""
                                                 width="100%"
                                             />
@@ -185,7 +185,7 @@
                                                 <small class="text-muted d-block">Stocks: {{$item->stocks}}</small>
                                             </div>
                                         </div>
-                                        <div class="card-footer">
+                                        <div class="card-footer mt-auto">
                                             <div class="float-right">
                                                 <button
                                                     data-toggle="modal"

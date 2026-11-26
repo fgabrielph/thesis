@@ -70,6 +70,13 @@
         body::-webkit-scrollbar-thumb {
             background-color: #000000;
         }
+
+        .product-thumb {
+            height: 240px;
+            width: 100%;
+            object-fit: contain;
+            background-color: #ffffff;
+        }
     </style>
 </head>
 <body>
