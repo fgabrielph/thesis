@@ -1,6 +1,6 @@
 @extends ('staff.master')
 
-@section ('title') Low Item(s) Stocks @endsection
+@section ('title') Low Stock Items @endsection
 
 @section ('content')
     <!-- Content Header (Page header) -->
@@ -59,7 +59,7 @@
                                                 <td class="text-center">{{$item->brands->name}}</td>
                                                 <td class="text-center">{{$item->name}}</td>
                                                 <td class="text-center">{{$item->stocks}}</td>
-                                                <td class="text-center">{{number_format($item->price_stocks, 2)}}</td>
+                                                <td class="text-center">₱ {{number_format($item->price_stocks, 2)}}</td>
                                                 <td class="text-center">{{$item->categories->name}}</td>
                                                 <td class="text-center">
                                                     <button

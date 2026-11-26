@@ -66,7 +66,7 @@
                                             <td class="text-center">{{$item->brands->name}}</td>
                                             <td class="text-center">{{$item->name}}</td>
                                             <td class="text-center">{{$item->stocks}}</td>
-                                            <td class="text-center">{{number_format($item->price_stocks, 2)}}</td>
+                                            <td class="text-center">₱ {{number_format($item->price_stocks, 2)}}</td>
                                             <td class="text-center">{{$item->categories->name}}</td>
                                             <td class="text-center">
                                                 <p
