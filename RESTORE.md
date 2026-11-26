@@ -4,11 +4,12 @@ Branch: `restore/laravel10-sqlite`
 
 ## Stack
 
-- Laravel 10.50
-- PHP 8.1+ (tested with 8.3)
+- Laravel 12.74
+- PHP 8.2+ (tested with 8.3)
 - SQLite
 - PayPal removed; checkout supports Cash on Delivery and Bank Transfer
 - `trader_sma()` is a pure-PHP polyfill in `app/Support/trader_sma.php`; no PECL extension required
+- `composer audit` reports no advisories
 
 ## First-time setup
 
