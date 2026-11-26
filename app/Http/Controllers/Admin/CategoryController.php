@@ -24,16 +24,6 @@ class CategoryController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @return Response
@@ -41,15 +31,12 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         // Validation
-        $this->validate($request, [
-            'name' => 'required|unique:categories|max:160',
-        ]);
-
+        $this->validate($request, ['name' => 'required|unique:categories|max:160']);
         // Create Category
         $category = new Category;
-        $category->name = $request->input('name');  // $post->user_id = auth()->user()->id; //This Gets the Currently User Logged in
+        $category->name = $request->input('name');
+        // $post->user_id = auth()->user()->id; //This Gets the Currently User Logged in
         $category->save();
-
         // Added Log
         $log = new Logs;
         $log->action = 'Added a category';
@@ -57,28 +44,6 @@ class CategoryController extends Controller
         $log->save();
 
         return back()->with('success', 'Category Added');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -90,15 +55,12 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         // Validation
-        $this->validate($request, [
-            'name' => 'required|max:160',
-        ]);
-
+        $this->validate($request, ['name' => 'required|max:160']);
         // Update Category
         $category = Category::find($id);
-        $category->name = $request->input('name');  // $post->user_id = auth()->user()->id; //This Gets the Currently User Logged in
+        $category->name = $request->input('name');
+        // $post->user_id = auth()->user()->id; //This Gets the Currently User Logged in
         $category->save();
-
         // Updated Log
         $log = new Logs;
         $log->action = 'Updated an Category';
@@ -106,16 +68,5 @@ class CategoryController extends Controller
         $log->save();
 
         return back()->with('success', 'Category Updated');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

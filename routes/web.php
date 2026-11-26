@@ -52,7 +52,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::post('/checkout', 'CheckoutController@store')->name('checkout.store');
 
     // Order Resource
-    Route::resource('orders', 'OrderController');
+    Route::resource('orders', 'OrderController')->only(['index', 'show', 'update']);
 
     Route::put('/proof/{id}/upload', 'AddProofController@upload')->name('proof.upload');
     Route::get('/proof/{id}/', 'AddProofController@addproof')->name('proof.add');

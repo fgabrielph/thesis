@@ -24,33 +24,11 @@ class OrderController extends Controller
         // $data['orders'] = Order::orderBy('created_at', 'desc')->paginate(20);
         // $orders = Order::orderBy('created_at', 'desc')->where('user_id', Auth::user()->id);
         $orders = auth()->user()->orders()->orderBy('created_at', 'desc')->get();
+
         // $orders = Order::orderBy('created_at', 'desc')->where('user_id', Auth::user()->id)->first(); //WORKING ATTRIBUTE GETTING THE RECENT ORDERS
-
         // dd(count($orders));
-
         // dd($orders->id);
         return view('site.accounts.orders')->with('orders', $orders);
-
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -67,17 +45,6 @@ class OrderController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  int  $id
@@ -86,7 +53,6 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         $order = Order::find($id);
-
         $order->status = 'Canceled';
         $order->save();
 

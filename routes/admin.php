@@ -11,20 +11,20 @@ Route::group(['prefix' => 'admin'], function () {
 
         Route::get('/', 'Admin\DashboardController@index')->name('admin.dashboard');
 
-        Route::resource('staffs', 'Admin\StaffController');
-        Route::resource('customers', 'Admin\CustomerController');
-        Route::resource('categories', 'Admin\CategoryController');
-        Route::resource('brands', 'Admin\BrandController');
-        Route::resource('items', 'Admin\ItemController');
+        Route::resource('staffs', 'Admin\StaffController')->only(['index', 'store', 'edit', 'destroy']);
+        Route::resource('customers', 'Admin\CustomerController')->only(['index', 'store', 'edit', 'destroy']);
+        Route::resource('categories', 'Admin\CategoryController')->only(['index', 'store', 'update']);
+        Route::resource('brands', 'Admin\BrandController')->only(['index', 'store', 'update']);
+        Route::resource('items', 'Admin\ItemController')->only(['index', 'store', 'update']);
         Route::get('low_items', 'Admin\ItemController@lowitem')->name('admin.lowitems');
-        Route::resource('admin_orders', 'Admin\OrderController');
+        Route::resource('admin_orders', 'Admin\OrderController')->only(['index', 'show']);
         Route::get('admin_orders/status/{status}/{id}', 'Admin\OrderController@decide')->name('admin_orders.status');
 
         // Logs Controller
         Route::get('logs', 'Admin\LogsController@index')->name('logs.index');
 
         // Custom Orders Controller
-        Route::resource('customorders', 'Admin\CustomOrderController');
+        Route::resource('customorders', 'Admin\CustomOrderController')->only(['index', 'show', 'edit', 'update']);
         Route::get('customorders/{customorder}/decline', 'Admin\CustomOrderController@decline')->name('customorders.decline');
         Route::get('customorders/{customorder}/accept', 'Admin\CustomOrderController@accept')->name('customorders.accept');
         Route::put('customorders/{customorder}/add_quantity', 'Admin\CustomOrderController@addquantity')->name('customorders.addquantity');
@@ -32,13 +32,13 @@ Route::group(['prefix' => 'admin'], function () {
         Route::put('customorders/{customorder}/accept', 'Admin\CustomOrderController@accept_payment')->name('customorders.accept');
 
         // Deliveries Controller
-        Route::resource('deliveries', 'Admin\DeliveryController');
+        Route::resource('deliveries', 'Admin\DeliveryController')->only(['index']);
         Route::get('deliveries/{status}/{id}', 'Admin\DeliveryController@change_status')->name('deliveries.status');
         Route::post('deliveries/{id}', 'Admin\DeliveryController@EDA')->name('deliveries.eda');
         Route::post('deliveries/edit/{id}', 'Admin\DeliveryController@edit_EDA')->name('deliveries.edit_eda');
 
         // Custom Deliveries Controller
-        Route::resource('custom_deliveries', 'Admin\CustomDeliveryController');
+        Route::resource('custom_deliveries', 'Admin\CustomDeliveryController')->only(['index']);
         Route::post('custom_deliveries/{id}', 'Admin\CustomDeliveryController@EDA')->name('custom_deliveries.eda');
         Route::post('custom_deliveries/edit/{id}', 'Admin\CustomDeliveryController@edit_EDA')->name('custom_deliveries.edit_eda');
         Route::get('custom_deliveries/{status}/{id}', 'Admin\CustomDeliveryController@change_status')->name('custom_deliveries.status');
