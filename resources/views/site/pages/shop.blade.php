@@ -51,7 +51,8 @@
 
         .scrollbar {
             overflow-y: scroll;
-            height: 625px;
+            height: auto;
+            max-height: 625px;
             background-color: gainsboro;
         }
 
@@ -77,36 +78,17 @@
     <div class="container">
         <!--Navbar-->
         <nav class="navbar navbar-expand-lg black lighten-3 mt-3 mb-3 white-text">
-            <!-- Navbar brand -->
-            <span class="navbar-brand"
-                >Not what you're looking for?
-                <a class="btn purple-gradient waves-effect waves-light" href="{{route('site.inquire')}}" role="button"
+            <span
+                class="navbar-brand text-wrap d-flex flex-column flex-md-row align-items-start align-items-md-center"
+            >
+                Not what you're looking for?
+                <a
+                    class="btn purple-gradient waves-effect waves-light mt-2 mt-md-0 ml-md-3"
+                    href="{{route('site.inquire')}}"
+                    role="button"
                     >Ask for a Quotation</a
-                ></span
-            >
-
-            <!-- Collapse button -->
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#basicExampleNav"
-                aria-controls="basicExampleNav"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-            >
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- Collapsible content -->
-            <div class="collapse navbar-collapse" id="basicExampleNav">
-                {{--                <form class="form-inline">--}}
-                {{--                    <div class="md-form my-0">--}}
-                {{--                        <input class="form-control mr-sm-2 white-text" type="text" placeholder="Search" aria-label="Search">--}}
-                {{--                    </div>--}}
-                {{--                </form>--}}
-            </div>
-            <!-- Collapsible content -->
+                >
+            </span>
         </nav>
         <!--/.Navbar-->
 
@@ -199,6 +181,12 @@
                                                 alt=""
                                                 width="100%"
                                             />
+                                            <div class="mt-2">
+                                                <strong class="product-price d-block"
+                                                    >₱ {{number_format($item->price_stocks, 2)}}</strong
+                                                >
+                                                <small class="text-muted d-block">Stocks: {{$item->stocks}}</small>
+                                            </div>
                                         </div>
                                         <div class="card-footer">
                                             <div class="float-right">
@@ -253,7 +241,7 @@
                                                         ₱ {{number_format($item->price_stocks, 2)}}
                                                     </h3>
                                                     <p>{{$item->description}}</p>
-                                                    Remaining:
+                                                    Stocks:
                                                     <div class="text-info">{{$item->stocks}}</div>
                                                     <br />
                                                 </div>
