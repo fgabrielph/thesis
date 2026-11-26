@@ -29,7 +29,8 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body p-0" style="margin: 1%">
-                            <table id="defTable" class="table table-hover">
+                            <div class="table-responsive">
+<table id="defTable" class="table table-hover">
                                 <thead class="table-dark">
                                 <tr>
                                     <th class="text-center">Order ID</th>
@@ -64,7 +65,7 @@
                                         <td>@if($cust_order->status == 0)
                                                 <h5><span class='badge text-bg-warning'>Pending</span></h5>
                                             @elseif($cust_order->status == 1)
-                                                <h5><span class='badge badge-dark'>Accepted</span></h5>
+                                                <h5><span class='badge text-bg-dark'>Accepted</span></h5>
                                             @elseif($cust_order->status == 2)
                                                 <h5><span class='badge text-bg-danger'>Declined</span></h5>
                                             @elseif($cust_order->status == 3)
@@ -87,22 +88,39 @@
                                                 <h5>P {{ number_format($cust_order->price, 2) }}</h5>
                                             @endif
                                         </td>
-                                        <td><a href="{{route('customorders.show', $cust_order->id)}}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
-                                            @if($cust_order->status == 0)
-                                                <a href="{{route('customorders.accept', $cust_order->id)}}" class="btn btn-success">Accept</a>
-                                                <a href="{{route('customorders.decline', $cust_order->id)}}" class="btn btn-danger">Decline</a>
-                                            @elseif($cust_order->status == 1)
-                                                <a href="{{route('customorders.edit', $cust_order->id)}}" class="btn text-white" style="background-color: orange;">Modify</a>
-                                                @if($cust_order->payment_status == 2)
-                                                    @if($cust_order->payment_method != 'cod')
-                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#receipt{{$cust_order->id}}" class="btn text-white" style="background-color: red;"><span class="fas fa-receipt"></span> View Bank Receipt</a>
-                                                    @else
-                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#accept{{$cust_order->id}}" class="btn text-white" style="background-color: red;"><span class="fas fa-receipt"></span> View Info</a>
+                                        <td>
+                                            <div class="table-actions">
+                                                <a href="{{ route('customorders.show', $cust_order->id) }}" class="btn btn-sm btn-outline-secondary" title="View" aria-label="View">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                @if($cust_order->status == 0)
+                                                    <a href="{{ route('customorders.accept', $cust_order->id) }}" class="btn btn-sm btn-outline-primary" title="Accept" aria-label="Accept">
+                                                        <i class="fas fa-check"></i>
+                                                    </a>
+                                                    <a href="{{ route('customorders.decline', $cust_order->id) }}" class="btn btn-sm btn-outline-danger" title="Decline" aria-label="Decline">
+                                                        <i class="fas fa-times"></i>
+                                                    </a>
+                                                @elseif($cust_order->status == 1)
+                                                    <a href="{{ route('customorders.edit', $cust_order->id) }}" class="btn btn-sm btn-outline-secondary" title="Modify" aria-label="Modify">
+                                                        <i class="fas fa-pen"></i>
+                                                    </a>
+                                                    @if($cust_order->payment_status == 2)
+                                                        @if($cust_order->payment_method != 'cod')
+                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#receipt{{$cust_order->id}}" class="btn btn-sm btn-outline-secondary" title="View bank receipt" aria-label="View bank receipt">
+                                                                <i class="fas fa-receipt"></i>
+                                                            </a>
+                                                        @else
+                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#accept{{$cust_order->id}}" class="btn btn-sm btn-outline-secondary" title="View info" aria-label="View info">
+                                                                <i class="fas fa-info-circle"></i>
+                                                            </a>
+                                                        @endif
                                                     @endif
+                                                @elseif($cust_order->status == 3)
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#deliver{{$cust_order->id}}" class="btn btn-sm btn-outline-primary" title="Deliver" aria-label="Deliver">
+                                                        <i class="fas fa-truck"></i>
+                                                    </a>
                                                 @endif
-                                            @elseif($cust_order->status == 3)
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#deliver{{$cust_order->id}}" class="btn btn-sm btn-success">Deliver</a> <!-- TO BE CONTINUED -->
-                                            @endif
+                                            </div>
                                         </td>
                                     </tr>
 
@@ -205,6 +223,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
+</div>
                         </div>
                     </div>
                 </div>

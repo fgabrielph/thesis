@@ -97,3 +97,22 @@ body {
 .app-content h1 {
     font-size: 1.75rem;
 }
+
+.app-content .table {
+    font-size: 0.875rem;
+}
+
+.app-content .table > :not(caption) > * > * {
+    padding: 0.5rem 0.45rem;
+}
+
+.app-content .table .btn-sm {
+    --bs-btn-padding-y: 0.2rem;
+    --bs-btn-padding-x: 0.4rem;
+}
+
+.table-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+}

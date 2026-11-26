@@ -29,7 +29,8 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body p-0" style="margin: 1%">
-                            <table id="defTable" class="table table-hover">
+                            <div class="table-responsive">
+<table id="defTable" class="table table-hover">
                                 <thead class="table-dark">
                                 <tr>
                                     <th class="text-center">Order ID</th>
@@ -85,17 +86,26 @@
                                                 </h4>
                                             </td>
                                             <td>
-                                                <button type="button" data-bs-toggle="modal" data-bs-target="#view{{$order->id}}" class="btn btn-sm btn-primary"><span class="fas fa-search"></span> View</button>
-                                                @if($order->payment_method == 'cod' && $order->status != 'Confirmed' && $order->status != 'Completed' && $order->status != 'Return' && $order->status != 'Canceled')
-                                                    <a href="{{route('staff_orders.status', ['status' => 'Confirmed', 'id' => $order->id])}}" class="btn btn-sm btn-primary"><span class="fas fa-check-circle"></span> Confirm</a>
-                                                @endif
-                                                @if(!(empty($order->image)))
-                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#receipt{{$order->id}}" class="btn text-white" style="background-color: grey;"><span class="fas fa-receipt"></span> View Receipt</a>
-                                                @endif
-                                                @if($order->status == 'Confirmed')
-                                                    {{--                                                <a href="{{route('admin_orders.status', ['status' => 'On Delivery', 'id' => $order->id])}}" class="btn btn-sm btn-success"><span class="fas fa-truck"></span> Deliver</a>--}}
-                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#deliver{{$order->id}}" class="btn btn-sm btn-success"><span class="fas fa-truck"></span> Deliver</a>
-                                                @endif
+                                                <div class="table-actions">
+                                                    <button type="button" data-bs-toggle="modal" data-bs-target="#view{{$order->id}}" class="btn btn-sm btn-outline-secondary" title="View" aria-label="View">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    @if($order->payment_method == 'cod' && $order->status != 'Confirmed' && $order->status != 'Completed' && $order->status != 'Return' && $order->status != 'Canceled')
+                                                        <a href="{{ route('staff_orders.status', ['status' => 'Confirmed', 'id' => $order->id]) }}" class="btn btn-sm btn-outline-primary" title="Confirm order" aria-label="Confirm order">
+                                                            <i class="fas fa-check"></i>
+                                                        </a>
+                                                    @endif
+                                                    @if(!empty($order->image))
+                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#receipt{{$order->id}}" class="btn btn-sm btn-outline-secondary" title="View receipt" aria-label="View receipt">
+                                                            <i class="fas fa-receipt"></i>
+                                                        </a>
+                                                    @endif
+                                                    @if($order->status == 'Confirmed')
+                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#deliver{{$order->id}}" class="btn btn-sm btn-outline-primary" title="Mark for delivery" aria-label="Mark for delivery">
+                                                            <i class="fas fa-truck"></i>
+                                                        </a>
+                                                    @endif
+                                                </div>
                                             </td>
                                         </tr>
 
@@ -216,6 +226,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
+</div>
                         </div>
                     </div>
                 </div>
