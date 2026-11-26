@@ -227,6 +227,8 @@
                     </li>
                 </ul>
                 <!-- Cart -->
+
+                @include ('site.includes.delivery-notice')
             </div>
             <!--Grid column-->
         </div>
