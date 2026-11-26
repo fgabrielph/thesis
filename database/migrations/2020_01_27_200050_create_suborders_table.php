@@ -16,9 +16,9 @@ class CreateSubordersTable extends Migration
         Schema::create('suborders', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('item_id')->unsigned();
-            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');;
+            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
             $table->bigInteger('order_id')->unsigned();
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');;
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->double('price', 2);
             $table->integer('quantity');
             $table->timestamps();

@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Logs;
-use Illuminate\Http\Request;
 use App\Staff;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Image;
@@ -15,71 +16,71 @@ class StaffController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
         $staffs = Staff::all();
+
         return view('admin.staffs.index')->with('staffs', $staffs);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(Request $request)
     {
-        //Validation
+        // Validation
         $this->validate($request, [
             'name' => 'required|unique:staff|max:160',
             'email' => 'required|unique:staff|email',
             'password' => 'required|min:8|max:16',
-            'confirm_pass' => 'same:password'
+            'confirm_pass' => 'same:password',
         ]);
 
-        //Handle File Upload
+        // Handle File Upload
 
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
 
-            # Get filename with extension
+            // Get filename with extension
             $fileNameWithExt = $request->file('image')->getClientOriginalName();
 
-            # Get just filename
+            // Get just filename
             $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
 
-            # Get just extension
+            // Get just extension
             $extension = $request->file('image')->getClientOriginalExtension();
 
-            # Filename to store
+            // Filename to store
             $fileNameToStore = $fileName.'_'.time().'.'.$extension;
 
-            # Small thumbnail name
+            // Small thumbnail name
             $smallthumbnail = $fileName.'_small_'.time().'.'.$extension;
 
-            # Medium thumbnail name
+            // Medium thumbnail name
             $mediumthumbnail = $fileName.'_medium_'.time().'.'.$extension;
 
-            # Large thumbnail name
+            // Large thumbnail name
             $largethumbnail = $fileName.'_large_'.time().'.'.$extension;
 
-            # Upload Image
-            $path = public_path('assets/images/' . $fileNameToStore);
-            $smallpath = public_path('assets/images/small_thumbnail/' . $smallthumbnail);
-            $mediumpath = public_path('assets/images/medium_thumbnail/' . $mediumthumbnail);
-            $largepath = public_path('assets/images/large_thumbnail/' . $largethumbnail);
+            // Upload Image
+            $path = public_path('assets/images/'.$fileNameToStore);
+            $smallpath = public_path('assets/images/small_thumbnail/'.$smallthumbnail);
+            $mediumpath = public_path('assets/images/medium_thumbnail/'.$mediumthumbnail);
+            $largepath = public_path('assets/images/large_thumbnail/'.$largethumbnail);
 
-            # Create original image
+            // Create original image
             Image::make($request->file('image'))->save($path);
 
-            # Create small thumbnail
+            // Create small thumbnail
             Image::make($request->file('image'))->resize(150, 93)->save($smallpath);
 
-            # Create medium thumbnail
+            // Create medium thumbnail
             Image::make($request->file('image'))->resize(300, 185)->save($mediumpath);
 
-            # Create large thumbnail
+            // Create large thumbnail
             Image::make($request->file('image'))->resize(550, 340)->save($largepath);
 
         } else {
@@ -98,31 +99,31 @@ class StaffController extends Controller
 
         return back()->withInput()->with('success', 'Staff Added');
 
-
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
 
         $staff = Staff::find($id);
 
         $status = $staff->status;
 
-        if($status == 0) {
+        if ($status == 0) {
             $staff->status = '1';
             $staff->save();
 
-            # Status Log
+            // Status Log
             $log = new Logs;
             $log->action = 'Staff Activated';
             $log->admin_id = Auth::user()->id;
             $log->save();
         }
 
-        if($status == 1) {
+        if ($status == 1) {
             $staff->status = '0';
             $staff->save();
 
-            # Status Log
+            // Status Log
             $log = new Logs;
             $log->action = 'Staff Deactivated';
             $log->admin_id = Auth::user()->id;
@@ -137,20 +138,16 @@ class StaffController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function update(Request $request, $id)
-    {
-
-    }
+    public function update(Request $request, $id) {}
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {
@@ -158,11 +155,12 @@ class StaffController extends Controller
 
         $staff->delete();
 
-        # Status Log
+        // Status Log
         $log = new Logs;
         $log->action = 'Deleted an account';
         $log->admin_id = Auth::user()->id;
         $log->save();
+
         return back()->withInput()->with('success', 'Account Deleted');
     }
 }

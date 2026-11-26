@@ -17,7 +17,6 @@ class AlterStaffTable extends Migration
 
             $table->string('image')->nullable()->default('noavatar.jpg')->after('id');
 
-
         });
     }
 

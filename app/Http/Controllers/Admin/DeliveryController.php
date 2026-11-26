@@ -3,30 +3,32 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Delivery;
-use App\Order;
 use App\Http\Controllers\Controller;
+use App\Item as Product;
+use App\Order;
 use App\Suborder;
 use Illuminate\Http\Request;
-use App\Item as Product;
+use Illuminate\Http\Response;
 
 class DeliveryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
 
         $deliveries = Delivery::all();
+
         return view('admin.deliveries.index')->with('deliveries', $deliveries);
     }
 
     public function change_status($change, $id)
     {
         $delivery = Delivery::find($id);
-        switch($change){
+        switch ($change) {
 
             case 'Completed':
 
@@ -35,13 +37,13 @@ class DeliveryController extends Controller
 
                 $order = Order::find($delivery->order_id);
                 $order->status = 'Completed';
-                if($order->payment_method == 'cod') {
+                if ($order->payment_method == 'cod') {
 
                     $order->payment_status = 1;
 
-                    # We Decrease the stocks based on sub orders
+                    // We Decrease the stocks based on sub orders
                     $suborders = Suborder::where('order_id', $order->id)->get();
-                    foreach($suborders as $suborder){
+                    foreach ($suborders as $suborder) {
                         $i = $suborder->item_id;
                         $qty = $suborder->quantity;
                         Product::where('id', $i)->decrement('stocks', $qty);
@@ -87,12 +89,13 @@ class DeliveryController extends Controller
         }
     }
 
-    public function EDA(Request $request, $id) {
+    public function EDA(Request $request, $id)
+    {
 
-        //dd($request->date);
-        # Validation
+        // dd($request->date);
+        // Validation
         $this->validate($request, [
-            'date' => 'required|after:' . date("m/d/yy").'|before_or_equal:' . date("m/d/yy", strtotime("+1 week")).''
+            'date' => 'required|after:'.date('m/d/yy').'|before_or_equal:'.date('m/d/yy', strtotime('+1 week')).'',
         ]);
 
         $order = Order::find($id);
@@ -102,20 +105,20 @@ class DeliveryController extends Controller
         $delivery = new Delivery;
         $delivery->order_id = $order->id;
         $delivery->status = 'On Delivery';
-        $delivery->customer_name = $order->first_name . ' ' . $order->last_name;
+        $delivery->customer_name = $order->first_name.' '.$order->last_name;
         $delivery->ETA = $request->date;
         $delivery->save();
 
         return back()->with('success', 'Order has been placed to Delivery Table');
 
-
     }
 
-    public function edit_EDA(Request $request, $id) {
-        //strtotime($request->date)
-        # Validation
+    public function edit_EDA(Request $request, $id)
+    {
+        // strtotime($request->date)
+        // Validation
         $this->validate($request, [
-            'date' => 'required|after:' . date("m/d/yy").'|before_or_equal:' . date("m/d/yy", strtotime("+1 week")).''
+            'date' => 'required|after:'.date('m/d/yy').'|before_or_equal:'.date('m/d/yy', strtotime('+1 week')).'',
         ]);
 
         $delivery = Delivery::find($id);
@@ -132,12 +135,10 @@ class DeliveryController extends Controller
 
     }
 
-
-
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -147,8 +148,7 @@ class DeliveryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -159,7 +159,7 @@ class DeliveryController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -170,7 +170,7 @@ class DeliveryController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit($id)
     {
@@ -180,9 +180,8 @@ class DeliveryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, $id)
     {
@@ -193,7 +192,7 @@ class DeliveryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {

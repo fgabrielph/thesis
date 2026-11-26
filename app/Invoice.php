@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
 {
-    public function order() {
+    public function order()
+    {
         return $this->belongsTo('App\Order', 'invoice_id');
     }
 }

@@ -2,19 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Category;
+use App\CustomOrder;
 use App\Http\Controllers\Controller;
-use DateTime;
-use DateInterval;
-use Illuminate\Http\Request;
+use App\Item;
 use App\Order;
 use App\User;
-use App\Item;
-use App\Suborder;
-use App\Category;
+use DateInterval;
+use DateTime;
 use DB;
-use Illuminate\Support\Arr;
-use App\CustomOrder;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class DashboardController extends Controller
 {
@@ -23,79 +19,73 @@ class DashboardController extends Controller
         $lowitem = Item::where('stocks', '<=', 5)->get();
         $number_of_lowitem = count($lowitem);
 
-        //dd($number_of_lowitem);
+        // dd($number_of_lowitem);
 
-        if($number_of_lowitem <= 5) {
-            $alert = $number_of_lowitem . ' item(s) low stock';
+        if ($number_of_lowitem <= 5) {
+            $alert = $number_of_lowitem.' item(s) low stock';
         }
 
         $all_orders = Order::all();
         $orders = Order::where('status', 'Pending')->get();
         $users = User::all();
         $items = Item::orderBy('updated_at', 'desc')->paginate(5);
-        //$categories = Category::all()->pluck('name')->toArray();
+        // $categories = Category::all()->pluck('name')->toArray();
         $categories = Category::withCount('items')->get();
 
-        #Get Custom Orders DYNAMICALLY
+        // Get Custom Orders DYNAMICALLY
         $cust_allmonths = CustomOrder::where('payment_status', 1)->get();
-        $store_cust_month = array();
+        $store_cust_month = [];
         foreach ($cust_allmonths as $cust_all_m) {
             array_push($store_cust_month, date('Y-m', strtotime($cust_all_m->created_at)));
         }
 
-        # We Calculate the Custom Order Sales
-        $final_cust_sales = array();
+        // We Calculate the Custom Order Sales
+        $final_cust_sales = [];
 
         $cust_getMonth = array_values(array_unique($store_cust_month));
-        //dd($cust_getMonth);
+        // dd($cust_getMonth);
 
-
-        # We get the sales to 12 as static since we plot data from January to December
-        for($i = 1; $i <= count($cust_getMonth); $i++) {
-            if($i == 10 || $i == 11 || $i == 12) {
-                $value = CustomOrder::where('created_at', "like", '%2020-'.$i. '%')->sum('price');
+        // We get the sales to 12 as static since we plot data from January to December
+        for ($i = 1; $i <= count($cust_getMonth); $i++) {
+            if ($i == 10 || $i == 11 || $i == 12) {
+                $value = CustomOrder::where('created_at', 'like', '%2020-'.$i.'%')->sum('price');
             } else {
-                $value = CustomOrder::where('created_at', "like", '%2020-0'.$i. '%')->sum('price');
+                $value = CustomOrder::where('created_at', 'like', '%2020-0'.$i.'%')->sum('price');
             }
 
             array_push($final_cust_sales, $value);
         }
-        //dd($final_cust_sales);
+        // dd($final_cust_sales);
 
         $cust_forecasted = trader_sma($final_cust_sales, (count($final_cust_sales)));
-        //dd($cust_forecasted);
+        // dd($cust_forecasted);
 
-
-        # Get all Orders DYNAMICALLY
+        // Get all Orders DYNAMICALLY
         $allmonths = Order::where('payment_status', 1)->get();
-        $store_month = array();
+        $store_month = [];
         foreach ($allmonths as $all_m) {
             array_push($store_month, date('Y-m', strtotime($all_m->created_at)));
         }
         $getMonth = array_values(array_unique($store_month));
 
-        # We Calculate the Sales
-        $final_sales = array();
-        foreach($getMonth as $s) {
-            $value = Order::where('created_at', "like", '%'. $s .'%')->sum('grand_total');
+        // We Calculate the Sales
+        $final_sales = [];
+        foreach ($getMonth as $s) {
+            $value = Order::where('created_at', 'like', '%'.$s.'%')->sum('grand_total');
             array_push($final_sales, $value);
         }
 
-        #We use user input here
+        // We use user input here
         $user_input = 1;
 
-        # We forecast sales using SMA
+        // We forecast sales using SMA
         $forecasted = trader_sma($final_sales, (count($final_sales) - $user_input));
-        //dd($sales);
-
+        // dd($sales);
 
         $pending_deliveries = $all_orders->where('status', '=', 'On Delivery');
         $returns = $all_orders->where('status', 'LIKE', 'Return');
-        //$data['item_updates'] = DB::table('items')->where('id', 'LIKE', 50)->get();
-        //dd($data['item_updates']);
-
-
-
+        // $data['item_updates'] = DB::table('items')->where('id', 'LIKE', 50)->get();
+        // dd($data['item_updates']);
 
         return view('admin.dashboard.index', ['categories' => $categories])->with('orders', $orders)
             ->with('users', $users)
@@ -109,7 +99,7 @@ class DashboardController extends Controller
             ->with('lowitem', $number_of_lowitem);
     }
 
-    # OLD DATA FOR REFERENCE MANUAL
+    // OLD DATA FOR REFERENCE MANUAL
     //        #Sales of Orders
     //        $jansales = Order::where('created_at', "like", '%2020-01%')->get();
     //        $febsales = Order::where('created_at', "like", '%2020-02%')->get();
@@ -133,8 +123,7 @@ class DashboardController extends Controller
     //        $sales = array();
     //        array_push($sales, $january_sale, $febuary_sale);
 
-
-    # Category Reference OLD
+    // Category Reference OLD
     //        dd($categories);
 
     //        $result = array();
@@ -145,7 +134,7 @@ class DashboardController extends Controller
     //
     //        dd($result);
 
-    # Date and Time OLD
+    // Date and Time OLD
     //        $current = new DateTime();
     //        $current1 = new DateTime();
     //        $current2 = new DateTime();
@@ -162,9 +151,9 @@ class DashboardController extends Controller
     //
     //        dd($secondMonthExactBeforeDate);
 
-    # MANUALLY CUSTOM ORDER GET DATA
+    // MANUALLY CUSTOM ORDER GET DATA
 
-    #Sales of Custom Orders
+    // Sales of Custom Orders
     //        $cust_jansales = CustomOrder::where('created_at', "like", '%2020-01%')->where('payment_status', 1)->get();
     //        $cust_febsales = CustomOrder::where('created_at', "like", '%2020-02%')->where('payment_status', 1)->get();
     //
@@ -187,14 +176,12 @@ class DashboardController extends Controller
     //        $cust_sales = array();
     //        array_push($cust_sales, $cust_january_sale, $cust_febuary_sale);
 
-
-    # We use this code of existing datas
+    // We use this code of existing datas
     //       array_push($final_cust_sales, 0);
     //       foreach ($cust_getMonth as $cust_s) {
     //           $value = CustomOrder::where('created_at', "like", '%'. $cust_s . '%')->sum('price');
     //           array_push($final_cust_sales, $value);
     //       }
     //      $cust_getMonth = array_values(array_unique($store_cust_month));
-
 
 }

@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Invoice;
-use Illuminate\Http\Request;
 use App\Order;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -18,18 +17,18 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
-        //$data['orders'] = Order::orderBy('created_at', 'desc')->paginate(20);
-        //$orders = Order::orderBy('created_at', 'desc')->where('user_id', Auth::user()->id);
+        // $data['orders'] = Order::orderBy('created_at', 'desc')->paginate(20);
+        // $orders = Order::orderBy('created_at', 'desc')->where('user_id', Auth::user()->id);
         $orders = auth()->user()->orders()->orderBy('created_at', 'desc')->get();
-        //$orders = Order::orderBy('created_at', 'desc')->where('user_id', Auth::user()->id)->first(); //WORKING ATTRIBUTE GETTING THE RECENT ORDERS
+        // $orders = Order::orderBy('created_at', 'desc')->where('user_id', Auth::user()->id)->first(); //WORKING ATTRIBUTE GETTING THE RECENT ORDERS
 
-        //dd(count($orders));
+        // dd(count($orders));
 
-       //dd($orders->id);
+        // dd($orders->id);
         return view('site.accounts.orders')->with('orders', $orders);
 
     }
@@ -37,7 +36,7 @@ class OrderController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -47,8 +46,7 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -59,7 +57,7 @@ class OrderController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -72,7 +70,7 @@ class OrderController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit($id)
     {
@@ -82,9 +80,8 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, $id)
     {
@@ -95,6 +92,4 @@ class OrderController extends Controller
 
         return back()->with('success', 'Your Order was Canceled');
     }
-
-
 }

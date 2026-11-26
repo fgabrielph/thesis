@@ -2,27 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\CustomOrder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Image;
 
 class InquiryController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $custom_orders = auth()->user()->custom_orders()->orderBy('created_at', 'desc')->get();
 
         return view('site.accounts.custom_order')->with('custom_orders', $custom_orders);
     }
 
-    public function show($id) {
+    public function show($id)
+    {
 
         $custom_order = CustomOrder::find($id);
 
         return view('site.accounts.show_custom')->with('custom_order', $custom_order);
     }
 
-    public function insert_order(Request $request) {
+    public function insert_order(Request $request)
+    {
 
         $this->validate($request, [
             'name' => 'required|max:160',
@@ -33,27 +36,26 @@ class InquiryController extends Controller
             'description' => 'required',
         ]);
 
-        # Handle File Upload
-        if($request->hasFile('image')){
+        // Handle File Upload
+        if ($request->hasFile('image')) {
 
-            # Get filename with extension
+            // Get filename with extension
             $fileNameWithExt = $request->file('image')->getClientOriginalName();
 
-            # Get just filename
+            // Get just filename
             $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
 
-            # Get just extension
+            // Get just extension
             $extension = $request->file('image')->getClientOriginalExtension();
 
-            # Filename to store
+            // Filename to store
             $fileNameToStore = $fileName.'_'.time().'.'.$extension;
 
-            # Upload Image
-            $path = public_path('assets/images/' . $fileNameToStore);
+            // Upload Image
+            $path = public_path('assets/images/'.$fileNameToStore);
 
-            # Create original image
+            // Create original image
             Image::make($request->file('image'))->save($path);
-
 
         } else {
             $fileNameToStore = 'noimage.jpg';
@@ -73,8 +75,8 @@ class InquiryController extends Controller
 
     }
 
-    public function addpaymentmethod(Request $request, $id) {
-
+    public function addpaymentmethod(Request $request, $id)
+    {
 
         switch ($request->payment_method) {
 
@@ -84,7 +86,8 @@ class InquiryController extends Controller
                 $custom_order->payment_method = 'cod';
                 $custom_order->payment_status = 2;
                 $custom_order->save();
-                return back()->with('success','your order is waiting for approval');
+
+                return back()->with('success', 'your order is waiting for approval');
 
                 break;
 
@@ -96,27 +99,26 @@ class InquiryController extends Controller
 
                 $custom_order = CustomOrder::find($id);
 
-                # Handle File Upload
-                if($request->hasFile('image')){
+                // Handle File Upload
+                if ($request->hasFile('image')) {
 
-                    # Get filename with extension
+                    // Get filename with extension
                     $fileNameWithExt = $request->file('image')->getClientOriginalName();
 
-                    # Get just filename
+                    // Get just filename
                     $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
 
-                    # Get just extension
+                    // Get just extension
                     $extension = $request->file('image')->getClientOriginalExtension();
 
-                    # Filename to store
+                    // Filename to store
                     $fileNameToStore = $fileName.'_'.time().'.'.$extension;
 
-                    # Upload Image
-                    $path = public_path('assets/images/' . $fileNameToStore);
+                    // Upload Image
+                    $path = public_path('assets/images/'.$fileNameToStore);
 
-                    # Create original image
+                    // Create original image
                     Image::make($request->file('image'))->save($path);
-
 
                 } else {
                     $fileNameToStore = 'noimage.jpg';
@@ -133,5 +135,4 @@ class InquiryController extends Controller
 
         }
     }
-
 }

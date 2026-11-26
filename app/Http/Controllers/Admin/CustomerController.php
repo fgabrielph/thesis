@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Logs;
-use Illuminate\Http\Request;
 use App\User;
-use DB;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Image;
@@ -16,7 +16,7 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -28,7 +28,7 @@ class CustomerController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -38,61 +38,60 @@ class CustomerController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(Request $request)
     {
-        //Validation
+        // Validation
         $this->validate($request, [
             'first_name' => 'required|max:160',
             'last_name' => 'required|max:160',
             'email' => 'required|unique:users|email',
             'password' => 'required|min:8|max:16',
-            'confirm_pass' => 'same:password'
+            'confirm_pass' => 'same:password',
         ]);
 
-        //Handle File Upload
+        // Handle File Upload
 
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
 
-            # Get filename with extension
+            // Get filename with extension
             $fileNameWithExt = $request->file('image')->getClientOriginalName();
 
-            # Get just filename
+            // Get just filename
             $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
 
-            # Get just extension
+            // Get just extension
             $extension = $request->file('image')->getClientOriginalExtension();
 
-            # Filename to store
+            // Filename to store
             $fileNameToStore = $fileName.'_'.time().'.'.$extension;
 
-            # Small thumbnail name
+            // Small thumbnail name
             $smallthumbnail = $fileName.'_small_'.time().'.'.$extension;
 
-            # Medium thumbnail name
+            // Medium thumbnail name
             $mediumthumbnail = $fileName.'_medium_'.time().'.'.$extension;
 
-            # Large thumbnail name
+            // Large thumbnail name
             $largethumbnail = $fileName.'_large_'.time().'.'.$extension;
 
-            # Upload Image
-            $path = public_path('assets/images/' . $fileNameToStore);
-            $smallpath = public_path('assets/images/small_thumbnail/' . $smallthumbnail);
-            $mediumpath = public_path('assets/images/medium_thumbnail/' . $mediumthumbnail);
-            $largepath = public_path('assets/images/large_thumbnail/' . $largethumbnail);
+            // Upload Image
+            $path = public_path('assets/images/'.$fileNameToStore);
+            $smallpath = public_path('assets/images/small_thumbnail/'.$smallthumbnail);
+            $mediumpath = public_path('assets/images/medium_thumbnail/'.$mediumthumbnail);
+            $largepath = public_path('assets/images/large_thumbnail/'.$largethumbnail);
 
-            # Create original image
+            // Create original image
             Image::make($request->file('image'))->save($path);
 
-            # Create small thumbnail
+            // Create small thumbnail
             Image::make($request->file('image'))->resize(150, 93)->save($smallpath);
 
-            # Create medium thumbnail
+            // Create medium thumbnail
             Image::make($request->file('image'))->resize(300, 185)->save($mediumpath);
 
-            # Create large thumbnail
+            // Create large thumbnail
             Image::make($request->file('image'))->resize(550, 340)->save($largepath);
 
         } else {
@@ -117,7 +116,7 @@ class CustomerController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -128,37 +127,34 @@ class CustomerController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit($id)
     {
         $customer = User::find($id);
         $status = $customer->status;
 
-        if($status == 0) {
+        if ($status == 0) {
             $customer->status = '1';
             $customer->save();
 
-            # Status Log
+            // Status Log
             $log = new Logs;
             $log->action = 'Customer Activated';
             $log->admin_id = Auth::user()->id;
             $log->save();
         }
 
-        if($status == 1) {
+        if ($status == 1) {
             $customer->status = '0';
             $customer->save();
 
-            # Status Log
+            // Status Log
             $log = new Logs;
             $log->action = 'Customer Deactivated';
             $log->admin_id = Auth::user()->id;
             $log->save();
         }
-
-
-
 
         $message = $customer->status ? 'Account Activated' : 'Account Deactivated';
 
@@ -168,20 +164,16 @@ class CustomerController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function update(Request $request, $id)
-    {
-
-    }
+    public function update(Request $request, $id) {}
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {
@@ -189,7 +181,7 @@ class CustomerController extends Controller
 
         $customer->delete();
 
-        # Deleted Log
+        // Deleted Log
         $log = new Logs;
         $log->action = 'Deleted an account';
         $log->admin_id = Auth::user()->id;

@@ -33,7 +33,6 @@ class CreateOrdersTable extends Migration
             $table->string('phone_number');
             $table->text('notes')->nullable();
 
-
             $table->timestamps();
         });
     }

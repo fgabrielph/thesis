@@ -2,27 +2,29 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\CustomOrder;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\CustomOrder;
+use Illuminate\Http\Response;
 
 class CustomOrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
         $custom_orders = CustomOrder::all();
+
         return view('admin.customorders.index')->with('custom_orders', $custom_orders);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -32,8 +34,7 @@ class CustomOrderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -44,7 +45,7 @@ class CustomOrderController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -57,7 +58,7 @@ class CustomOrderController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit($id)
     {
@@ -89,9 +90,8 @@ class CustomOrderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, $id)
     {
@@ -100,27 +100,29 @@ class CustomOrderController extends Controller
         $completed = $request->completed;
         $stock = $customorder->quantity;
 
-        if($completed <= $stock) {
-            if($completed <= 0) {
+        if ($completed <= $stock) {
+            if ($completed <= 0) {
                 return back()->with('error', 'Please check your quantity');
             }
 
-            if($customorder->completed > $stock) {
+            if ($customorder->completed > $stock) {
                 return back()->with('error', 'Completed Request exceeds the Given Quantity');
             }
 
             $customorder->completed = $customorder->completed + $request->completed;
-            if($customorder->completed > $stock) {
+            if ($customorder->completed > $stock) {
                 return back()->with('error', 'Completed Request exceeds the Given Quantity');
             } else {
                 $customorder->save();
             }
 
-            if($customorder->completed == $stock) {
+            if ($customorder->completed == $stock) {
                 $customorder->status = 3;
                 $customorder->save();
+
                 return redirect(route('customorders.index'))->with('success', 'Item Completed');
             }
+
             return back()->with('success', 'Completed Item is updated');
 
         } else {
@@ -135,7 +137,7 @@ class CustomOrderController extends Controller
     {
         $customorder = CustomOrder::find($id);
 
-        if($request->quantity <= 0) {
+        if ($request->quantity <= 0) {
 
             return back()->with('error', 'Please add a Quantity!');
 
@@ -153,9 +155,9 @@ class CustomOrderController extends Controller
     {
         $customorder = CustomOrder::find($id);
 
-        //Validation
+        // Validation
         $this->validate($request, [
-            'price' => 'required|numeric|min:0.01'
+            'price' => 'required|numeric|min:0.01',
         ]);
 
         $customorder->price = $request->price;
@@ -174,15 +176,13 @@ class CustomOrderController extends Controller
         return back()->with('success', 'Payment Accepted');
     }
 
-//    public function deliver()
-
-
+    //    public function deliver()
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {

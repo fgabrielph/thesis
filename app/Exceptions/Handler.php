@@ -3,17 +3,22 @@
 namespace App\Exceptions;
 
 use Exception;
-use Throwable;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Auth\AuthenticationException;
-use Illuminate\Support\Arr; //LARAVEL 6 of array_get
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Symfony\Component\HttpFoundation\Response;
+use Throwable;
+
+ // LARAVEL 6 of array_get
 
 class Handler extends ExceptionHandler
 {
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param AuthenticationException $exception
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @param  Request  $request
+     * @return JsonResponse|RedirectResponse|Response
      */
     protected function unauthenticated($request, AuthenticationException $exception)
     {
@@ -21,7 +26,7 @@ class Handler extends ExceptionHandler
             return response()->json(['message' => $exception->getMessage()], 401);
         }
         $guard = Arr::get($exception->guards(), 0);
-        switch($guard){
+        switch ($guard) {
             case 'admin':
                 $login = 'admin.login';
                 break;
@@ -32,8 +37,10 @@ class Handler extends ExceptionHandler
                 $login = 'login';
                 break;
         }
+
         return redirect()->guest(route($login));
     }
+
     /**
      * A list of the exception types that are not reported.
      *
@@ -56,10 +63,10 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Exception  $exception
+     * @param  Exception  $exception
      * @return void
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function report(Throwable $exception)
     {
@@ -69,11 +76,11 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param  Request  $request
+     * @param  Exception  $exception
+     * @return Response
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function render($request, Throwable $exception)
     {
