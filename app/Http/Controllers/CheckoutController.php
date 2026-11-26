@@ -9,6 +9,7 @@ use Cart;
 use Illuminate\Http\Request as Requesting;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 
 class CheckoutController extends Controller
 {
@@ -55,7 +56,9 @@ class CheckoutController extends Controller
         $string_grand_total = Cart::total();
         $formatted_grand_total = str_replace(',', '', $string_grand_total);
 
-        DB::transaction(function () use ($request, $formatted_grand_total) {
+        $order = null;
+
+        DB::transaction(function () use ($request, $formatted_grand_total, &$order) {
             $order = new Order;
             $order->order_number = 'ORD-'.strtoupper(uniqid());
             $order->user_id = auth()->user()->id;
@@ -87,6 +90,14 @@ class CheckoutController extends Controller
             Cart::destroy();
         });
 
-        return Redirect::to('/cart')->with('success', 'Your order has been placed. Thank you.');
+        return Redirect::route('checkout.confirmation', $order)
+            ->with('success', 'Your order has been placed. Thank you.');
+    }
+
+    public function confirmation(Order $order): View
+    {
+        abort_unless($order->user_id === auth()->id(), 404);
+
+        return view('site.pages.order-confirmation')->with('order', $order);
     }
 }

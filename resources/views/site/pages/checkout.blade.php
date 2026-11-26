@@ -8,7 +8,7 @@
     /><br />
     <div class="container wow fadeIn">
         <!-- Heading -->
-        <h2 class="my-5 h2 text-center">Checkout form</h2>
+        <h2 class="my-5 h2 text-center">Checkout</h2>
 
         <!--Grid row-->
         <div class="row">
@@ -93,53 +93,56 @@
                         <div class="row">
                             <!--Grid column-->
                             <div class="col-lg-4 col-md-6 mb-4">
-                                <label for="state">City</label>
-                                <input
-                                    value="{{ old('city') }}"
-                                    name="city"
-                                    type="text"
-                                    id="address-2"
-                                    class="form-control"
-                                />
+                                <div class="md-form mb-0">
+                                    <input
+                                        value="{{ old('city') }}"
+                                        name="city"
+                                        type="text"
+                                        id="city"
+                                        class="form-control"
+                                    />
+                                    <label for="city">City</label>
+                                </div>
                             </div>
                             <!--Grid column-->
                             <div class="col-lg-4 col-md-6 mb-4">
-                                <label for="state">Zip Code</label>
-                                <input
-                                    value="{{ old('zip') }}"
-                                    name="zip"
-                                    type="text"
-                                    id="address-2"
-                                    class="form-control"
-                                />
+                                <div class="md-form mb-0">
+                                    <input
+                                        value="{{ old('zip') }}"
+                                        name="zip"
+                                        type="text"
+                                        id="zip"
+                                        class="form-control"
+                                    />
+                                    <label for="zip">Zip Code</label>
+                                </div>
                             </div>
 
                             <div class="col-lg-4 col-md-6 mb-4">
-                                <label for="state">Mobile Number</label>
-                                <input
-                                    value="{{ Auth::user()->mobile_number }}"
-                                    name="mobile_num"
-                                    type="text"
-                                    id="address-2"
-                                    class="form-control"
-                                />
+                                <div class="md-form mb-0">
+                                    <input
+                                        value="{{ Auth::user()->mobile_number }}"
+                                        name="mobile_num"
+                                        type="text"
+                                        id="mobile_num"
+                                        class="form-control"
+                                    />
+                                    <label for="mobile_num">Mobile Number</label>
+                                </div>
                             </div>
                         </div>
                         <!--Grid row-->
 
                         <!--address-->
                         <div class="md-form mb-5">
-                            <input
-                                name="notes"
-                                type="text"
-                                id="address"
-                                class="form-control"
-                                placeholder="Enter Notes"
-                            />
-                            <label for="address" class="">Notes</label>
+                            <input name="notes" type="text" id="notes" class="form-control" />
+                            <label for="notes" class="">Notes</label>
                         </div>
 
-                        <input class="mb-3" type="checkbox" value="" id="checker" /> Receiver
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" value="" id="checker" />
+                            <label class="form-check-label" for="checker">Deliver to a different person</label>
+                        </div>
                         <!--deliver to-->
                         <div id="receiver" class="md-form mb-5" style="display: none">
                             <input
@@ -192,7 +195,7 @@
                         </div>
                         <hr class="mb-4" />
 
-                        <button class="btn btn-primary btn-lg btn-block" type="submit">Proceed</button>
+                        <button class="btn btn-primary btn-lg btn-block" type="submit">Place order</button>
                     </form>
                 </div>
                 <!--/.Card-->

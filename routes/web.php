@@ -57,6 +57,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::post('/checkout', 'CheckoutController@store')->name('checkout.store');
     });
 
+    Route::get('/checkout/confirmation/{order}', 'CheckoutController@confirmation')->name('checkout.confirmation');
+
     // Order Resource
     Route::resource('orders', 'OrderController')->only(['index', 'show', 'update']);
 

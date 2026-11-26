@@ -4,7 +4,7 @@
         <!-- Brand -->
         <a class="navbar-brand" href="{{route('home')}}">
             <img
-                src="../assets/images/LogoMJC.png"
+                src="/assets/images/LogoMJC.png"
                 alt="AdminLTE Logo"
                 class="brand-image img-circle elevation-3"
                 style="opacity: 0.8; width: 80px; height: 40px"
