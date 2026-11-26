@@ -213,7 +213,7 @@
                 data: {
                     labels: [
                         @foreach ($categories as $cat)
-                        '{{ $cat->name }}',
+                        @json ($cat->name),
                         @endforeach
                     ],
                     datasets: [

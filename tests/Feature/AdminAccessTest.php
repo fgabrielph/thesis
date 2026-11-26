@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Admin;
+use App\Order;
 use App\Staff;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -39,5 +40,30 @@ class AdminAccessTest extends TestCase
             ->get('/staff')
             ->assertOk()
             ->assertSee('Dashboard');
+    }
+
+    public function test_order_status_action_rejects_get(): void
+    {
+        $this->seed();
+
+        $this->actingAs(Admin::firstOrFail(), 'admin')
+            ->get('/admin/admin_orders/status/Confirmed/1')
+            ->assertStatus(405);
+    }
+
+    public function test_order_status_action_accepts_post(): void
+    {
+        $this->seed();
+
+        $order = Order::firstOrFail();
+
+        $this->actingAs(Admin::firstOrFail(), 'admin')
+            ->post(route('admin_orders.status', ['status' => 'Decline', 'id' => $order->id]))
+            ->assertRedirect();
+
+        $this->assertDatabaseHas('orders', [
+            'id' => $order->id,
+            'status' => 'Canceled',
+        ]);
     }
 }

@@ -104,16 +104,26 @@
                                                         <td>{{$delivery->created_at->toFormattedDateString()}}</td>
                                                         <td>{{date('M d, Y', strtotime($delivery->ETA))}}</td>
                                                         <td>
-                                                            <a
-                                                                href="{{route('staff_deliveries.status', ['status' => 'Completed', 'id' => $delivery->id])}}"
-                                                                class="btn btn-lg btn-success"
-                                                                >Complete</a
+                                                            <form
+                                                                action="{{ route('staff_deliveries.status', ['status' => 'Completed', 'id' => $delivery->id]) }}"
+                                                                method="POST"
+                                                                class="d-inline"
                                                             >
-                                                            <a
-                                                                href="{{route('staff_deliveries.status', ['status' => 'Return', 'id' => $delivery->id])}}"
-                                                                class="btn btn-lg btn-primary"
-                                                                >Return</a
+                                                                @csrf
+                                                                <button type="submit" class="btn btn-lg btn-success">
+                                                                    Complete
+                                                                </button>
+                                                            </form>
+                                                            <form
+                                                                action="{{ route('staff_deliveries.status', ['status' => 'Return', 'id' => $delivery->id]) }}"
+                                                                method="POST"
+                                                                class="d-inline"
                                                             >
+                                                                @csrf
+                                                                <button type="submit" class="btn btn-lg btn-primary">
+                                                                    Return
+                                                                </button>
+                                                            </form>
                                                         </td>
                                                     </tr>
                                                 @endif
@@ -162,7 +172,10 @@
                                                         <td>{{$delivery->created_at->toFormattedDateString()}}</td>
                                                         <td>{{date('M d, Y', strtotime($delivery->ETA))}}</td>
                                                         <td>
-                                                            {{--                                                        <a href="{{route('deliveries.status', ['status' => 'On Delivery', 'id' => $delivery->id])}}" class="btn btn-lg btn-primary"><span class="fas fa-truck"></span> Deliver</a>--}}
+                                                            {{--                                                        <form action="{{ route('deliveries.status', ['status' => 'On Delivery', 'id' => $delivery->id]) }}" method="POST" class="d-inline">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-lg btn-primary"><span class="fas fa-truck"></span> Deliver</button>
+                                                        </form>--}}
                                                             <a
                                                                 href="#"
                                                                 data-bs-toggle="modal"

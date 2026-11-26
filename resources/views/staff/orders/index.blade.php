@@ -104,14 +104,21 @@
                                                             <i class="fas fa-eye"></i>
                                                         </button>
                                                         @if ($order->payment_method == 'cod' && $order->status != 'Confirmed' && $order->status != 'Completed' && $order->status != 'Return' && $order->status != 'Canceled')
-                                                            <a
-                                                                href="{{ route('staff_orders.status', ['status' => 'Confirmed', 'id' => $order->id]) }}"
-                                                                class="btn btn-sm btn-outline-primary"
-                                                                title="Confirm order"
-                                                                aria-label="Confirm order"
+                                                            <form
+                                                                action="{{ route('staff_orders.status', ['status' => 'Confirmed', 'id' => $order->id]) }}"
+                                                                method="POST"
+                                                                class="d-inline"
                                                             >
-                                                                <i class="fas fa-check"></i>
-                                                            </a>
+                                                                @csrf
+                                                                <button
+                                                                    type="submit"
+                                                                    class="btn btn-sm btn-outline-primary"
+                                                                    title="Confirm order"
+                                                                    aria-label="Confirm order"
+                                                                >
+                                                                    <i class="fas fa-check"></i>
+                                                                </button>
+                                                            </form>
                                                         @endif
                                                         @if (!empty($order->image))
                                                             <a
@@ -264,16 +271,29 @@
 
                                                         <div class="modal-footer">
                                                             @if ($order->status != 'Confirmed' && $order->status != 'Completed' && $order->status != 'Return')
-                                                                <a
-                                                                    href="{{route('staff_orders.status', ['status' => 'Accept', 'id' => $order->id])}}"
-                                                                    class="btn btn-lg btn-success"
-                                                                    >Accept</a
+                                                                <form
+                                                                    action="{{ route('staff_orders.status', ['status' => 'Accept', 'id' => $order->id]) }}"
+                                                                    method="POST"
+                                                                    class="d-inline"
                                                                 >
-                                                                <a
-                                                                    href="{{route('staff_orders.status', ['status' => 'Decline', 'id' => $order->id])}}"
-                                                                    class="btn btn-lg btn-danger"
-                                                                    >Decline</a
+                                                                    @csrf
+                                                                    <button
+                                                                        type="submit"
+                                                                        class="btn btn-lg btn-success"
+                                                                    >
+                                                                        Accept
+                                                                    </button>
+                                                                </form>
+                                                                <form
+                                                                    action="{{ route('staff_orders.status', ['status' => 'Decline', 'id' => $order->id]) }}"
+                                                                    method="POST"
+                                                                    class="d-inline"
                                                                 >
+                                                                    @csrf
+                                                                    <button type="submit" class="btn btn-lg btn-danger">
+                                                                        Decline
+                                                                    </button>
+                                                                </form>
                                                             @endif
                                                         </div>
                                                     </div>

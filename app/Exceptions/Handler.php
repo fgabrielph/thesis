@@ -12,7 +12,7 @@ use Illuminate\Support\Arr;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
- // LARAVEL 6 of array_get
+// LARAVEL 6 of array_get
 
 class Handler extends ExceptionHandler
 {

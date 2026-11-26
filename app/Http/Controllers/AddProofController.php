@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Order;
 use Illuminate\Http\Request;
 use Image;
 
@@ -10,7 +9,7 @@ class AddProofController extends Controller
 {
     public function addproof($id)
     {
-        $order = Order::find($id);
+        $order = auth()->user()->orders()->findOrFail($id);
         if ($order->payment_status == 1) {
 
             return redirect(route('orders.index'))->with('error', 'This Order is already paid');
@@ -27,10 +26,10 @@ class AddProofController extends Controller
 
         // Validation
         $this->validate($request, [
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $order = Order::find($id);
+        $order = auth()->user()->orders()->findOrFail($id);
 
         // Handle File Upload
         if ($request->hasFile('image')) {

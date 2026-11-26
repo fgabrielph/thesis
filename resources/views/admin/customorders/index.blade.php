@@ -110,22 +110,36 @@
                                                             <i class="fas fa-eye"></i>
                                                         </a>
                                                         @if ($cust_order->status == 0)
-                                                            <a
-                                                                href="{{ route('customorders.accept', $cust_order->id) }}"
-                                                                class="btn btn-sm btn-outline-primary"
-                                                                title="Accept"
-                                                                aria-label="Accept"
+                                                            <form
+                                                                action="{{ route('customorders.accept', $cust_order->id) }}"
+                                                                method="POST"
+                                                                class="d-inline"
                                                             >
-                                                                <i class="fas fa-check"></i>
-                                                            </a>
-                                                            <a
-                                                                href="{{ route('customorders.decline', $cust_order->id) }}"
-                                                                class="btn btn-sm btn-outline-danger"
-                                                                title="Decline"
-                                                                aria-label="Decline"
+                                                                @csrf
+                                                                <button
+                                                                    type="submit"
+                                                                    class="btn btn-sm btn-outline-primary"
+                                                                    title="Accept"
+                                                                    aria-label="Accept"
+                                                                >
+                                                                    <i class="fas fa-check"></i>
+                                                                </button>
+                                                            </form>
+                                                            <form
+                                                                action="{{ route('customorders.decline', $cust_order->id) }}"
+                                                                method="POST"
+                                                                class="d-inline"
                                                             >
-                                                                <i class="fas fa-times"></i>
-                                                            </a>
+                                                                @csrf
+                                                                <button
+                                                                    type="submit"
+                                                                    class="btn btn-sm btn-outline-danger"
+                                                                    title="Decline"
+                                                                    aria-label="Decline"
+                                                                >
+                                                                    <i class="fas fa-times"></i>
+                                                                </button>
+                                                            </form>
                                                         @elseif ($cust_order->status == 1)
                                                             <a
                                                                 href="{{ route('customorders.edit', $cust_order->id) }}"
@@ -219,7 +233,7 @@
 
                                                             <div class="card-footer">
                                                                 <form
-                                                                    action="{{route('customorders.accept', $cust_order->id)}}"
+                                                                    action="{{route('customorders.accept_payment', $cust_order->id)}}"
                                                                     method="POST"
                                                                 >
                                                                     {{ csrf_field() }}
@@ -287,7 +301,7 @@
 
                                                             <div class="card-footer">
                                                                 <form
-                                                                    action="{{route('customorders.accept', $cust_order->id)}}"
+                                                                    action="{{route('customorders.accept_payment', $cust_order->id)}}"
                                                                     method="POST"
                                                                 >
                                                                     {{ csrf_field() }}

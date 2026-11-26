@@ -39,7 +39,7 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = Order::find($id);
+        $order = auth()->user()->orders()->findOrFail($id);
 
         return view('site.accounts.showorder')->with('order', $order);
     }
@@ -52,7 +52,7 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $order = Order::find($id);
+        $order = auth()->user()->orders()->findOrFail($id);
         $order->status = 'Canceled';
         $order->save();
 
