@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Delivery;
 use App\Http\Controllers\Controller;
-use App\Item as Product;
 use App\Order;
-use App\Suborder;
+use App\Services\OrderStockService;
+use App\Support\OrderStatus;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -51,9 +51,14 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $order = Order::find($id);
+        $order = Order::findOrFail($id);
+
+        if (! OrderStatus::canTransition($order->status, $request->status)) {
+            return back()->with('error', 'Invalid order status transition');
+        }
+
         $order->status = $request->status;
-        if (! empty($order->image) && $request->status == 'Confirmed') {
+        if (! empty($order->image) && $request->status == OrderStatus::CONFIRMED) {
             $order->payment_status = 1;
         }
         $order->save();
@@ -63,62 +68,58 @@ class OrderController extends Controller
 
     public function decide($choice, $id)
     {
-        $order = Order::find($id);
+        $order = Order::findOrFail($id);
+
         switch ($choice) {
             case 'Accept':
-                $order->status = 'Confirmed';
-                $order->payment_status = 1;
-                $order->save();
-                // We Decrease the stocks based on sub orders
-                $suborders = Suborder::where('order_id', $id)->get();
-                foreach ($suborders as $suborder) {
-                    $item = $suborder->item_id;
-                    $quantity = $suborder->quantity;
-                    Product::where('id', $item)->decrement('stocks', $quantity);
+                if (! OrderStatus::canTransition($order->status, OrderStatus::CONFIRMED)) {
+                    return back()->with('error', 'Invalid order status transition');
                 }
 
+                $order->status = OrderStatus::CONFIRMED;
+                $order->payment_status = 1;
+                $order->save();
+                app(OrderStockService::class)->deductOnce($order);
+
                 return back()->with('success', 'Order has been modified');
-                break;
             case 'Decline':
-                $order->status = 'Canceled';
+                if (! OrderStatus::canTransition($order->status, OrderStatus::CANCELED)) {
+                    return back()->with('error', 'Invalid order status transition');
+                }
+
+                $order->status = OrderStatus::CANCELED;
                 $order->payment_status = 0;
                 $order->save();
 
                 return back()->with('success', 'Order has been modified');
-                break;
             case 'Confirmed':
-                $order->status = 'Confirmed';
-                //                if($order->payment_method != 'cod') {
-                //
-                //                    $order->payment_status = 1;
-                //                    $order->save();
-                //
-                //                    # We Decrease the stocks based on sub orders
-                //                    $suborders = Suborder::where('order_id', $id)->get();
-                //                    foreach($suborders as $suborder){
-                //                        $i = $suborder->item_id;
-                //                        $qty = $suborder->quantity;
-                //                        Product::where('id', $i)->decrement('stocks', $qty);
-                //                    }
-                //                }
+                if (! OrderStatus::canTransition($order->status, OrderStatus::CONFIRMED)) {
+                    return back()->with('error', 'Invalid order status transition');
+                }
+
+                $order->status = OrderStatus::CONFIRMED;
                 $order->save();
 
                 return back()->with('success', 'Order has been modified');
-                break;
             case 'On Delivery':
-                $order->status = 'On Delivery';
+                if (! OrderStatus::canTransition($order->status, OrderStatus::ON_DELIVERY)) {
+                    return back()->with('error', 'Invalid order status transition');
+                }
+
+                $order->status = OrderStatus::ON_DELIVERY;
                 $order->save();
-                $delivery = new Delivery;
-                $delivery->order_id = $order->id;
-                $delivery->status = 'On Delivery';
-                $delivery->customer_name = $order->first_name.' '.$order->last_name;
-                $delivery->save();
+
+                Delivery::updateOrCreate(
+                    ['order_id' => $order->id],
+                    [
+                        'status' => OrderStatus::ON_DELIVERY,
+                        'customer_name' => $order->first_name.' '.$order->last_name,
+                    ]
+                );
 
                 return back()->with('success', 'Order has been placed to Delivery Table');
-                break;
             default:
                 return back()->with('error', 'Error Input Field');
-                break;
         }
     }
 }

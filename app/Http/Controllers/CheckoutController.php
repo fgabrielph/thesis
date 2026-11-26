@@ -6,6 +6,7 @@ use App\Order;
 use App\Suborder;
 use Cart;
 use Illuminate\Http\Request as Requesting;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 
 class CheckoutController extends Controller
@@ -34,39 +35,40 @@ class CheckoutController extends Controller
             return Redirect::back()->with('error', 'Unsupported payment method.');
         }
 
-        // Removing Commas in thousands for Grand Total
         $string_grand_total = Cart::total();
         $formatted_grand_total = str_replace(',', '', $string_grand_total);
 
-        $order = new Order;
-        $order->order_number = 'ORD-'.strtoupper(uniqid());
-        $order->user_id = auth()->user()->id;
-        $order->first_name = $request->firstName;
-        $order->last_name = $request->lastName;
-        $order->deliver_to = $request->deliver_to;
-        $order->deliver_to_address = $request->deliver_to_address;
-        $order->address = $request->address;
-        $order->city = $request->city;
-        $order->zip_code = $request->zip;
-        $order->phone_number = $request->mobile_num;
-        $order->notes = $request->notes;
-        $order->payment_method = $request->paymentMethod;
-        $order->payment_status = 0;
-        $order->item_count = Cart::count();
-        $order->grand_total = $formatted_grand_total;
-        $order->status = 'Pending';
-        $order->save();
+        DB::transaction(function () use ($request, $formatted_grand_total) {
+            $order = new Order;
+            $order->order_number = 'ORD-'.strtoupper(uniqid());
+            $order->user_id = auth()->user()->id;
+            $order->first_name = $request->firstName;
+            $order->last_name = $request->lastName;
+            $order->deliver_to = $request->deliver_to;
+            $order->deliver_to_address = $request->deliver_to_address;
+            $order->address = $request->address;
+            $order->city = $request->city;
+            $order->zip_code = $request->zip;
+            $order->phone_number = $request->mobile_num;
+            $order->notes = $request->notes;
+            $order->payment_method = $request->paymentMethod;
+            $order->payment_status = 0;
+            $order->item_count = Cart::count();
+            $order->grand_total = $formatted_grand_total;
+            $order->status = 'Pending';
+            $order->save();
 
-        foreach (Cart::content() as $item) {
-            $suborder = new Suborder;
-            $suborder->order_id = $order->id;
-            $suborder->item_id = $item->id;
-            $suborder->price = $item->price;
-            $suborder->quantity = $item->qty;
-            $suborder->save();
-        }
+            foreach (Cart::content() as $item) {
+                $suborder = new Suborder;
+                $suborder->order_id = $order->id;
+                $suborder->item_id = $item->id;
+                $suborder->price = $item->price;
+                $suborder->quantity = $item->qty;
+                $suborder->save();
+            }
 
-        Cart::destroy();
+            Cart::destroy();
+        });
 
         return Redirect::to('/cart')->with('success', 'Your order has been placed. Thank you.');
     }
