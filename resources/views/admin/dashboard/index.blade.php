@@ -14,9 +14,10 @@
                 <h4>There are {{$lowitem}} item(s) low in stock</h4>
             </div>
             @endif
-            <div class="card">
-                <div class="card-header">
-                    <h1>WELCOME {{ Auth::user()->name }}</h1>
+            <div class="card mb-3">
+                <div class="card-body py-3">
+                    <h1 class="h4 mb-1">Welcome, {{ Auth::user()->name }}</h1>
+                    <p class="text-muted mb-0">Here is the current order and inventory overview.</p>
                 </div>
             </div>
             <!-- Small boxes (Stat box) -->
@@ -130,7 +131,7 @@
                 <!-- ./col -->
 
                 <div class="col-lg-8 col-6">
-                    <div class="card card-primary">
+                    <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Number of Items as per Category</h3>
 
@@ -154,7 +155,7 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <div class="card card-success">
+                    <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Sales of Order</h3>
                             <div class="card-tools">
@@ -171,7 +172,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card card-warning">
+                    <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Sales of Custom Order</h3>
                             <div class="card-tools">
