@@ -1,61 +1,41 @@
-@extends ('site.master')
+@extends ('site.layouts.storefront')
 
 @section ('title') Invoice @endsection
 
 @section ('content')
-    <br
-    /><br
-    /><br
-    /><br
-    /><br />
-    <div class="container">
+    <div class="sf-invoice">
         <div class="card">
-            <div class="card-header">
-                <div class="col-6">
-                    <h3 class="page-header"><i class="fa fa-globe"></i> {{ $invoice->payment_id}}</h3>
+            <div class="card-header d-flex flex-column flex-sm-row justify-content-between gap-2">
+                <h1 class="h4 mb-0">Invoice {{$invoice->payment_id}}</h1>
+                <span class="text-muted">{{$invoice->created_at->toFormattedDateString()}}</span>
+            </div>
+
+            <div class="card-body">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="small text-muted">Email</div>
+                        <div>{{$invoice->customer_email}}</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="small text-muted">Country Code</div>
+                        <div>{{$invoice->country_code}}</div>
+                        <div class="small text-muted mt-2">Currency</div>
+                        <div>{{$invoice->currency}}</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="small text-muted">Customer ID</div>
+                        <div>{{$invoice->customer_id}}</div>
+                        <div class="small text-muted mt-2">Amount</div>
+                        <div><x-storefront.money :amount="$invoice->price" /></div>
+                        <div class="small text-muted mt-2">Payment Status</div>
+                        <div>{{$invoice->payment_status}}</div>
+                    </div>
                 </div>
             </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-12">
-                        <h5 class="text-right">Date: {{ $invoice->created_at->toFormattedDateString() }}</h5>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-4">
-                        <h6>
-                            <address>Email: <strong> {{ $invoice->customer_email }} </strong></address>
-                        </h6>
-                    </div>
-                    <div class="col-4">
-                        <address>
-                            Country Code: {{ $invoice->country_code }}<br />Paid in currency:
-                            <strong>{{ $invoice->currency }}</strong>
-                        </address>
-                    </div>
-                    <div class="col-4">
-                        <b>Customer ID:</b> {{ $invoice->customer_id }}<br />
-                        <b>Amount:</b> P {{ number_format($invoice->price, 2) }}<br />
-                        <b>Payment Status:</b> {{ $invoice->payment_status }}<br />
-                    </div>
-                </div>
+
+            <div class="card-footer">
+                <a href="{{route('orders.index')}}" class="btn btn-primary">Go Back</a>
             </div>
         </div>
-        <br />
-        <a href="{{route('orders.index')}}" class="btn btn-primary"> Go Back</a>
     </div>
-
-    <br
-    /><br
-    /><br
-    /><br
-    /><br
-    /><br
-    /><br />
-@endsection
-
-@section ('footer')
-    @include ('site.includes.footer')
-
 @endsection
