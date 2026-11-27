@@ -1,4 +1,4 @@
-@extends ('site.master')
+@extends ('site.layouts.storefront')
 
 @section ('title') Inquire Form @endsection
 
@@ -7,7 +7,6 @@
     /><br
     /><br />
     <div class="container">
-        @include ('site.includes.messages')
         <div class="card">
             <div class="card-header white-text" style="background: #000">
                 <div class="col-6">
@@ -105,6 +104,7 @@
                                 class="custom-file-input"
                                 id="fileInput"
                                 name="image"
+                                data-preview="#img"
                                 aria-describedby="fileInput"
                             />
                             <label class="custom-file-label" for="fileInput">Choose a file</label>
@@ -132,27 +132,3 @@
 
 @endsection
 
-@section ('footer')
-    @include ('site.includes.footer')
-
-@endsection
-
-@section ('js')
-    <script>
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    document.getElementById('img').src = e.target.result;
-                };
-
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        $('#fileInput').change(function () {
-            readURL(this);
-        });
-    </script>
-@endsection

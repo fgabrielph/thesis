@@ -1,11 +1,10 @@
-@extends ('site.master')
+@extends ('site.layouts.storefront')
 
-@section ('title') Privacy Policy @endsection
+@section ('title') FAQs @endsection
 
 @section ('content')
     <div class="content">
         <div class="container">
-            <br /><br /><br />
             <div class="card">
                 <div class="card-header text-center">
                     <h1><strong>Frequently Asked Questions</strong></h1>
@@ -88,9 +87,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section ('footer')
-    @include ('site.includes.footer')
-
 @endsection

@@ -1,4 +1,4 @@
-@extends ('site.master')
+@extends ('site.layouts.storefront')
 
 @section ('title') Contact Us @endsection
 
@@ -34,10 +34,5 @@
             </div>
         </div>
     </div>
-
-@endsection
-
-@section ('footer')
-    @include ('site.includes.footer')
 
 @endsection
