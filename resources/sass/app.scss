@@ -31,8 +31,8 @@
 }
 
 .sidebar-menu .nav-link.active {
-    background-color: var(--admin-brand);
-    color: var(--admin-on-brand);
+    background-color: var(--admin-brand) !important;
+    color: var(--admin-on-brand) !important;
 }
 
 .page-item.active .page-link {

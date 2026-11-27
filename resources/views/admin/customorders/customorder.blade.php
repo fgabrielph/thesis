@@ -122,7 +122,7 @@
                                                             @if (empty($customorder->price))
                                                                 N/A
                                                             @else
-                                                                {{$customorder->price}}
+                                                                <x-ui.money :amount="$customorder->price" />
                                                             @endif
                                                         </b>
                                                     </h5>
@@ -172,7 +172,5 @@
             </div>
         </div>
     </div>
-
-@endsection
 
 @endsection

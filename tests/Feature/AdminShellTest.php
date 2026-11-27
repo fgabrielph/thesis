@@ -60,6 +60,17 @@ class AdminShellTest extends TestCase
             ->assertSee('table-shell', false);
     }
 
+    public function test_admin_custom_order_detail_renders_progress(): void
+    {
+        $this->seed();
+        $customOrder = \App\CustomOrder::firstOrFail();
+
+        $this->actingAs(Admin::firstOrFail(), 'admin')
+            ->get(route('customorders.show', $customOrder))
+            ->assertOk()
+            ->assertSee('progress', false);
+    }
+
     public function test_staff_dashboard_uses_the_staff_shell(): void
     {
         $this->seed();
