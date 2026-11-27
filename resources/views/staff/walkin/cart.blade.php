@@ -22,7 +22,7 @@
         <div class="container wow fadeIn">
             <!-- Heading -->
             <h2 class="my-5 h2 text-center">Cart</h2>
-            @include ('site.includes.messages')
+            @include ('staff.includes.messages')
 
             @if (Cart::content()->count() > 0)
                 <!--Grid row-->

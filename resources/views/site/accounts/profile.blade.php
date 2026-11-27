@@ -1,6 +1,6 @@
 @extends ('site.layouts.storefront')
 
-@section ('title') {{Auth::user()->name}} @endsection
+@section ('title') My Account @endsection
 
 @section ('content')
     <div class="sf-profile">
@@ -11,9 +11,9 @@
                 <div class="card">
                     <div class="card-header fw-semibold">Profile Picture</div>
                     <img
-                        src="/assets/images/large_thumbnail/{{Auth::user()->avatar}}"
+                        src="{{ Auth::user()->avatar ? '/assets/images/large_thumbnail/'.Auth::user()->avatar : '/assets/images/noavatar.jpg' }}"
                         class="card-img-bottom"
-                        alt="{{Auth::user()->name}}"
+                        alt="{{Auth::user()->first_name}} {{Auth::user()->last_name}}"
                     />
                 </div>
 
@@ -65,7 +65,7 @@
 
             <div class="col-lg-8">
                 <div class="card">
-                    <div class="card-header fw-semibold">{{Auth::user()->name}}'s Dashboard</div>
+                    <div class="card-header fw-semibold">{{Auth::user()->first_name}} {{Auth::user()->last_name}}'s Dashboard</div>
                     <div class="card-body">
                         <form action="{{route('account.name')}}" method="POST">
                             @csrf
@@ -173,7 +173,7 @@
                         </div>
                         <div class="modal-body">
                             <img
-                                src="/assets/images/large_thumbnail/{{Auth::user()->avatar}}"
+                                src="{{ Auth::user()->avatar ? '/assets/images/large_thumbnail/'.Auth::user()->avatar : '/assets/images/noavatar.jpg' }}"
                                 class="img-fluid rounded mb-3"
                                 alt="Current profile picture"
                             />
