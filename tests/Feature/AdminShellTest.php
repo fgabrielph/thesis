@@ -23,6 +23,17 @@ class AdminShellTest extends TestCase
             ->assertSee('page-header', false);
     }
 
+    public function test_admin_orders_uses_shared_components(): void
+    {
+        $this->seed();
+
+        $this->actingAs(Admin::firstOrFail(), 'admin')
+            ->get(route('admin_orders.index'))
+            ->assertOk()
+            ->assertSee('status-badge', false)
+            ->assertSee('table-shell', false);
+    }
+
     public function test_staff_dashboard_uses_the_staff_shell(): void
     {
         $this->seed();

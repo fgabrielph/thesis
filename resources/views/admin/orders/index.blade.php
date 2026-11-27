@@ -3,21 +3,7 @@
 @section ('title') Orders @endsection
 
 @section ('content')
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Orders</h1>
-                    <p>list of orders</p>
-                </div>
-                <!-- /.col -->
-            </div>
-            <!-- /.row -->
-        </div>
-        <!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+    <x-ui.page-header title="Orders" subtitle="list of orders" />
 
     <!-- Main content -->
     <div class="content">
@@ -25,7 +11,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     @include ('admin.includes.messages')
-                    <div class="card">
+                    <div class="table-shell card">
                         <div class="card-header">
                             <h3 class="card-title">Manage Orders</h3>
                         </div>
@@ -70,26 +56,12 @@
                                                     </h5>
                                                 </td>
                                                 <td class="text-center">
-                                                    <h5>
-                                                        {!! $order->payment_status ? '<span class="badge bg-success">Paid</span>' : '<span class="badge bg-danger">Unpaid</span>' !!}
-                                                    </h5>
+                                                    <x-ui.status-badge :status="$order->payment_status ? 'Paid' : 'Unpaid'" />
                                                 </td>
                                                 <td class="text-center">
-                                                    <h4>
-                                                        @if ($order->status == 'Pending')
-                                                            <span class="badge bg-warning">Pending</span>
-                                                        @elseif ($order->status == 'Canceled')
-                                                            <span class="badge bg-danger">Declined</span>
-                                                        @elseif ($order->status == 'Confirmed')
-                                                            <span class="badge text-dark" style="background-color: greenyellow"
-                                                                >Confirmed</span
-                                                            >
-                                                        @elseif ($order->status == 'Return')
-                                                            <span class="badge bg-secondary">Returned</span>
-                                                        @elseif ($order->status == 'Completed')
-                                                            <span class="badge bg-success">Completed</span>
-                                                        @endif
-                                                    </h4>
+                                                    <x-ui.status-badge
+                                                        :status="$order->status == 'Canceled' ? 'Declined' : ($order->status == 'Return' ? 'Returned' : $order->status)"
+                                                    />
                                                 </td>
                                                 <td>
                                                     <div class="table-actions">
