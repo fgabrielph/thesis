@@ -3,21 +3,7 @@
 @section ('title') Custom Order @endsection
 
 @section ('content')
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Custom Orders</h1>
-                    <p>list of custom orders</p>
-                </div>
-                <!-- /.col -->
-            </div>
-            <!-- /.row -->
-        </div>
-        <!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+    <x-ui.page-header title="Custom Orders" subtitle="list of custom orders" />
 
     <!-- Main content -->
     <div class="content">
@@ -25,7 +11,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     @include ('admin.includes.messages')
-                    <div class="card">
+                    <div class="table-shell card">
                         <div class="card-header">
                             <h3 class="card-title">Manage Custom Orders</h3>
                         </div>
@@ -58,32 +44,14 @@
                                                 <td>{{$cust_order->city}}</td>
                                                 <td>{{$cust_order->zip_code}}</td>
                                                 <td>
-                                                    @if ($cust_order->payment_status == 0)
-                                                        <h5><span class="badge text-bg-danger">Not yet paid</span></h5>
-                                                    @elseif ($cust_order->payment_status == 1)
-                                                        <h5><span class="badge text-bg-success">Paid</span></h5>
-                                                    @elseif ($cust_order->payment_status == 2)
-                                                        <h5>
-                                                            <span class="badge text-bg-warning"
-                                                                >Waiting for Approval</span
-                                                            >
-                                                        </h5>
-                                                    @endif
+                                                    <x-ui.status-badge
+                                                        :status="$cust_order->payment_status == 0 ? 'Not yet paid' : ($cust_order->payment_status == 1 ? 'Paid' : 'Waiting for Approval')"
+                                                    />
                                                 </td>
                                                 <td>
-                                                    @if ($cust_order->status == 0)
-                                                        <h5><span class="badge text-bg-warning">Pending</span></h5>
-                                                    @elseif ($cust_order->status == 1)
-                                                        <h5><span class="badge text-bg-dark">Accepted</span></h5>
-                                                    @elseif ($cust_order->status == 2)
-                                                        <h5><span class="badge text-bg-danger">Declined</span></h5>
-                                                    @elseif ($cust_order->status == 3)
-                                                        <h5>
-                                                            <span class="badge text-bg-info text-white">Completed</span>
-                                                        </h5>
-                                                    @elseif ($cust_order->status == 5)
-                                                        <h5><span class="badge text-bg-success">Delivered</span></h5>
-                                                    @endif
+                                                    <x-ui.status-badge
+                                                        :status="$cust_order->status == 0 ? 'Pending' : ($cust_order->status == 1 ? 'Accepted' : ($cust_order->status == 2 ? 'Declined' : ($cust_order->status == 3 ? 'Completed' : ($cust_order->status == 5 ? 'Delivered' : 'Processing'))))"
+                                                    />
                                                 </td>
                                                 <td>
                                                     @if (empty($cust_order->quantity))

@@ -13,7 +13,7 @@
 
     @vite ('resources/js/app.js')
 </head>
-<body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+<body class="layout-fixed sidebar-expand-lg bg-body-tertiary" data-staff-shell>
     <div class="app-wrapper">
         @include ('staff.includes.navbar')
         @include ('staff.includes.sidebar')

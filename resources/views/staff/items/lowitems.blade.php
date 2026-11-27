@@ -3,29 +3,15 @@
 @section ('title') Low Stock Items @endsection
 
 @section ('content')
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Items</h1>
-                    <p>list of items</p>
-                </div>
-                <!-- /.col -->
-            </div>
-            <!-- /.row -->
-        </div>
-        <!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+    <x-ui.page-header title="Items" subtitle="list of items" />
 
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    @include ('admin.includes.messages')
-                    <div class="card">
+                    @include ('staff.includes.messages')
+                    <div class="table-shell card">
                         <div class="card-header">
                             <h3 class="card-title">Manage Items</h3>
                         </div>

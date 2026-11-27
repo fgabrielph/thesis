@@ -1,6 +1,47 @@
 // Application overrides for AdminLTE 4 / Bootstrap 5.
 // Vendor CSS is imported from resources/js/app.js before this file.
 
+:root {
+    --admin-brand: #ffa500;
+    --admin-on-brand: #111111;
+    --admin-ink: #111111;
+    --admin-muted: #6b7280;
+    --admin-surface: #ffffff;
+    --admin-surface-alt: #f3f4f6;
+    --admin-border: #e5e7eb;
+    --admin-success: #15803d;
+    --admin-warning: #b45309;
+    --admin-danger: #b91c1c;
+
+    --bs-primary: var(--admin-brand);
+    --bs-primary-rgb: 255, 165, 0;
+    --bs-link-color: #9a5b00;
+    --bs-link-hover-color: #7a4700;
+}
+
+.btn-primary {
+    --bs-btn-bg: var(--admin-brand);
+    --bs-btn-border-color: var(--admin-brand);
+    --bs-btn-color: var(--admin-on-brand);
+    --bs-btn-hover-bg: #e69500;
+    --bs-btn-hover-border-color: #e69500;
+    --bs-btn-hover-color: var(--admin-on-brand);
+    --bs-btn-active-bg: #cc8400;
+    --bs-btn-active-border-color: #cc8400;
+    --bs-btn-active-color: var(--admin-on-brand);
+}
+
+.sidebar-menu .nav-link.active {
+    background-color: var(--admin-brand) !important;
+    color: var(--admin-on-brand) !important;
+}
+
+.page-item.active .page-link {
+    background-color: var(--admin-brand);
+    border-color: var(--admin-brand);
+    color: var(--admin-on-brand);
+}
+
 .app-main {
     background: var(--bs-body-bg);
 }

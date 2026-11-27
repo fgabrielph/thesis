@@ -3,21 +3,10 @@
 @section ('title') Custom Order{{$customorder->id}} @endsection
 
 @section ('content')
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Custom Order Number {{$customorder->id}}</h1>
-                    <p>Placed by {{$customorder->user->first_name . ' ' . $customorder->user->last_name}}</p>
-                </div>
-                <!-- /.col -->
-            </div>
-            <!-- /.row -->
-        </div>
-        <!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+    <x-ui.page-header
+        :title="'Custom Order Number '.$customorder->id"
+        :subtitle="'Placed by '.$customorder->user->first_name.' '.$customorder->user->last_name"
+    />
 
     <!-- Main content -->
     <div class="content">
@@ -47,13 +36,18 @@
                                             @elseif (empty($customorder->completed))
                                                 <h3>0 / {{$customorder->quantity}}, In Progress</h3>
                                             @else
-                                                <input
-                                                    type="text"
-                                                    value="{{$customorder->completed}}"
-                                                    class="dial"
-                                                    data-thickness=".3"
-
-                                                /><br />
+                                                <div
+                                                    class="progress mb-3"
+                                                    role="progressbar"
+                                                    aria-valuenow="{{$customorder->completed}}"
+                                                    aria-valuemin="0"
+                                                    aria-valuemax="{{$customorder->quantity}}"
+                                                >
+                                                    <div
+                                                        class="progress-bar bg-warning"
+                                                        style="width: {{$customorder->quantity ? round(($customorder->completed / $customorder->quantity) * 100) : 0}}%"
+                                                    ></div>
+                                                </div>
                                                 <h3>
                                                     {{$customorder->completed}} out of {{$customorder->quantity}} Completed
                                                 </h3>
@@ -128,7 +122,7 @@
                                                             @if (empty($customorder->price))
                                                                 N/A
                                                             @else
-                                                                {{$customorder->price}}
+                                                                <x-ui.money :amount="$customorder->price" />
                                                             @endif
                                                         </b>
                                                     </h5>
@@ -178,23 +172,5 @@
             </div>
         </div>
     </div>
-
-@endsection
-
-@section ('scripts')
-    <script src="http://anthonyterrien.com/demo/knob/jquery.knob.min.js"></script>
-    <script>
-        $('.dial').knob({
-            max: '{{$customorder->quantity}}',
-            readOnly: true,
-            fgColor: 'orange',
-            inputColor: 'black',
-            draw: function () {
-                $(this.i)
-                    .val(this.cv + ' / {{$customorder->quantity}}')
-                    .css('font-size', '20pt'); //Puts a percent after values
-            },
-        });
-    </script>
 
 @endsection
