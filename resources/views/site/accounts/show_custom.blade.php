@@ -180,7 +180,13 @@
 
                         <p><strong>Contact number:</strong> {{$custom_order->user->mobile_number}}</p>
 
-                        <p class="mb-1"><strong>Description:</strong></p>
+                        <p class="mb-1"><strong>Delivery address:</strong></p>
+                        <p class="mb-0">
+                            {{$custom_order->address}}<br />
+                            {{$custom_order->city}} {{$custom_order->zip_code}}
+                        </p>
+
+                        <p class="mb-1 mt-3"><strong>Description:</strong></p>
                         <p>{{$custom_order->description}}</p>
 
                         <p class="mb-0">

@@ -49,46 +49,31 @@
                                         @endif
                                     </td>
                                     <td>{{$order->created_at->toFormattedDateString()}}</td>
-                                    <td class="text-center">
-                                        <div class="dropdown">
-                                            <button
-                                                class="btn btn-sm btn-primary dropdown-toggle"
-                                                type="button"
-                                                data-bs-toggle="dropdown"
-                                                aria-expanded="false"
+                                    <td>
+                                        <div class="d-flex flex-wrap justify-content-center gap-1">
+                                            <a href="{{route('orders.show', $order->id)}}" class="btn btn-sm btn-primary"
+                                                >View</a
                                             >
-                                                Actions
-                                            </button>
-                                            <ul class="dropdown-menu dropdown-menu-end">
-                                                <li>
-                                                    <a href="{{route('orders.show', $order->id)}}" class="dropdown-item"
-                                                        >View details</a
+
+                                            @if ($order->status == 'Pending' && $order->payment_method == 'bank')
+                                                <a href="{{route('proof.add', $order->id)}}" class="btn btn-sm btn-outline-secondary"
+                                                    >Proof</a
+                                                >
+                                            @endif
+
+                                            @if ($order->payment_status == 0 && $order->payment_method == 'cod' && $order->status != 'Canceled')
+                                                <form
+                                                    action="{{route('orders.update', $order->id)}}"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Cancel this order?')"
+                                                >
+                                                    @csrf
+                                                    @method ('PUT')
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                        >Cancel</button
                                                     >
-                                                </li>
-                                                @if ($order->status == 'Pending' && $order->payment_method == 'bank')
-                                                    <li>
-                                                        <a href="{{route('proof.add', $order->id)}}" class="dropdown-item"
-                                                            >{{ empty($order->image) ? 'Add' : 'Edit' }} proof of payment</a
-                                                        >
-                                                    </li>
-                                                @endif
-                                                @if ($order->payment_status == 0 && $order->payment_method == 'cod' && $order->status != 'Canceled')
-                                                    <li><hr class="dropdown-divider" /></li>
-                                                    <li>
-                                                        <form
-                                                            action="{{route('orders.update', $order->id)}}"
-                                                            method="POST"
-                                                            onsubmit="return confirm('Cancel this order?')"
-                                                        >
-                                                            @csrf
-                                                            @method ('PUT')
-                                                            <button type="submit" class="dropdown-item text-danger"
-                                                                >Cancel order</button
-                                                            >
-                                                        </form>
-                                                    </li>
-                                                @endif
-                                            </ul>
+                                                </form>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>

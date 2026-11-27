@@ -3,14 +3,11 @@
 @section ('title') Inquire Form @endsection
 
 @section ('content')
-    <br
-    /><br
-    /><br />
-    <div class="container">
+    <div>
         <div class="card">
-            <div class="card-header white-text" style="background: #000">
-                <div class="col-6">
-                    <h3 class="page-header"><i class="fa fa-globe"></i> Inquire for Custom Order</h3>
+            <div class="card-header bg-dark text-white">
+                <div>
+                    <h1 class="h4 mb-0"><i class="fa fa-globe"></i> Inquire for Custom Order</h1>
                 </div>
             </div>
             <div class="card-body">
@@ -94,21 +91,15 @@
                         <div class="col-md-2"></div>
                     </div>
                     <br />
-                    <div class="input-group mb-4">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Upload</span>
-                        </div>
-                        <div class="custom-file">
-                            <input
-                                type="file"
-                                class="custom-file-input"
-                                id="fileInput"
-                                name="image"
-                                data-preview="#img"
-                                aria-describedby="fileInput"
-                            />
-                            <label class="custom-file-label" for="fileInput">Choose a file</label>
-                        </div>
+                    <div class="mb-4">
+                        <label for="fileInput" class="form-label">Upload</label>
+                        <input
+                            type="file"
+                            class="form-control"
+                            id="fileInput"
+                            name="image"
+                            data-preview="#img"
+                        />
                     </div>
                     <label for="textInput"
                         >Description <b><i style="color: red">*Please include the Quantity of your order.</i></b></label
@@ -124,7 +115,7 @@
                     <br />
 
                     <input name="_method" type="hidden" value="PUT" />
-                    <button class="btn peach-gradient btn-block" type="submit">Send</button>
+                    <button class="btn btn-primary w-100" type="submit">Send</button>
                 </form>
             </div>
         </div>
