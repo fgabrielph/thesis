@@ -1,4 +1,4 @@
-@extends ('site.master')
+@extends ('site.layouts.storefront')
 
 @section ('title') Contact Us @endsection
 
@@ -10,7 +10,7 @@
         <h3 class="text-center">Visit and Contact Us</h3>
         <div class="row mt-3">
             <div class="col-md-9">
-                <img src="{{asset('/assets/images/location.JPG')}}" alt="" />
+                <img src="{{asset('/assets/images/location.JPG')}}" class="img-fluid rounded" alt="New MJC location" />
             </div>
             <div class="col-md-3">
                 <h4><i class="fas fa-search-location"></i> Located</h4>
@@ -34,10 +34,5 @@
             </div>
         </div>
     </div>
-
-@endsection
-
-@section ('footer')
-    @include ('site.includes.footer')
 
 @endsection

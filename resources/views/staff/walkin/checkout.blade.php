@@ -28,7 +28,7 @@
             <div class="row">
                 <!--Grid column-->
                 <div class="col-md-8 mb-4">
-                    @include ('site.includes.messages')
+                    @include ('staff.includes.messages')
                     <!--Card-->
                     <div class="card">
                         <!--Card content-->

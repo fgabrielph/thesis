@@ -1,8 +1,6 @@
-@extends ('site.master')
+@extends ('site.layouts.storefront')
 
 @section ('title') About @endsection
-
-@section ('others') @include ('site.includes.carousel') @endsection
 
 @section ('content')
     <div class="container dark-grey-text mt-5">
@@ -118,10 +116,5 @@
     {{--            <!--Grid column-->--}}
     {{--        </div>--}}
     {{--    </div>--}}
-
-@endsection
-
-@section ('footer')
-    @include ('site.includes.footer')
 
 @endsection

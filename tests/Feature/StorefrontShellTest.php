@@ -13,10 +13,10 @@ class StorefrontShellTest extends TestCase
             ->assertSee('data-storefront', false);
     }
 
-    public function test_unconverted_pages_keep_the_legacy_shell(): void
+    public function test_all_storefront_pages_use_the_shell(): void
     {
         $this->get(route('about'))
             ->assertOk()
-            ->assertDontSee('data-storefront', false);
+            ->assertSee('data-storefront', false);
     }
 }
