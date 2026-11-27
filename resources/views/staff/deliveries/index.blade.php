@@ -10,8 +10,8 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    @include ('admin.includes.messages')
-                    <div class="card">
+                    @include ('staff.includes.messages')
+                    <div class="table-shell card">
                         <div class="card-body">
                             <nav>
                                 <div class="nav nav-tabs" id="nav-tab" role="tablist">

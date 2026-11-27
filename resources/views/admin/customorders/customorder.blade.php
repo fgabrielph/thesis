@@ -4,8 +4,8 @@
 
 @section ('content')
     <x-ui.page-header
-        title="Custom Order Number {{$customorder->id}}"
-        subtitle="Placed by {{$customorder->user->first_name . ' ' . $customorder->user->last_name}}"
+        :title="'Custom Order Number '.$customorder->id"
+        :subtitle="'Placed by '.$customorder->user->first_name.' '.$customorder->user->last_name"
     />
 
     <!-- Main content -->

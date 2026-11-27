@@ -18,7 +18,10 @@
                     <h4>There {{ $lowitem == 1 ? 'is' : 'are' }} {{ $lowitem }} {{ Str::plural('item', $lowitem) }} low in stock</h4>
                 </div>
             @endif
-            <x-ui.page-header title="Welcome, {{ Auth::user()->name }}" subtitle="Here is the current order and inventory overview." />
+            <x-ui.page-header
+                :title="'Welcome, '.Auth::user()->name"
+                subtitle="Here is the current order and inventory overview."
+            />
 
             <div class="row g-3 mb-4">
                 <div class="col-md-3 col-6">

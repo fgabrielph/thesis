@@ -53,7 +53,7 @@
     "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-v4compatibility.woff2"
   },
   "resources/js/app.js": {
-    "file": "assets/app-D38bPyR3.js",
+    "file": "assets/app-CLyDc03Q.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -61,7 +61,7 @@
       "_bootstrap.esm-okd1uo41.js"
     ],
     "css": [
-      "assets/app-C-fP1nVI.css"
+      "assets/app-Do5nS_kB.css"
     ]
   },
   "resources/js/storefront.js": {

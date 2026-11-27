@@ -44,32 +44,14 @@
                                                 <td>{{$cust_order->city}}</td>
                                                 <td>{{$cust_order->zip_code}}</td>
                                                 <td>
-                                                    @if ($cust_order->payment_status == 0)
-                                                        <h5><span class="badge text-bg-danger">Not yet paid</span></h5>
-                                                    @elseif ($cust_order->payment_status == 1)
-                                                        <h5><span class="badge text-bg-success">Paid</span></h5>
-                                                    @elseif ($cust_order->payment_status == 2)
-                                                        <h5>
-                                                            <span class="badge text-bg-warning"
-                                                                >Waiting for Approval</span
-                                                            >
-                                                        </h5>
-                                                    @endif
+                                                    <x-ui.status-badge
+                                                        :status="$cust_order->payment_status == 0 ? 'Not yet paid' : ($cust_order->payment_status == 1 ? 'Paid' : 'Waiting for Approval')"
+                                                    />
                                                 </td>
                                                 <td>
-                                                    @if ($cust_order->status == 0)
-                                                        <h5><span class="badge text-bg-warning">Pending</span></h5>
-                                                    @elseif ($cust_order->status == 1)
-                                                        <h5><span class="badge text-bg-dark">Accepted</span></h5>
-                                                    @elseif ($cust_order->status == 2)
-                                                        <h5><span class="badge text-bg-danger">Declined</span></h5>
-                                                    @elseif ($cust_order->status == 3)
-                                                        <h5>
-                                                            <span class="badge text-bg-info text-white">Completed</span>
-                                                        </h5>
-                                                    @elseif ($cust_order->status == 5)
-                                                        <h5><span class="badge text-bg-success">Delivered</span></h5>
-                                                    @endif
+                                                    <x-ui.status-badge
+                                                        :status="$cust_order->status == 0 ? 'Pending' : ($cust_order->status == 1 ? 'Accepted' : ($cust_order->status == 2 ? 'Declined' : ($cust_order->status == 3 ? 'Completed' : ($cust_order->status == 5 ? 'Delivered' : 'Processing'))))"
+                                                    />
                                                 </td>
                                                 <td>
                                                     @if (empty($cust_order->quantity))

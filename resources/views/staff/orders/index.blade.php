@@ -10,7 +10,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    @include ('admin.includes.messages')
+                    @include ('staff.includes.messages')
                     <div class="table-shell card">
                         <div class="card-header">
                             <h3 class="card-title">Manage Orders</h3>

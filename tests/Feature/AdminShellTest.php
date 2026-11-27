@@ -31,7 +31,8 @@ class AdminShellTest extends TestCase
             ->get(route('admin_orders.index'))
             ->assertOk()
             ->assertSee('status-badge', false)
-            ->assertSee('table-shell', false);
+            ->assertSee('table-shell', false)
+            ->assertSee('id="defTable"', false);
     }
 
     public function test_admin_items_uses_shared_table_shell(): void
