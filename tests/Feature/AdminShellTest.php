@@ -34,6 +34,17 @@ class AdminShellTest extends TestCase
             ->assertSee('table-shell', false);
     }
 
+    public function test_admin_items_uses_shared_table_shell(): void
+    {
+        $this->seed();
+
+        $this->actingAs(Admin::firstOrFail(), 'admin')
+            ->get(route('items.index'))
+            ->assertOk()
+            ->assertSee('table-shell', false)
+            ->assertDontSee('₱ ₱', false);
+    }
+
     public function test_staff_dashboard_uses_the_staff_shell(): void
     {
         $this->seed();
