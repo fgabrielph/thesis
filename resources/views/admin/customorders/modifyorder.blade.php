@@ -3,21 +3,10 @@
 @section ('title') Custom Order{{$customorder->id}} @endsection
 
 @section ('content')
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Custom Order Number {{$customorder->id}}</h1>
-                    <p>Placed by {{$customorder->user->name}}</p>
-                </div>
-                <!-- /.col -->
-            </div>
-            <!-- /.row -->
-        </div>
-        <!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+    <x-ui.page-header
+        title="Custom Order Number {{$customorder->id}}"
+        subtitle="Placed by {{$customorder->user->first_name . ' ' . $customorder->user->last_name}}"
+    />
 
     <!-- Main content -->
     <div class="content">

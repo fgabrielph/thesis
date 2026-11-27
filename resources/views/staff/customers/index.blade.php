@@ -3,28 +3,12 @@
 @section ('title') Customers @endsection
 
 @section ('content')
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Customers</h1>
-                    <p>list of costumers</p>
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-6">
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-primary float-end"
-                        ><span class="fas fa-plus" aria-hidden="true"></span>
-                        Add Customer
-                    </a>
-                </div>
-                <!-- /.col -->
-            </div>
-            <!-- /.row -->
-        </div>
-        <!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+    <x-ui.page-header title="Customers" subtitle="list of customers">
+        <a href="#" data-bs-toggle="modal" data-bs-target="#add" class="btn btn-primary">
+            <span class="fas fa-plus" aria-hidden="true"></span>
+            Add Customer
+        </a>
+    </x-ui.page-header>
 
     <!-- Main content -->
     <div class="content">
@@ -32,7 +16,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     @include ('staff.includes.messages')
-                    <div class="card">
+                    <div class="table-shell card">
                         <div class="card-header">
                             <h3 class="card-title">Manage Customer</h3>
                         </div>

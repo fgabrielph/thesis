@@ -3,21 +3,7 @@
 @section ('title') Custom Order @endsection
 
 @section ('content')
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Custom Orders</h1>
-                    <p>list of custom orders</p>
-                </div>
-                <!-- /.col -->
-            </div>
-            <!-- /.row -->
-        </div>
-        <!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+    <x-ui.page-header title="Custom Orders" subtitle="list of custom orders" />
 
     <!-- Main content -->
     <div class="content">
@@ -25,7 +11,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     @include ('admin.includes.messages')
-                    <div class="card">
+                    <div class="table-shell card">
                         <div class="card-header">
                             <h3 class="card-title">Manage Custom Orders</h3>
                         </div>
