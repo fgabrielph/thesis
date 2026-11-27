@@ -41,4 +41,25 @@ class StorefrontAccountTest extends TestCase
             ->assertOk()
             ->assertSee('sf-invoice', false);
     }
+
+    public function test_custom_orders_and_proof_pages_use_the_storefront_shell(): void
+    {
+        $this->seed();
+        $user = User::where('email', 'customer@example.com')->firstOrFail();
+        $customOrder = $user->custom_orders()->firstOrFail();
+        $order = $user->orders()->firstOrFail();
+
+        $this->actingAs($user)->get(route('custom_order.index'))
+            ->assertOk()
+            ->assertSee('data-storefront', false)
+            ->assertSee('sf-custom-orders', false);
+
+        $this->actingAs($user)->get(route('custom_order.show', $customOrder))
+            ->assertOk()
+            ->assertSee('sf-custom-order', false);
+
+        $this->actingAs($user)->get(route('proof.add', $order))
+            ->assertOk()
+            ->assertSee('sf-proof', false);
+    }
 }
