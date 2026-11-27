@@ -1,6 +1,6 @@
 @props(['title' => null, 'empty' => false, 'emptyMessage' => 'No records found.'])
 
-<div class="card">
+<div class="table-shell card">
     @if ($title || isset($toolbar))
         <div class="card-header d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2">
             @if ($title)

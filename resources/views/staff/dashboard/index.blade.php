@@ -18,97 +18,45 @@
                     <h4>There {{ $lowitem == 1 ? 'is' : 'are' }} {{ $lowitem }} {{ Str::plural('item', $lowitem) }} low in stock</h4>
                 </div>
             @endif
-            <div class="card mb-3">
-                <div class="card-body py-3">
-                    <h1 class="h4 mb-1">Welcome, {{ Auth::user()->name }}</h1>
-                    <p class="text-muted mb-0">Here is the current order and inventory overview.</p>
-                </div>
-            </div>
-            <!-- Small boxes (Stat box) -->
-            <div class="row">
+            <x-ui.page-header title="Welcome, {{ Auth::user()->name }}" subtitle="Here is the current order and inventory overview." />
+
+            <div class="row g-3 mb-4">
                 <div class="col-md-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h3>{{count($orders)}}</h3>
-                            <p>New Orders</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fas fa-shopping-bag"></i>
-                        </div>
-                        <a href="{{route('staff_orders.index')}}" class="small-box-footer"
-                            >View orders <i class="fas fa-arrow-circle-right"></i
-                        ></a>
-                    </div>
+                    <x-ui.stat-card
+                        label="New Orders"
+                        :value="count($orders)"
+                        :href="route('staff_orders.index')"
+                        icon="shopping-bag"
+                        tone="info"
+                    />
                 </div>
-                <!-- ./col -->
                 <div class="col-md-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-warning">
-                        <div class="inner">
-                            <h3>{{count($users)}}</h3>
-
-                            <p>User Registrations</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fas fa-user-plus"></i>
-                        </div>
-                        <a href="{{route('staff_customer.index')}}" class="small-box-footer"
-                            >View customers <i class="fas fa-arrow-circle-right"></i
-                        ></a>
-                    </div>
+                    <x-ui.stat-card
+                        label="User Registrations"
+                        :value="count($users)"
+                        :href="route('staff_customer.index')"
+                        icon="user-plus"
+                        tone="warning"
+                    />
                 </div>
-
-                {{--                <div class="col-md-3 col-6">--}}
-                {{--                    <!-- small box -->--}}
-                {{--                    <div class="small-box bg-warning">--}}
-                {{--                        <div class="inner">--}}
-                {{--                            <h3>{{$lowitem}}</h3>--}}
-
-                {{--                            <p>Inventory Alert</p>--}}
-                {{--                        </div>--}}
-                {{--                        <div class="icon">--}}
-                {{--                            <i class="fas fa-boxes"></i>--}}
-                {{--                        </div>--}}
-                {{--                        <a href="{{route('customers.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>--}}
-                {{--                    </div>--}}
-                {{--                </div>--}}
-
-                <!-- ./col -->
                 <div class="col-md-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-danger">
-                        <div class="inner">
-                            <h3>{{count($pending_deliveries)}}</h3>
-                            <p>On Delivery</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fas fa-truck"></i>
-                        </div>
-                        <a href="{{route('staff_deliveries.index')}}" class="small-box-footer"
-                            >View deliveries <i class="fas fa-arrow-circle-right"></i
-                        ></a>
-                    </div>
+                    <x-ui.stat-card
+                        label="On Delivery"
+                        :value="count($pending_deliveries)"
+                        :href="route('staff_deliveries.index')"
+                        icon="truck"
+                        tone="danger"
+                    />
                 </div>
-                <!-- ./col -->
-
-                <!-- ./col -->
                 <div class="col-md-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-secondary">
-                        <div class="inner">
-                            <h3>{{count($returns)}}</h3>
-                            <p>Returns</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fas fa-truck-loading"></i>
-                        </div>
-                        <a href="{{route('staff_orders.index')}}" class="small-box-footer"
-                            >View orders <i class="fas fa-arrow-circle-right"></i
-                        ></a>
-                    </div>
+                    <x-ui.stat-card
+                        label="Returns"
+                        :value="count($returns)"
+                        :href="route('staff_orders.index')"
+                        icon="truck-loading"
+                        tone="secondary"
+                    />
                 </div>
-                <!-- ./col -->
             </div>
 
             <div class="row">

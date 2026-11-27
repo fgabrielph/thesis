@@ -1,6 +1,6 @@
 @props(['label', 'value', 'href', 'icon' => 'chart-bar', 'tone' => 'primary'])
 
-<div class="card h-100 border-0 shadow-sm">
+<div class="stat-card card h-100 border-0 shadow-sm">
     <div class="card-body">
         <div class="d-flex justify-content-between align-items-start gap-3">
             <div>

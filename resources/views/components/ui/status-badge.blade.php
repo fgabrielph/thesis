@@ -11,4 +11,4 @@
     };
 @endphp
 
-<span class="badge text-bg-{{$tone}}">{{$status}}</span>
+<span class="status-badge badge text-bg-{{$tone}}">{{$status}}</span>
